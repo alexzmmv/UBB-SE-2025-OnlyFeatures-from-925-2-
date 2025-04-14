@@ -44,7 +44,7 @@ namespace WinUIApp.Tests.Integration
             var brand = CreateTestBrand(brandName);
 
             // Fix: Make sure we properly retrieve the DrinkId by using ExecuteScalar
-            using (var connection = new SqlConnection("Server=DESKTOP-UHDRE10\\SQLEXPRESS;Initial Catalog=WinUIApp;Integrated Security=True;TrustServerCertificate=True"))
+            using (var connection = new SqlConnection("Server=DESKTOP-UHDRE10\\SQLEXPRESS;Initial Catalog=WinUIAppTest;Integrated Security=True;TrustServerCertificate=True"))
             {
                 connection.Open();
 
@@ -110,11 +110,15 @@ namespace WinUIApp.Tests.Integration
             try
             {
                 // First try to insert the brand directly, with error handling
-                using (var connection = new SqlConnection("Server=DESKTOP-UHDRE10\\SQLEXPRESS;Initial Catalog=WinUIApp;Integrated Security=True;TrustServerCertificate=True"))
+                using (var connection = new SqlConnection("Server=DESKTOP-UHDRE10\\SQLEXPRESS;Initial Catalog=WinUIAppTest;Integrated Security=True;TrustServerCertificate=True"))
                 {
                     connection.Open();
 
                     // Try to insert and get the ID in one operation
+
+
+
+
                     string insertQuery = @"
             BEGIN TRY
                 INSERT INTO Brand (BrandName)
@@ -148,7 +152,7 @@ namespace WinUIApp.Tests.Integration
                 // If we still get a unique constraint violation, try to retrieve the brand directly
                 if (ex.Number == 2627 || ex.Number == 2601)  // Unique constraint violation error codes
                 {
-                    using (var connection = new SqlConnection("Server=DESKTOP-UHDRE10\\SQLEXPRESS;Initial Catalog=WinUIApp;Integrated Security=True;TrustServerCertificate=True"))
+                    using (var connection = new SqlConnection("Server=DESKTOP-UHDRE10\\SQLEXPRESS;Initial Catalog=WinUIAppTest;Integrated Security=True;TrustServerCertificate=True"))
                     {
                         connection.Open();
                         string query = "SELECT BrandId FROM Brand WHERE BrandName = @BrandName";
