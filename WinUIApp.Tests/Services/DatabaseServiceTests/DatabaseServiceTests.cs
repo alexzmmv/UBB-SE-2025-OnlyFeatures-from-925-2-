@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
-using WinUIApp.Services;
+using WinUIApp.Database;
 using Xunit;
 
 namespace WinUIApp.Tests.Services.DatabaseServiceTests
 {
     public class DatabaseServiceTests
     {
-        private readonly DatabaseService _service;
+        private readonly DatabaseManager _service;
 
         public DatabaseServiceTests()
         {
-            var connectionField = typeof(DatabaseService)
+            var connectionField = typeof(DatabaseManager)
                 .GetField("_databaseServiceInstance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
             connectionField?.SetValue(null, null);
 
-            _service = DatabaseService.Instance;
+            _service = DatabaseManager.Instance;
         }
 
         [Fact]

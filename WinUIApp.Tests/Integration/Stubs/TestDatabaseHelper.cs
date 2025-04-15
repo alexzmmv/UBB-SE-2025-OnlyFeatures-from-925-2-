@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
+using WinUIApp.Database;
 using WinUIApp.Models;
-using WinUIApp.Services;
 
 namespace WinUIApp.Tests.Integration
 {
     public class TestDatabaseHelper
     {
-        private readonly DatabaseService _databaseService;
+        private readonly DatabaseManager _databaseService;
         private readonly string _connectionString;
 
-        public TestDatabaseHelper(DatabaseService databaseService, string connectionString = null)
+        public TestDatabaseHelper(DatabaseManager databaseService, string connectionString = null)
         {
             _databaseService = databaseService;
             _connectionString = connectionString ??
