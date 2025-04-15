@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace WinUIApp.Services
+namespace WinUIApp.Database
 {
     using System.Collections.Generic;
     using Microsoft.Data.SqlClient;
@@ -10,12 +10,12 @@ namespace WinUIApp.Services
     /// <summary>
     /// Interface for managing database operations.
     /// </summary>
-    public interface IDatabaseService
+    public interface IDatabaseManager
     {
         /// <summary>
         /// Gets the singleton instance of the DatabaseService class.
         /// </summary>
-        static abstract DatabaseService Instance { get; }
+        static abstract DatabaseManager Instance { get; }
 
         /// <summary>
         /// Executes a SQL data modification query (INSERT, UPDATE, DELETE) and returns the number of rows affected.

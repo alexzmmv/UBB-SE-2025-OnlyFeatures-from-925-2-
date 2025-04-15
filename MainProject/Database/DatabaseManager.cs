@@ -2,35 +2,34 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace WinUIApp.Services
+namespace WinUIApp.Database
 {
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using Microsoft.Data.SqlClient;
-    using WinUIApp.Database;
 
     /// <summary>
     /// Service for managing database operations.
     /// </summary>
-    public class DatabaseService : IDatabaseService
+    public class DatabaseManager : IDatabaseManager
     {
         private static readonly object DatabaseServiceInstanceLock = new ();
-        private static DatabaseService databaseServiceInstance;
+        private static DatabaseManager databaseServiceInstance;
         private readonly DatabaseConnection databaseConnection;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DatabaseService"/> class.
+        /// Initializes a new instance of the <see cref="DatabaseManager"/> class.
         /// </summary>
-        private DatabaseService()
+        private DatabaseManager()
         {
-            this.databaseConnection = DatabaseConnection.Instance;
+            databaseConnection = DatabaseConnection.Instance;
         }
 
         /// <summary>
         /// Gets the singleton instance of the DatabaseService class.
         /// </summary>
-        public static DatabaseService Instance
+        public static DatabaseManager Instance
         {
             get
             {
@@ -42,7 +41,7 @@ namespace WinUIApp.Services
                         {
                             lock (DatabaseServiceInstanceLock)
                             {
-                                databaseServiceInstance = new DatabaseService();
+                                databaseServiceInstance = new DatabaseManager();
                             }
                         }
                     }
@@ -64,8 +63,8 @@ namespace WinUIApp.Services
 
             try
             {
-                this.databaseConnection.OpenConnection();
-                using var sqlSelectCommand = new SqlCommand(sqlSelectQuery, this.databaseConnection.GetConnection());
+                databaseConnection.OpenConnection();
+                using var sqlSelectCommand = new SqlCommand(sqlSelectQuery, databaseConnection.GetConnection());
                 if (sqlSelectQueryParameters != null)
                 {
                     sqlSelectCommand.Parameters.AddRange(sqlSelectQueryParameters.ToArray());
@@ -89,7 +88,7 @@ namespace WinUIApp.Services
             }
             finally
             {
-                this.databaseConnection.CloseConnection();
+                databaseConnection.CloseConnection();
             }
 
             return selectQueryResults;
@@ -107,8 +106,8 @@ namespace WinUIApp.Services
 
             try
             {
-                this.databaseConnection.OpenConnection();
-                using var dataModificationQueryCommand = new SqlCommand(sqlDataModificationQuery, this.databaseConnection.GetConnection());
+                databaseConnection.OpenConnection();
+                using var dataModificationQueryCommand = new SqlCommand(sqlDataModificationQuery, databaseConnection.GetConnection());
                 if (sqlDataModificationQueryParameters != null)
                 {
                     dataModificationQueryCommand.Parameters.AddRange(sqlDataModificationQueryParameters.ToArray());
@@ -122,7 +121,7 @@ namespace WinUIApp.Services
             }
             finally
             {
-                this.databaseConnection.CloseConnection();
+                databaseConnection.CloseConnection();
             }
 
             return numberOfRowsAffectedByQuery;
