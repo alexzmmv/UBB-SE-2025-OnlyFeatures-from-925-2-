@@ -6,7 +6,9 @@ namespace WinUIApp.Services
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using WinUIApp.Models;
+    using WinUIApp.Repositories;
 
     /// <summary>
     /// Drink service for managing drink-related operations.
@@ -14,23 +16,23 @@ namespace WinUIApp.Services
     public class DrinkService : IDrinkService
     {
         private const int DefaultPersonalDrinkCount = 1;
-        private IDrinkModel drinkModel;
+        private IDrinkRepository drinkRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DrinkService"/> class.
         /// </summary>
         public DrinkService()
         {
-            this.drinkModel = new DrinkModel();
+            this.drinkRepository = new DrinkRepository();
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DrinkService"/> class with a specified drink model.
         /// </summary>
-        /// <param name="drinkModel"> Drink model. </param>
-        public DrinkService(IDrinkModel drinkModel)
+        /// <param name="drinkRepository"> Drink Repository. </param>
+        public DrinkService(IDrinkRepository drinkRepository)
         {
-            this.drinkModel = drinkModel;
+            this.drinkRepository = drinkRepository;
         }
 
         /// <summary>
@@ -43,7 +45,7 @@ namespace WinUIApp.Services
         {
             try
             {
-                return this.drinkModel.GetDrinkById(drinkId);
+                return this.drinkRepository.GetDrinkById(drinkId);
             }
             catch (Exception drinkRetrievalException)
             {
@@ -66,7 +68,66 @@ namespace WinUIApp.Services
         {
             try
             {
-                return this.drinkModel.GetDrinks(searchKeyword, drinkBrandNameFilter, drinkCategoryFilter, minimumAlcoholPercentage, maximumAlcoholPercentage, orderingCriteria);
+                List<Drink> allDrinks = this.drinkRepository.GetDrinks();
+                List<Drink> filteredDrinks = allDrinks;
+
+                if (minimumAlcoholPercentage != null)
+                {
+                    filteredDrinks = filteredDrinks.FindAll(drink => drink.AlcoholContent >= minimumAlcoholPercentage);
+                }
+
+                if (maximumAlcoholPercentage != null)
+                {
+                    filteredDrinks = filteredDrinks.FindAll(drink => drink.AlcoholContent <= maximumAlcoholPercentage);
+                }
+
+                if (searchKeyword != null && searchKeyword != string.Empty)
+                {
+                    filteredDrinks = filteredDrinks.FindAll(drink => drink.DrinkName.ToLower().Contains(searchKeyword.ToLower()));
+                }
+
+                if (drinkBrandNameFilter != null && drinkBrandNameFilter.Count > 0)
+                {
+                    filteredDrinks = filteredDrinks.FindAll(drink => drinkBrandNameFilter.Contains(drink.DrinkBrand.BrandName));
+                }
+
+                if (drinkCategoryFilter != null && drinkCategoryFilter.Count > 0)
+                {
+                    filteredDrinks = filteredDrinks.FindAll(drink =>
+                        drinkCategoryFilter.TrueForAll(categoryFilter =>
+                            drink.CategoryList.Any(category => category.CategoryName == categoryFilter)));
+                }
+
+                if (orderingCriteria != null && orderingCriteria.Count == 1)
+                {
+                    string orderingKey = orderingCriteria.Keys.First();
+                    bool isAscending = orderingCriteria[orderingKey];
+
+                    if (orderingKey == "DrinkName")
+                    {
+                        if (isAscending)
+                        {
+                            filteredDrinks = filteredDrinks.OrderBy(drink => drink.DrinkName).ToList();
+                        }
+                        else
+                        {
+                            filteredDrinks = filteredDrinks.OrderByDescending(drink => drink.DrinkName).ToList();
+                        }
+                    }
+                    else if (orderingKey == "AlcoholContent")
+                    {
+                        if (isAscending)
+                        {
+                            filteredDrinks = filteredDrinks.OrderBy(drink => drink.AlcoholContent).ToList();
+                        }
+                        else
+                        {
+                            filteredDrinks = filteredDrinks.OrderByDescending(drink => drink.AlcoholContent).ToList();
+                        }
+                    }
+                }
+
+                return filteredDrinks;
             }
             catch (Exception drinksRetrievalException)
             {
@@ -87,7 +148,7 @@ namespace WinUIApp.Services
         {
             try
             {
-                this.drinkModel.AddDrink(inputtedDrinkName, inputtedDrinkPath, inputtedDrinkCategories, inputtedDrinkBrandName, inputtedAlcoholPercentage);
+                this.drinkRepository.AddDrink(inputtedDrinkName, inputtedDrinkPath, inputtedDrinkCategories, inputtedDrinkBrandName, inputtedAlcoholPercentage);
             }
             catch (Exception addingDrinkException)
             {
@@ -104,7 +165,7 @@ namespace WinUIApp.Services
         {
             try
             {
-                this.drinkModel.UpdateDrink(drink);
+                this.drinkRepository.UpdateDrink(drink);
             }
             catch (Exception updateDrinkException)
             {
@@ -121,7 +182,7 @@ namespace WinUIApp.Services
         {
             try
             {
-                this.drinkModel.DeleteDrink(drinkId);
+                this.drinkRepository.DeleteDrink(drinkId);
             }
             catch (Exception deleteDrinkException)
             {
@@ -138,7 +199,7 @@ namespace WinUIApp.Services
         {
             try
             {
-                return this.drinkModel.GetDrinkCategories();
+                return this.drinkRepository.GetDrinkCategories();
             }
             catch (Exception drinkCategoriesRetrievalException)
             {
@@ -155,7 +216,7 @@ namespace WinUIApp.Services
         {
             try
             {
-                return this.drinkModel.GetDrinkBrands();
+                return this.drinkRepository.GetDrinkBrands();
             }
             catch (Exception drinkBrandNamesRetrievalException)
             {
@@ -174,7 +235,7 @@ namespace WinUIApp.Services
         {
             try
             {
-                return this.drinkModel.GetPersonalDrinkList(userId, maximumDrinkCount);
+                return this.drinkRepository.GetPersonalDrinkList(userId);
             }
             catch (Exception personalDrinkListRetrievalException)
             {
@@ -193,7 +254,7 @@ namespace WinUIApp.Services
         {
             try
             {
-                return this.drinkModel.IsDrinkInPersonalList(userId, drinkId);
+                return this.drinkRepository.IsDrinkInPersonalList(userId, drinkId);
             }
             catch (Exception checkingUserPersonalListException)
             {
@@ -212,7 +273,7 @@ namespace WinUIApp.Services
         {
             try
             {
-                return this.drinkModel.AddToPersonalDrinkList(userId, drinkId);
+                return this.drinkRepository.AddToPersonalDrinkList(userId, drinkId);
             }
             catch (Exception addDrinkToUserPersonalListException)
             {
@@ -231,7 +292,7 @@ namespace WinUIApp.Services
         {
             try
             {
-                return this.drinkModel.DeleteFromPersonalDrinkList(userId, drinkId);
+                return this.drinkRepository.DeleteFromPersonalDrinkList(userId, drinkId);
             }
             catch (Exception deleteFromUserPersonalDrinkListException)
             {
@@ -250,8 +311,8 @@ namespace WinUIApp.Services
         {
             try
             {
-                this.drinkModel.VoteDrinkOfTheDay(userId, drinkId);
-                return this.drinkModel.GetDrinkById(drinkId) ?? throw new Exception("Drink not found after voting.");
+                this.drinkRepository.VoteDrinkOfTheDay(userId, drinkId);
+                return this.drinkRepository.GetDrinkById(drinkId) ?? throw new Exception("Drink not found after voting.");
             }
             catch (Exception voteDrinkOfTheDayException)
             {
@@ -268,7 +329,7 @@ namespace WinUIApp.Services
         {
             try
             {
-                return this.drinkModel.GetDrinkOfTheDay();
+                return this.drinkRepository.GetDrinkOfTheDay();
             }
             catch (Exception e)
             {
