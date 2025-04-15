@@ -98,11 +98,11 @@ namespace WinUIApp.ViewModels
                 string sortField;
                 if (this.fieldToSortBy == NameField)
                 {
-                    sortField = "D.DrinkName";
+                    sortField = "DrinkName";
                 }
                 else
                 {
-                    sortField = "D.AlcoholContent";
+                    sortField = "AlcoholContent";
                 }
 
                 var orderBy = new Dictionary<string, bool>
