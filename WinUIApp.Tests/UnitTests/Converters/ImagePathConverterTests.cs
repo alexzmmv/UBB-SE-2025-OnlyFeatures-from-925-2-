@@ -4,7 +4,7 @@ using Moq;
 using WinUIApp.Utils.Converters;
 using Microsoft.UI.Xaml.Media.Imaging;
 
-namespace WinUIApp.Tests.Converters
+namespace WinUIApp.Tests.UnitTests.Converters
 {
     public class ImagePathConverterTests
     {

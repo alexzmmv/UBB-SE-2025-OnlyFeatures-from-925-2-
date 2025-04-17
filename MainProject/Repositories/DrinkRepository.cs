@@ -2,6 +2,10 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("WinUIApp.Tests")]
+
 namespace WinUIApp.Repositories
 {
     using System;
@@ -36,9 +40,9 @@ namespace WinUIApp.Repositories
         /// Initializes a new instance of the <see cref="DrinkRepository"/> class.
         /// </summary>
         /// <param name="dataBaseService"> The database service. </param>
-        public DrinkRepository(DatabaseManager dataBaseService)
+        public DrinkRepository(IDatabaseManager dataBaseService)
         {
-            this.dataBaseManager = dataBaseService;
+            this.dataBaseManager = dataBaseService as DatabaseManager;
         }
 
         /// <summary>

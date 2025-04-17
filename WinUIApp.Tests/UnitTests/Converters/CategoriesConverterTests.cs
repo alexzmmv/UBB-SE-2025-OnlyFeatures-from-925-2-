@@ -4,7 +4,7 @@ using Xunit;
 using WinUIApp.Utils.Converters;
 using WinUIApp.Models;
 
-namespace WinUIApp.Tests.Converters
+namespace WinUIApp.Tests.UnitTests.Converters
 {
     public class CategoriesConverterTests
     {

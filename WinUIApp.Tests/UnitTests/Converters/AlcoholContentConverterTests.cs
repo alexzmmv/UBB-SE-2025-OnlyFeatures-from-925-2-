@@ -2,7 +2,7 @@
 using Xunit;
 using WinUIApp.Utils.Converters;
 
-namespace WinUIApp.Tests.Converters
+namespace WinUIApp.Tests.UnitTests.Converters
 {
     public class AlcoholContentConverterTests
     {
