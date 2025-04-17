@@ -348,5 +348,105 @@ namespace WinUIApp.Tests.UnitTests.Services
             Assert.Equal(expectedCategories, result);
             this.mockRepository.Verify(r => r.GetDrinkCategories(), Times.Once);
         }
+
+        /// <summary>
+        /// Test for VoteDrinkOfTheDay - should return drink on new vote.
+        /// </summary>
+        [Fact]
+        public void VoteDrinkOfTheDay_NewVote_ReturnsDrink()
+        {
+            // Arrange
+            int userId = 1;
+            int drinkId = 42;
+            var expectedDrink = new Drink(drinkId, "Lager", "lager.png", new List<Category>(), new Brand(1, "Brand"), 5.0f);
+
+            this.mockRepository.Setup(r => r.VoteDrinkOfTheDay(userId, drinkId));
+            this.mockRepository.Setup(r => r.GetDrinkById(drinkId)).Returns(expectedDrink);
+
+            // Act
+            var result = this.drinkService.VoteDrinkOfTheDay(userId, drinkId);
+
+            // Assert
+            Assert.Equal(expectedDrink, result);
+            this.mockRepository.Verify(r => r.VoteDrinkOfTheDay(userId, drinkId), Times.Once);
+            this.mockRepository.Verify(r => r.GetDrinkById(drinkId), Times.Once);
+        }
+
+        /// <summary>
+        /// Test for VoteDrinkOfTheDay - should return updated drink if user modifies vote.
+        /// </summary>
+        [Fact]
+        public void VoteDrinkOfTheDay_ModifiedVote_ReturnsDrink()
+        {
+            // Arrange
+            int userId = 2;
+            int drinkId = 7;
+            var expectedDrink = new Drink(drinkId, "Stout", "stout.jpg", new List<Category>(), new Brand(2, "Brew"), 6.5f);
+
+            this.mockRepository.Setup(r => r.VoteDrinkOfTheDay(userId, drinkId));
+            this.mockRepository.Setup(r => r.GetDrinkById(drinkId)).Returns(expectedDrink);
+
+            // Act
+            var result = this.drinkService.VoteDrinkOfTheDay(userId, drinkId);
+
+            // Assert
+            Assert.Equal(expectedDrink, result);
+            this.mockRepository.Verify(r => r.VoteDrinkOfTheDay(userId, drinkId), Times.Once);
+            this.mockRepository.Verify(r => r.GetDrinkById(drinkId), Times.Once);
+        }
+
+        /// <summary>
+        /// Test for VoteDrinkOfTheDay - should wrap and rethrow exception if repository fails.
+        /// </summary>
+        [Fact]
+        public void VoteDrinkOfTheDay_WhenRepositoryThrows_ThrowsWrappedException()
+        {
+            // Arrange
+            int userId = 1;
+            int drinkId = 99;
+            var exception = new Exception("DB error");
+
+            this.mockRepository.Setup(r => r.VoteDrinkOfTheDay(userId, drinkId)).Throws(exception);
+
+            // Act & Assert
+            var thrown = Assert.Throws<Exception>(() => this.drinkService.VoteDrinkOfTheDay(userId, drinkId));
+            Assert.Contains("Error voting drink", thrown.Message);
+            Assert.Equal(exception, thrown.InnerException);
+        }
+
+        /// <summary>
+        /// Test for GetDrinkOfTheDay - should return the drink of the day successfully.
+        /// </summary>
+        [Fact]
+        public void GetDrinkOfTheDay_RepositoryReturnsDrink_ReturnsDrink()
+        {
+            // Arrange
+            var expectedDrink = new Drink(1, "Daily Special", "daily.jpg", new List<Category>(), new Brand(1, "Brand X"), 6.5f);
+            this.mockRepository.Setup(r => r.GetDrinkOfTheDay()).Returns(expectedDrink);
+
+            // Act
+            var result = this.drinkService.GetDrinkOfTheDay();
+
+            // Assert
+            Assert.Equal(expectedDrink, result);
+            this.mockRepository.Verify(r => r.GetDrinkOfTheDay(), Times.Once);
+        }
+
+        /// <summary>
+        /// Test for GetDrinkOfTheDay - should wrap and rethrow exception when repository fails.
+        /// </summary>
+        [Fact]
+        public void GetDrinkOfTheDay_RepositoryThrowsException_WrapsException()
+        {
+            // Arrange
+            var exception = new Exception("Repository error");
+            this.mockRepository.Setup(r => r.GetDrinkOfTheDay()).Throws(exception);
+
+            // Act & Assert
+            var thrown = Assert.Throws<Exception>(() => this.drinkService.GetDrinkOfTheDay());
+            Assert.Contains("Error getting drink of the day", thrown.Message);
+            Assert.Equal(exception, thrown.InnerException);
+        }
+
     }
 }
