@@ -348,5 +348,245 @@ namespace WinUIApp.Tests.UnitTests.Services
             Assert.Equal(expectedCategories, result);
             this.mockRepository.Verify(r => r.GetDrinkCategories(), Times.Once);
         }
+
+        /// <summary>
+        /// Test for GetDrinkCategories - should wrap and rethrow exception.
+        /// </summary>
+        [Fact]
+        public void GetDrinkCategories_RepositoryThrowsException_WrapException()
+        {
+            // Arrange
+            var exception = new Exception("Repository error");
+            this.mockRepository.Setup(r => r.GetDrinkCategories()).Throws(exception);
+
+            // Act & Assert
+            var thrownException = Assert.Throws<Exception>(() => this.drinkService.GetDrinkCategories());
+            Assert.Contains("Error happened while getting drink categories", thrownException.Message);
+        }
+
+        /// <summary>
+        /// Test for GetDrinkBrandNames - should return list of brands.
+        /// </summary>
+        [Fact]
+        public void GetDrinkBrandNames_Success_ReturnsBrands()
+        {
+            // Arrange
+            var expectedBrands = new List<Brand>
+    {
+        new Brand(1, "Brand 1"),
+        new Brand(2, "Brand 2")
+    };
+            this.mockRepository.Setup(r => r.GetDrinkBrands()).Returns(expectedBrands);
+
+            // Act
+            var result = this.drinkService.GetDrinkBrandNames();
+
+            // Assert
+            Assert.Equal(expectedBrands, result);
+        }
+
+        /// <summary>
+        /// Test for GetDrinkBrandNames - should wrap and rethrow exception.
+        /// </summary>
+        [Fact]
+        public void GetDrinkBrandNames_RepositoryThrowsException_WrapException()
+        {
+            // Arrange
+            var exception = new Exception("Repository error");
+            this.mockRepository.Setup(r => r.GetDrinkBrands()).Throws(exception);
+
+            // Act & Assert
+            var thrownException = Assert.Throws<Exception>(() => this.drinkService.GetDrinkBrandNames());
+            Assert.Contains("Error happened while getting drink brands", thrownException.Message);
+        }
+
+        /// <summary>
+        /// Test for GetUserPersonalDrinkList - should return list of personal drinks with default count.
+        /// </summary>
+        [Fact]
+        public void GetUserPersonalDrinkList_DefaultCount_ReturnsDrinks()
+        {
+            // Arrange
+            int userId = 1;
+            var expectedDrinks = new List<Drink>
+    {
+        new Drink(1, "Personal Drink 1", "test1.jpg", new List<Category>(), new Brand(1, "Brand 1"), 5.0f),
+        new Drink(2, "Personal Drink 2", "test2.jpg", new List<Category>(), new Brand(2, "Brand 2"), 8.0f)
+    };
+            this.mockRepository.Setup(r => r.GetPersonalDrinkList(userId)).Returns(expectedDrinks);
+
+            // Act
+            var result = this.drinkService.GetUserPersonalDrinkList(userId);
+
+            // Assert
+            Assert.Equal(expectedDrinks, result);
+            this.mockRepository.Verify(r => r.GetPersonalDrinkList(userId), Times.Once);
+        }
+
+        /// <summary>
+        /// Test for GetUserPersonalDrinkList - should return list of personal drinks with specified count.
+        /// </summary>
+        [Fact]
+        public void GetUserPersonalDrinkList_CustomCount_ReturnsDrinks()
+        {
+            // Arrange
+            int userId = 1;
+            int maximumDrinkCount = 5;
+            var expectedDrinks = new List<Drink>
+    {
+        new Drink(1, "Personal Drink 1", "test1.jpg", new List<Category>(), new Brand(1, "Brand 1"), 5.0f),
+        new Drink(2, "Personal Drink 2", "test2.jpg", new List<Category>(), new Brand(2, "Brand 2"), 8.0f)
+    };
+            this.mockRepository.Setup(r => r.GetPersonalDrinkList(userId)).Returns(expectedDrinks);
+
+            // Act
+            var result = this.drinkService.GetUserPersonalDrinkList(userId, maximumDrinkCount);
+
+            // Assert
+            Assert.Equal(expectedDrinks, result);
+            this.mockRepository.Verify(r => r.GetPersonalDrinkList(userId), Times.Once);
+        }
+
+        /// <summary>
+        /// Test for GetUserPersonalDrinkList - should wrap and rethrow exception.
+        /// </summary>
+        [Fact]
+        public void GetUserPersonalDrinkList_RepositoryThrowsException_WrapException()
+        {
+            // Arrange
+            int userId = 1;
+            var exception = new Exception("Repository error");
+            this.mockRepository.Setup(r => r.GetPersonalDrinkList(userId)).Throws(exception);
+
+            // Act & Assert
+            var thrownException = Assert.Throws<Exception>(() => this.drinkService.GetUserPersonalDrinkList(userId));
+            Assert.Contains("Error getting personal drink list", thrownException.Message);
+            Assert.Equal(exception, thrownException.InnerException);
+        }
+
+        /// <summary>
+        /// Test for IsDrinkInUserPersonalList - should return true when drink is in list.
+        /// </summary>
+        [Fact]
+        public void IsDrinkInUserPersonalList_DrinkInList_ReturnsTrue()
+        {
+            // Arrange
+            int userId = 1;
+            int drinkId = 1;
+            this.mockRepository.Setup(r => r.IsDrinkInPersonalList(userId, drinkId)).Returns(true);
+
+            // Act
+            var result = this.drinkService.IsDrinkInUserPersonalList(userId, drinkId);
+
+            // Assert
+            Assert.True(result);
+        }
+
+        /// <summary>
+        /// Test for IsDrinkInUserPersonalList - should return false when drink is not in list.
+        /// </summary>
+        [Fact]
+        public void IsDrinkInUserPersonalList_DrinkNotInList_ReturnsFalse()
+        {
+            // Arrange
+            int userId = 1;
+            int drinkId = 1;
+            this.mockRepository.Setup(r => r.IsDrinkInPersonalList(userId, drinkId)).Returns(false);
+
+            // Act
+            var result = this.drinkService.IsDrinkInUserPersonalList(userId, drinkId);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        /// <summary>
+        /// Test for IsDrinkInUserPersonalList - should wrap and rethrow exception.
+        /// </summary>
+        [Fact]
+        public void IsDrinkInUserPersonalList_RepositoryThrowsException_WrapException()
+        {
+            // Arrange
+            int userId = 1;
+            int drinkId = 1;
+            var exception = new Exception("Repository error");
+            this.mockRepository.Setup(r => r.IsDrinkInPersonalList(userId, drinkId)).Throws(exception);
+
+            // Act & Assert
+            var thrownException = Assert.Throws<Exception>(() => this.drinkService.IsDrinkInUserPersonalList(userId, drinkId));
+            Assert.Contains("Error checking if the drink is in the user's personal list", thrownException.Message);
+        }
+
+        /// <summary>
+        /// Test for AddToUserPersonalDrinkList - should return true on success.
+        /// </summary>
+        [Fact]
+        public void AddToUserPersonalDrinkList_Success_ReturnsTrue()
+        {
+            // Arrange
+            int userId = 1;
+            int drinkId = 1;
+            this.mockRepository.Setup(r => r.AddToPersonalDrinkList(userId, drinkId)).Returns(true);
+
+            // Act
+            var result = this.drinkService.AddToUserPersonalDrinkList(userId, drinkId);
+
+            // Assert
+            Assert.True(result);
+        }
+
+        /// <summary>
+        /// Test for AddToUserPersonalDrinkList - should wrap and rethrow exception.
+        /// </summary>
+        [Fact]
+        public void AddToUserPersonalDrinkList_RepositoryThrowsException_WrapException()
+        {
+            // Arrange
+            int userId = 1;
+            int drinkId = 1;
+            var exception = new Exception("Repository error");
+            this.mockRepository.Setup(r => r.AddToPersonalDrinkList(userId, drinkId)).Throws(exception);
+
+            // Act & Assert
+            var thrownException = Assert.Throws<Exception>(() => this.drinkService.AddToUserPersonalDrinkList(userId, drinkId));
+            Assert.Contains("Error adding drink to personal list", thrownException.Message);
+        }
+
+        /// <summary>
+        /// Test for DeleteFromUserPersonalDrinkList - should return true on success.
+        /// </summary>
+        [Fact]
+        public void DeleteFromUserPersonalDrinkList_Success_ReturnsTrue()
+        {
+            // Arrange
+            int userId = 1;
+            int drinkId = 1;
+            this.mockRepository.Setup(r => r.DeleteFromPersonalDrinkList(userId, drinkId)).Returns(true);
+
+            // Act
+            var result = this.drinkService.DeleteFromUserPersonalDrinkList(userId, drinkId);
+
+            // Assert
+            Assert.True(result);
+        }
+
+        /// <summary>
+        /// Test for DeleteFromUserPersonalDrinkList - should wrap and rethrow exception.
+        /// </summary>
+        [Fact]
+        public void DeleteFromUserPersonalDrinkList_RepositoryThrowsException_WrapException()
+        {
+            // Arrange
+            int userId = 1;
+            int drinkId = 1;
+            var exception = new Exception("Repository error");
+            this.mockRepository.Setup(r => r.DeleteFromPersonalDrinkList(userId, drinkId)).Throws(exception);
+
+            // Act & Assert
+            var thrownException = Assert.Throws<Exception>(() => this.drinkService.DeleteFromUserPersonalDrinkList(userId, drinkId));
+            Assert.Contains("Error deleting drink from personal list", thrownException.Message);
+        }
+
+
     }
 }
