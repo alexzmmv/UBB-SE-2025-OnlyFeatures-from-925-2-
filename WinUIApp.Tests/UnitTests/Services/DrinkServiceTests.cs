@@ -38,14 +38,14 @@ namespace WinUIApp.Tests.UnitTests.Services
             // Arrange
             int drinkId = 1;
             var expectedDrink = new Drink(drinkId, "Test Drink", "test.jpg", new List<Category>(), new Brand(1, "Test Brand"), 5.0f);
-            this.mockRepository.Setup(r => r.GetDrinkById(drinkId)).Returns(expectedDrink);
+            this.mockRepository.Setup(repository => repository.GetDrinkById(drinkId)).Returns(expectedDrink);
 
             // Act
             var result = this.drinkService.GetDrinkById(drinkId);
 
             // Assert
             Assert.Equal(expectedDrink, result);
-            this.mockRepository.Verify(r => r.GetDrinkById(drinkId), Times.Once);
+            this.mockRepository.Verify(repository => repository.GetDrinkById(drinkId), Times.Once);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace WinUIApp.Tests.UnitTests.Services
             // Arrange
             int drinkId = 1;
             var exception = new Exception("Repository error");
-            this.mockRepository.Setup(r => r.GetDrinkById(drinkId)).Throws(exception);
+            this.mockRepository.Setup(repository => repository.GetDrinkById(drinkId)).Throws(exception);
 
             // Act & Assert
             var thrownException = Assert.Throws<Exception>(() => this.drinkService.GetDrinkById(drinkId));
@@ -87,7 +87,7 @@ namespace WinUIApp.Tests.UnitTests.Services
             // Assert
             Assert.Equal(expectedDrinks.Count, result.Count);
             Assert.Equal(expectedDrinks, result);
-            this.mockRepository.Verify(r => r.GetDrinks(), Times.Once);
+            this.mockRepository.Verify(repository => repository.GetDrinks(), Times.Once);
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace WinUIApp.Tests.UnitTests.Services
             // Assert
             Assert.Single(result);
             Assert.Equal(8.0f, result[0].AlcoholContent);
-            this.mockRepository.Verify(r => r.GetDrinks(), Times.Once);
+            this.mockRepository.Verify(repository => repository.GetDrinks(), Times.Once);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace WinUIApp.Tests.UnitTests.Services
             // Assert
             Assert.Single(result);
             Assert.Equal(5.0f, result[0].AlcoholContent);
-            this.mockRepository.Verify(r => r.GetDrinks(), Times.Once);
+            this.mockRepository.Verify(repository => repository.GetDrinks(), Times.Once);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace WinUIApp.Tests.UnitTests.Services
             Assert.Equal(2, result.Count);
             Assert.Equal(5.0f, result[0].AlcoholContent);
             Assert.Equal(8.0f, result[1].AlcoholContent);
-            this.mockRepository.Verify(r => r.GetDrinks(), Times.Once);
+            this.mockRepository.Verify(repository => repository.GetDrinks(), Times.Once);
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace WinUIApp.Tests.UnitTests.Services
             Assert.Equal(2, result.Count);
             Assert.Equal(8.0f, result[0].AlcoholContent);
             Assert.Equal(5.0f, result[1].AlcoholContent);
-            this.mockRepository.Verify(r => r.GetDrinks(), Times.Once);
+            this.mockRepository.Verify(repository => repository.GetDrinks(), Times.Once);
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace WinUIApp.Tests.UnitTests.Services
             this.drinkService.AddDrink(drinkName, drinkUrl, categories, brandName, alcoholContent);
 
             // Assert
-            this.mockRepository.Verify(r => r.AddDrink(drinkName, drinkUrl, categories, brandName, alcoholContent), Times.Once);
+            this.mockRepository.Verify(repository => repository.AddDrink(drinkName, drinkUrl, categories, brandName, alcoholContent), Times.Once);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace WinUIApp.Tests.UnitTests.Services
             float alcoholContent = 5.0f;
             var exception = new Exception("Repository error");
             
-            this.mockRepository.Setup(r => r.AddDrink(drinkName, drinkUrl, categories, brandName, alcoholContent))
+            this.mockRepository.Setup(repository => repository.AddDrink(drinkName, drinkUrl, categories, brandName, alcoholContent))
                 .Throws(exception);
 
             // Act & Assert
@@ -274,7 +274,7 @@ namespace WinUIApp.Tests.UnitTests.Services
             this.drinkService.UpdateDrink(drink);
 
             // Assert
-            this.mockRepository.Verify(r => r.UpdateDrink(drink), Times.Once);
+            this.mockRepository.Verify(repository => repository.UpdateDrink(drink), Times.Once);
         }
 
         /// <summary>
@@ -286,7 +286,7 @@ namespace WinUIApp.Tests.UnitTests.Services
             // Arrange
             var drink = new Drink(1, "Updated Drink", "updated.jpg", new List<Category>(), new Brand(1, "Brand"), 7.5f);
             var exception = new Exception("Repository error");
-            this.mockRepository.Setup(r => r.UpdateDrink(drink)).Throws(exception);
+            this.mockRepository.Setup(repository => repository.UpdateDrink(drink)).Throws(exception);
 
             // Act & Assert
             var thrownException = Assert.Throws<Exception>(() => this.drinkService.UpdateDrink(drink));
@@ -307,7 +307,7 @@ namespace WinUIApp.Tests.UnitTests.Services
             this.drinkService.DeleteDrink(drinkId);
 
             // Assert
-            this.mockRepository.Verify(r => r.DeleteDrink(drinkId), Times.Once);
+            this.mockRepository.Verify(repository => repository.DeleteDrink(drinkId), Times.Once);
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace WinUIApp.Tests.UnitTests.Services
             // Arrange
             int drinkId = 1;
             var exception = new Exception("Repository error");
-            this.mockRepository.Setup(r => r.DeleteDrink(drinkId)).Throws(exception);
+            this.mockRepository.Setup(repository => repository.DeleteDrink(drinkId)).Throws(exception);
 
             // Act & Assert
             var thrownException = Assert.Throws<Exception>(() => this.drinkService.DeleteDrink(drinkId));
@@ -339,14 +339,14 @@ namespace WinUIApp.Tests.UnitTests.Services
                 new Category(1, "Category 1"),
                 new Category(2, "Category 2")
             };
-            this.mockRepository.Setup(r => r.GetDrinkCategories()).Returns(expectedCategories);
+            this.mockRepository.Setup(repository => repository.GetDrinkCategories()).Returns(expectedCategories);
 
             // Act
             var result = this.drinkService.GetDrinkCategories();
 
             // Assert
             Assert.Equal(expectedCategories, result);
-            this.mockRepository.Verify(r => r.GetDrinkCategories(), Times.Once);
+            this.mockRepository.Verify(repository => repository.GetDrinkCategories(), Times.Once);
         }
 
         /// <summary>
@@ -691,16 +691,16 @@ namespace WinUIApp.Tests.UnitTests.Services
             int drinkId = 42;
             var expectedDrink = new Drink(drinkId, "Lager", "lager.png", new List<Category>(), new Brand(1, "Brand"), 5.0f);
 
-            this.mockRepository.Setup(r => r.VoteDrinkOfTheDay(userId, drinkId));
-            this.mockRepository.Setup(r => r.GetDrinkById(drinkId)).Returns(expectedDrink);
+            this.mockRepository.Setup(repository => repository.VoteDrinkOfTheDay(userId, drinkId));
+            this.mockRepository.Setup(repository => repository.GetDrinkById(drinkId)).Returns(expectedDrink);
 
             // Act
             var result = this.drinkService.VoteDrinkOfTheDay(userId, drinkId);
 
             // Assert
             Assert.Equal(expectedDrink, result);
-            this.mockRepository.Verify(r => r.VoteDrinkOfTheDay(userId, drinkId), Times.Once);
-            this.mockRepository.Verify(r => r.GetDrinkById(drinkId), Times.Once);
+            this.mockRepository.Verify(repository => repository.VoteDrinkOfTheDay(userId, drinkId), Times.Once);
+            this.mockRepository.Verify(repository => repository.GetDrinkById(drinkId), Times.Once);
         }
 
         /// <summary>
@@ -714,16 +714,16 @@ namespace WinUIApp.Tests.UnitTests.Services
             int drinkId = 7;
             var expectedDrink = new Drink(drinkId, "Stout", "stout.jpg", new List<Category>(), new Brand(2, "Brew"), 6.5f);
 
-            this.mockRepository.Setup(r => r.VoteDrinkOfTheDay(userId, drinkId));
-            this.mockRepository.Setup(r => r.GetDrinkById(drinkId)).Returns(expectedDrink);
+            this.mockRepository.Setup(repository => repository.VoteDrinkOfTheDay(userId, drinkId));
+            this.mockRepository.Setup(repository => repository.GetDrinkById(drinkId)).Returns(expectedDrink);
 
             // Act
             var result = this.drinkService.VoteDrinkOfTheDay(userId, drinkId);
 
             // Assert
             Assert.Equal(expectedDrink, result);
-            this.mockRepository.Verify(r => r.VoteDrinkOfTheDay(userId, drinkId), Times.Once);
-            this.mockRepository.Verify(r => r.GetDrinkById(drinkId), Times.Once);
+            this.mockRepository.Verify(repository => repository.VoteDrinkOfTheDay(userId, drinkId), Times.Once);
+            this.mockRepository.Verify(repository => repository.GetDrinkById(drinkId), Times.Once);
         }
 
         /// <summary>
@@ -737,7 +737,7 @@ namespace WinUIApp.Tests.UnitTests.Services
             int drinkId = 99;
             var exception = new Exception("DB error");
 
-            this.mockRepository.Setup(r => r.VoteDrinkOfTheDay(userId, drinkId)).Throws(exception);
+            this.mockRepository.Setup(repository => repository.VoteDrinkOfTheDay(userId, drinkId)).Throws(exception);
 
             // Act & Assert
             var thrown = Assert.Throws<Exception>(() => this.drinkService.VoteDrinkOfTheDay(userId, drinkId));
@@ -753,14 +753,14 @@ namespace WinUIApp.Tests.UnitTests.Services
         {
             // Arrange
             var expectedDrink = new Drink(1, "Daily Special", "daily.jpg", new List<Category>(), new Brand(1, "Brand X"), 6.5f);
-            this.mockRepository.Setup(r => r.GetDrinkOfTheDay()).Returns(expectedDrink);
+            this.mockRepository.Setup(repository => repository.GetDrinkOfTheDay()).Returns(expectedDrink);
 
             // Act
             var result = this.drinkService.GetDrinkOfTheDay();
 
             // Assert
             Assert.Equal(expectedDrink, result);
-            this.mockRepository.Verify(r => r.GetDrinkOfTheDay(), Times.Once);
+            this.mockRepository.Verify(repository => repository.GetDrinkOfTheDay(), Times.Once);
         }
 
         /// <summary>
@@ -771,7 +771,7 @@ namespace WinUIApp.Tests.UnitTests.Services
         {
             // Arrange
             var exception = new Exception("Repository error");
-            this.mockRepository.Setup(r => r.GetDrinkOfTheDay()).Throws(exception);
+            this.mockRepository.Setup(repository => repository.GetDrinkOfTheDay()).Throws(exception);
 
             // Act & Assert
             var thrown = Assert.Throws<Exception>(() => this.drinkService.GetDrinkOfTheDay());
