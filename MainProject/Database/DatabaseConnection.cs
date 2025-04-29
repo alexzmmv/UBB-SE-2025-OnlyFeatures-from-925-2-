@@ -21,7 +21,7 @@ namespace WinUIApp.Database
 
         static DatabaseConnection()
         {
-            ConnectionString = "Data Source=DESKTOP-TE49281;Initial Catalog=DrinkData;Integrated Security=True;TrustServerCertificate=True";
+            ConnectionString = "Data Source=BOGDAN\\SQLEXPRESS;Initial Catalog=DrinkData;Integrated Security=True;TrustServerCertificate=True";
         }
 
         /// <summary>
