@@ -402,3 +402,4 @@ FodyWeavers.xsd
 /App.config
 
 .idea/
+/MainProject/appsettings.json

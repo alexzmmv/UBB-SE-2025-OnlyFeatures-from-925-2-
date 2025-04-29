@@ -7,7 +7,9 @@ namespace WinUIApp.Database
     using System;
     using System.Configuration;
     using System.Diagnostics;
+    using System.IO;
     using Microsoft.Data.SqlClient;
+    using Microsoft.Extensions.Configuration;
 
     /// <summary>
     /// Singleton class for managing the database connection.
@@ -21,7 +23,14 @@ namespace WinUIApp.Database
 
         static DatabaseConnection()
         {
-            ConnectionString = "Data Source=BOGDAN\\SQLEXPRESS;Initial Catalog=DrinkData;Integrated Security=True;TrustServerCertificate=True";
+            // Initialize configuration
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())  // Set base path to current directory
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)  // Load the appsettings file
+                .Build();
+
+            // Retrieve the connection string from appsettings.json
+            ConnectionString = configuration.GetValue<string>("DbConnection");
         }
 
         /// <summary>
