@@ -2,11 +2,11 @@
 {
     public class GetDrinksRequest
     {
-        string? searchKeyword { get; set; }
-        List<string>? drinkBrandNameFilter { get; set; }
-        List<string>? drinkCategoryFilter { get; set; }
-        float? minimumAlcoholPercentage { get; set; }
-        float? maximumAlcoholPercentage { get; set; }
-        Dictionary<string, bool>? orderingCriteria { get; set; }
+        public string searchKeyword { get; set; }
+        public List<string> drinkBrandNameFilter { get; set; }
+        public List<string> drinkCategoryFilter { get; set; }
+        public float minimumAlcoholPercentage { get; set; }
+        public float maximumAlcoholPercentage { get; set; }
+        public Dictionary<string, bool>? orderingCriteria { get; set; }
     }
 }
