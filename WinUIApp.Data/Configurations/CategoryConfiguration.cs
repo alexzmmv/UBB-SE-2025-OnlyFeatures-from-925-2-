@@ -10,6 +10,9 @@ namespace WinUiApp.Data.Configurations
         {
             builder.HasKey(category => category.CategoryId);
 
+            builder.Property(category => category.CategoryId)
+                   .ValueGeneratedOnAdd();
+
             builder.Property(category => category.CategoryName)
                    .IsRequired()
                    .HasMaxLength(255);

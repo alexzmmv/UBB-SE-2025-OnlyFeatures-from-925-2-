@@ -10,6 +10,9 @@ namespace WinUiApp.Data.Configurations
         {
             builder.HasKey(drink => drink.DrinkId);
 
+            builder.Property(drink => drink.DrinkId)
+                   .ValueGeneratedOnAdd();
+
             builder.Property(drink => drink.DrinkName)
                    .IsRequired()
                    .HasMaxLength(255);

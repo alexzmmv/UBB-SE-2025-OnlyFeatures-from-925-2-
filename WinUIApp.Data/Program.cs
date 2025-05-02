@@ -12,7 +12,7 @@ public class Program
         var host = Host.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration((hostingContext, config) =>
             {
-                var path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "../../../../WinUIApp"));
+                var path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "../../../../WinUIApp.WebAPI"));
                 config.SetBasePath(path)
                     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                     .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true)
