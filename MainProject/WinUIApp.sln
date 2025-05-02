@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUIApp.Tests", "..\WinUIA
 		{AC433543-B12B-425B-B396-202AD8C62DBA} = {AC433543-B12B-425B-B396-202AD8C62DBA}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUiApp.Data", "..\WuiUiApp.Data\WinUiApp.Data.csproj", "{AC433543-B12B-425B-B396-202AD8C62DBA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -55,18 +53,6 @@ Global
 		{0F076CB3-6B21-49BC-8311-904C89DAA5D4}.Release|x64.Build.0 = Release|Any CPU
 		{0F076CB3-6B21-49BC-8311-904C89DAA5D4}.Release|x86.ActiveCfg = Release|Any CPU
 		{0F076CB3-6B21-49BC-8311-904C89DAA5D4}.Release|x86.Build.0 = Release|Any CPU
-		{AC433543-B12B-425B-B396-202AD8C62DBA}.Debug|ARM64.ActiveCfg = Debug|Any CPU
-		{AC433543-B12B-425B-B396-202AD8C62DBA}.Debug|ARM64.Build.0 = Debug|Any CPU
-		{AC433543-B12B-425B-B396-202AD8C62DBA}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{AC433543-B12B-425B-B396-202AD8C62DBA}.Debug|x64.Build.0 = Debug|Any CPU
-		{AC433543-B12B-425B-B396-202AD8C62DBA}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{AC433543-B12B-425B-B396-202AD8C62DBA}.Debug|x86.Build.0 = Debug|Any CPU
-		{AC433543-B12B-425B-B396-202AD8C62DBA}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{AC433543-B12B-425B-B396-202AD8C62DBA}.Release|ARM64.Build.0 = Release|Any CPU
-		{AC433543-B12B-425B-B396-202AD8C62DBA}.Release|x64.ActiveCfg = Release|Any CPU
-		{AC433543-B12B-425B-B396-202AD8C62DBA}.Release|x64.Build.0 = Release|Any CPU
-		{AC433543-B12B-425B-B396-202AD8C62DBA}.Release|x86.ActiveCfg = Release|Any CPU
-		{AC433543-B12B-425B-B396-202AD8C62DBA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
