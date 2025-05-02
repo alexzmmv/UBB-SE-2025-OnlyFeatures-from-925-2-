@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MainProject\WinUIApp.csproj" />
+    <ProjectReference Include="..\WinUIApp.Data\WinUIApp.Data.csproj" />
   </ItemGroup>
 
 </Project>

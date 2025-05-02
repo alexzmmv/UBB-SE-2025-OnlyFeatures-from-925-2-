@@ -153,4 +153,7 @@
       <Compile Remove="Drink.cs" />
       <Compile Remove="Review.cs" />
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\WinUIApp.Data\WinUIApp.Data.csproj" />
+    </ItemGroup>
 </Project>
