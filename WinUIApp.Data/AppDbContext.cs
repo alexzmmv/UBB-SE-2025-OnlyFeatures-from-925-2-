@@ -5,9 +5,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using WuiUiApp.Data.Data;
+using WinUiApp.Data.Data;
 
-namespace WuiUiApp.Data;
+namespace WinUiApp.Data;
 
 public class AppDbContext : DbContext
 {

@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 
-namespace WuiUiApp.Data;
+namespace WinUiApp.Data;
 
 public class Program
 {
@@ -12,7 +12,7 @@ public class Program
         var host = Host.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration((hostingContext, config) =>
             {
-                var path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "../WunUIApp"));
+                var path = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "../../../../WinUIApp"));
                 config.SetBasePath(path)
                     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                     .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true)

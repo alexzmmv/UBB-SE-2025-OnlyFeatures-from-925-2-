@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using WuiUiApp.Data.Data;
+using WinUiApp.Data.Data;
 
-namespace WuiUiApp.Data.Configurations
+namespace WinUiApp.Data.Configurations
 {
     public class VoteConfiguration : IEntityTypeConfiguration<Vote>
     {

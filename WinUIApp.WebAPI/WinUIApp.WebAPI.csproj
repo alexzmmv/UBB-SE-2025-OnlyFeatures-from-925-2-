@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable><OutputType>Exe</OutputType>
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>x86;x64;ARM64;AnyCPU</Platforms>
-    <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
-    <SelfContained>true</SelfContained>
+    <!-- <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers> -->
+    <!-- <SelfContained>true</SelfContained> -->
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -25,8 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MainProject\WinUIApp.csproj" />
     <ProjectReference Include="..\WinUIApp.Data\WinUIApp.Data.csproj" />
+    <ProjectReference Include="..\WinUIApp\WinUIApp.csproj" />
   </ItemGroup>
 
 </Project>

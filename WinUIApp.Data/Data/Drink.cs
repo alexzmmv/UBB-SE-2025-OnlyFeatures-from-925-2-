@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WuiUiApp.Data.Data
+namespace WinUiApp.Data.Data
 {
     public class Drink
     {
