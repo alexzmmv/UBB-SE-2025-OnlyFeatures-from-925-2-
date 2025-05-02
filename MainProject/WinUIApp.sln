@@ -7,9 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUIApp", "WinUIApp.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUIApp.Tests", "..\WinUIApp.Tests\WinUIApp.Tests.csproj", "{0F076CB3-6B21-49BC-8311-904C89DAA5D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUiApp.Data", "..\WuiUiApp.Data\WinUiApp.Data.csproj", "{5E153633-7622-D374-2C57-15544C6274BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUIApp.Data2", "..\WuiUiApp.Data\WinUIApp.Data2.csproj", "{5E153633-7622-D374-2C57-15544C6274BF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUIApp.WebAPI", "..\WinUIApp.WebAPI\WinUIApp.WebAPI.csproj", "{1C3AB06E-3F8F-DF37-DAA6-3FBE4C97D44C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5E153633-7622-D374-2C57-15544C6274BF} = {5E153633-7622-D374-2C57-15544C6274BF}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

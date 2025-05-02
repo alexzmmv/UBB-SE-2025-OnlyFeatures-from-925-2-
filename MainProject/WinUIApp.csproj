@@ -1,21 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
+    <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <RootNamespace>WinUIApp</RootNamespace>
-	  <ApplicationManifest>app.manifest</ApplicationManifest>
-	  <Platforms>x86;x64;ARM64</Platforms>
+	    <ApplicationManifest>app.manifest</ApplicationManifest>
+	    <Platforms>x86;x64;ARM64</Platforms>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
-	  <SelfContained>true</SelfContained>
-	  <PublishProfile>win-$(Platform).pubxml</PublishProfile>
+	    <SelfContained>true</SelfContained>
+	    <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
     <Nullable>enable</Nullable>
-  </PropertyGroup>
+    </PropertyGroup>
 
 
-  <ItemGroup>
+    <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
@@ -23,21 +23,21 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
-  </ItemGroup>
+    </ItemGroup>
 
-  <ItemGroup>
+    <ItemGroup>
     <Manifest Include="$(ApplicationManifest)" />
-  </ItemGroup>
+    </ItemGroup>
 
-  <!--
+    <!--
     Defining the "Msix" ProjectCapability here allows the Single-project MSIX Packaging
     Tools extension to be activated for this project even if the Windows App SDK Nuget
     package has not yet been restored.
-  -->
-  <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+    -->
+    <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
-  </ItemGroup>
-  <ItemGroup>
+    </ItemGroup>
+    <ItemGroup>
     <PackageReference Include="CommunityToolkit.WinUI.Controls.RangeSelector" Version="8.2.250402" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.1.2" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
@@ -50,64 +50,71 @@
     <PackageReference Include="MySqlConnector" Version="2.4.0" />
     <PackageReference Include="NUnit" Version="4.3.2" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="xunit.extensibility.core" Version="2.9.3" />
-  </ItemGroup>
-  <ItemGroup>
+    </ItemGroup>
+    <ItemGroup>
     <None Update="Styles\GlobalStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
+        <Generator>MSBuild:Compile</Generator>
     </None>
     <Page Update="Views\Components\SearchPageComponents\RatingFilterComponent.xaml">
-      <Generator>MSBuild:Compile</Generator>
+        <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Components\SearchPageComponents\AlcoholContentFilterComponent.xaml">
-      <Generator>MSBuild:Compile</Generator>
+        <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Components\SearchPageComponents\BrandFilterComponent.xaml">
-      <Generator>MSBuild:Compile</Generator>
+        <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Components\SearchPageComponents\CategoryFilterComponent.xaml">
-      <Generator>MSBuild:Compile</Generator>
+        <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Components\SearchPageComponents\SortSelectorComponent.xaml">
-      <Generator>MSBuild:Compile</Generator>
+        <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Components\HeaderComponents\Header.xaml">
-      <Generator>MSBuild:Compile</Generator>
+        <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Components\VoteDrinkOfTheDayButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
+        <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Components\AddRemoveFromDrinkListButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
+        <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Pages\MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+        <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Pages\DrinkDetailPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+        <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Components\VerticalDrinkList.xaml">
-      <Generator>MSBuild:Compile</Generator>
+        <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Components\UpdateDrinkFlyout.xaml">
-      <Generator>MSBuild:Compile</Generator>
+        <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Components\UpdateDrinkButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
+        <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\DrinkModelCrudTest.xaml">
-      <Generator>MSBuild:Compile</Generator>
+        <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Components\DrinkComponent.xaml">
-      <Generator>MSBuild:Compile</Generator>
+        <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Components\DrinkListComponent.xaml">
-      <Generator>MSBuild:Compile</Generator>
+        <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
+    </ItemGroup>
+	
+	<ItemGroup>
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<CodeAnalysisRuleSet>SE.ruleset</CodeAnalysisRuleSet>
 	</PropertyGroup>
@@ -139,5 +146,11 @@
     </ItemGroup>
     <ItemGroup>
       <PRIResource Remove="Views\Windows\**" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Remove="Brand.cs" />
+      <Compile Remove="Category.cs" />
+      <Compile Remove="Drink.cs" />
+      <Compile Remove="Review.cs" />
     </ItemGroup>
 </Project>
