@@ -400,3 +400,6 @@ FodyWeavers.xsd
 *.sln.iml
 /.env
 /App.config
+
+.idea/
+/MainProject/appsettings.json

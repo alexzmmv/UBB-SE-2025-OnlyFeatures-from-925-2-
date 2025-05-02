@@ -4,10 +4,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUIApp", "WinUIApp.csproj", "{D027432B-546E-44F8-B245-FAE34E8DE638}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AC433543-B12B-425B-B396-202AD8C62DBA} = {AC433543-B12B-425B-B396-202AD8C62DBA}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUIApp.Tests", "..\WinUIApp.Tests\WinUIApp.Tests.csproj", "{0F076CB3-6B21-49BC-8311-904C89DAA5D4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AC433543-B12B-425B-B396-202AD8C62DBA} = {AC433543-B12B-425B-B396-202AD8C62DBA}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WuiUiApp.Data", "..\WuiUiApp.Data\WuiUiApp.Data.csproj", "{AC433543-B12B-425B-B396-202AD8C62DBA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUiApp.Data", "..\WuiUiApp.Data\WinUiApp.Data.csproj", "{AC433543-B12B-425B-B396-202AD8C62DBA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
