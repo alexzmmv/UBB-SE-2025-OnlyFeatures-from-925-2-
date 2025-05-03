@@ -5,7 +5,7 @@
 namespace WinUIApp.Services
 {
     using System.Collections.Generic;
-    using WinUiApp.Data.Data;
+    using WinUIApp.Models;
 
     /// <summary>
     /// Interface for managing drink-related operations.

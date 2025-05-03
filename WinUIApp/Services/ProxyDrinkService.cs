@@ -9,8 +9,8 @@ namespace WinUIApp.Services
     using System.Linq;
     using System.Net.Http;
     using System.Net.Http.Json;
-    using WinUiApp.Data.Data;
     using WinUIApp.Data.Requests.Drink;
+    using WinUIApp.Models;
 
     public class ProxyDrinkService : IDrinkService
     {
