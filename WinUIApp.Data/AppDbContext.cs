@@ -23,6 +23,8 @@ public class AppDbContext : DbContext
     public DbSet<Vote> Votes { get; set; }
     public DbSet<DrinkOfTheDay> DrinkOfTheDays { get; set; }
     public DbSet<UserDrink> UserDrinks { get; set; }
+    public DbSet<Review> Reviews { get; set; }
+    public DbSet<Rating> Ratings { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
