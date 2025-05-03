@@ -35,7 +35,7 @@ namespace WinUIApp.WebAPI.Repositories
         public Review? GetReviewById(int reviewId)
         {
             return this.dbContext.Reviews
-                .FirstOrDefault(r => r.ReviewId == reviewId);
+                .FirstOrDefault(review => review.ReviewId == reviewId);
         }
 
         /// <inheritdoc/>
@@ -48,7 +48,7 @@ namespace WinUIApp.WebAPI.Repositories
         public List<Review> GetReviewsByRatingId(int ratingId)
         {
             return this.dbContext.Reviews
-                .Where(r => r.RatingId == ratingId)
+                .Where(rating => rating.RatingId == ratingId)
                 .ToList();
         }
 
@@ -78,7 +78,7 @@ namespace WinUIApp.WebAPI.Repositories
             }
 
             var existingReview = this.dbContext.Reviews
-                .FirstOrDefault(r => r.ReviewId == review.ReviewId);
+                .FirstOrDefault(existingReview => existingReview.ReviewId == review.ReviewId);
 
             if (existingReview == null)
             {
@@ -98,7 +98,7 @@ namespace WinUIApp.WebAPI.Repositories
         public void DeleteReview(int reviewId)
         {
             var review = this.dbContext.Reviews
-                .FirstOrDefault(r => r.ReviewId == reviewId);
+                .FirstOrDefault(review => review.ReviewId == reviewId);
 
             if (review == null)
             {
@@ -112,7 +112,7 @@ namespace WinUIApp.WebAPI.Repositories
         /// <inheritdoc/>
         public bool CheckIfReviewExists(int reviewId)
         {
-            return this.dbContext.Reviews.Any(r => r.ReviewId == reviewId);
+            return this.dbContext.Reviews.Any(review => review.ReviewId == reviewId);
         }
     }
 }

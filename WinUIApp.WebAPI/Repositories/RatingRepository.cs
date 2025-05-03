@@ -35,7 +35,7 @@ namespace WinUIApp.WebAPI.Repositories
         public Rating? GetRatingById(int ratingId)
         {
             return this.dbContext.Ratings
-                .FirstOrDefault(r => r.RatingId == ratingId);
+                .FirstOrDefault(rating => rating.RatingId == ratingId);
         }
 
         /// <inheritdoc/>
@@ -48,7 +48,7 @@ namespace WinUIApp.WebAPI.Repositories
         public List<Rating> GetRatingsByDrinkId(int drinkId)
         {
             return this.dbContext.Ratings
-                .Where(r => r.DrinkId == drinkId)
+                .Where(rating => rating.DrinkId == drinkId)
                 .ToList();
         }
 
@@ -66,7 +66,7 @@ namespace WinUIApp.WebAPI.Repositories
         public void UpdateRating(Rating rating)
         {
             var existingRating = this.dbContext.Ratings
-                .FirstOrDefault(r => r.RatingId == rating.RatingId);
+                .FirstOrDefault(existingRating => existingRating.RatingId == rating.RatingId);
 
             if (existingRating == null)
             {
@@ -86,7 +86,7 @@ namespace WinUIApp.WebAPI.Repositories
         public void DeleteRating(int ratingId)
         {
             var rating = this.dbContext.Ratings
-                .FirstOrDefault(r => r.RatingId == ratingId);
+                .FirstOrDefault(rating => rating.RatingId == ratingId);
 
             if (rating == null)
             {
