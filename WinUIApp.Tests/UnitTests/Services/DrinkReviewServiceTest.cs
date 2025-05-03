@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Moq;
-using WinUIApp.Models;
-using WinUIApp.Services.DummyServices;
+using WinUIApp.WebAPI.Models;
+using WinUIApp.WebAPI.Services.DummyServices;
 using Xunit;
 
 namespace WinUIApp.Tests.UnitTests.Services

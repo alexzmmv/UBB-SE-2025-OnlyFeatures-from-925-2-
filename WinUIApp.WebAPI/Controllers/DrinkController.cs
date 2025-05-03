@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WinUIApp.Models;
-using WinUIApp.Services;
+using WinUIApp.WebAPI.Models;
 using WinUIApp.WebAPI.Requests.Drink;
+using WinUIApp.WebAPI.Services;
 
 namespace WinUIApp.WebAPI.Controllers
 {

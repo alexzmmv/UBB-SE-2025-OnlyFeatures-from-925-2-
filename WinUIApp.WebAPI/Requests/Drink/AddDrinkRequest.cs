@@ -1,4 +1,4 @@
-﻿using WinUIApp.Models;
+﻿using WinUIApp.WebAPI.Models;
 
 namespace WinUIApp.WebAPI.Requests.Drink
 {

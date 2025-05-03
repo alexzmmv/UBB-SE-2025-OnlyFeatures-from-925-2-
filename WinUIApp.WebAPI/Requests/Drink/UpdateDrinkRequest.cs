@@ -1,9 +1,9 @@
-﻿using WinUIApp.Models;
+﻿using WinUIApp.WebAPI.Models;
 
 namespace WinUIApp.WebAPI.Requests.Drink
 {
     public class UpdateDrinkRequest
     {
-        public WinUIApp.Models.Drink drink { get; set; }
+        public WinUIApp.WebAPI.Models.Drink drink { get; set; }
     }
 }

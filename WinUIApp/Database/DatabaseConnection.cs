@@ -25,7 +25,7 @@ namespace WinUIApp.Database
         {
             // Initialize configuration
             var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())  // Set base path to current directory
+                .SetBasePath(AppContext.BaseDirectory)  // Set base path to current directory
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)  // Load the appsettings file
                 .Build();
 
