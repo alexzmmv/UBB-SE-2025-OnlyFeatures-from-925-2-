@@ -1,4 +1,4 @@
-﻿namespace WinUIApp.WebAPI.Requests.Drink
+﻿namespace WinUIApp.Data.Requests.Drink
 {
     public class DeleteDrinkRequest
     {

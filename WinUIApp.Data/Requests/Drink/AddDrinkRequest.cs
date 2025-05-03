@@ -1,6 +1,6 @@
-﻿using WinUIApp.WebAPI.Models;
+﻿using WinUiApp.Data.Data;
 
-namespace WinUIApp.WebAPI.Requests.Drink
+namespace WinUIApp.Data.Requests.Drink
 {
     public class AddDrinkRequest
     {
