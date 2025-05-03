@@ -130,13 +130,13 @@ namespace WinUIApp.Data.Migrations
 
             modelBuilder.Entity("WinUiApp.Data.Data.Rating", b =>
                 {
-                    b.Property<int>("RatingID")
+                    b.Property<int>("RatingId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RatingID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RatingId"));
 
-                    b.Property<int>("DrinkID")
+                    b.Property<int>("DrinkId")
                         .HasColumnType("int");
 
                     b.Property<byte?>("IsActive")
@@ -148,25 +148,26 @@ namespace WinUIApp.Data.Migrations
                     b.Property<double?>("RatingValue")
                         .HasColumnType("float");
 
-                    b.Property<int>("UserID")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("RatingID");
+                    b.HasKey("RatingId");
 
-                    b.HasIndex("DrinkID");
+                    b.HasIndex("DrinkId");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId", "DrinkId")
+                        .IsUnique();
 
                     b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("WinUiApp.Data.Data.Review", b =>
                 {
-                    b.Property<int>("ReviewID")
+                    b.Property<int>("ReviewId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewId"));
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -178,17 +179,17 @@ namespace WinUIApp.Data.Migrations
                     b.Property<byte?>("IsActive")
                         .HasColumnType("tinyint");
 
-                    b.Property<int>("RatingID")
+                    b.Property<int>("RatingId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserID")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("ReviewID");
+                    b.HasKey("ReviewId");
 
-                    b.HasIndex("RatingID");
+                    b.HasIndex("RatingId");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Reviews");
                 });
@@ -318,14 +319,14 @@ namespace WinUIApp.Data.Migrations
                 {
                     b.HasOne("WinUiApp.Data.Data.Drink", "Drink")
                         .WithMany()
-                        .HasForeignKey("DrinkID")
+                        .HasForeignKey("DrinkId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("WinUiApp.Data.Data.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Drink");
@@ -337,13 +338,15 @@ namespace WinUIApp.Data.Migrations
                 {
                     b.HasOne("WinUiApp.Data.Data.Rating", "Rating")
                         .WithMany()
-                        .HasForeignKey("RatingID")
+                        .HasForeignKey("RatingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("WinUiApp.Data.Data.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Rating");
 

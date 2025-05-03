@@ -8,16 +8,16 @@ namespace WinUiApp.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Review> builder)
         {
-            builder.HasKey(review => review.ReviewID);
+            builder.HasKey(review => review.ReviewId);
 
-            builder.Property(review => review.ReviewID)
+            builder.Property(review => review.ReviewId)
                    .ValueGeneratedOnAdd();
 
-            builder.Property(review => review.RatingID)
+            builder.Property(review => review.RatingId)
                    .IsRequired();
 
-            builder.Property(review => review.UserID)
-                   .IsRequired(false);
+            builder.Property(review => review.UserId)
+                   .IsRequired();
 
             builder.Property(review => review.Content)
                    .HasColumnType("text");
@@ -31,8 +31,13 @@ namespace WinUiApp.Data.Configurations
                    
             builder.HasOne(review => review.Rating)
                    .WithMany()
-                   .HasForeignKey(review => review.RatingID)
+                   .HasForeignKey(review => review.RatingId)
                    .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(review => review.User)
+                   .WithMany()
+                   .HasForeignKey(review => review.UserId)
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

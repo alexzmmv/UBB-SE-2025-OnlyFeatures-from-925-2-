@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WinUIApp.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddReviewRatingTable : Migration
+    public partial class RenamingAndBrand4 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,78 +15,80 @@ namespace WinUIApp.Data.Migrations
                 name: "Ratings",
                 columns: table => new
                 {
-                    RatingID = table.Column<int>(type: "int", nullable: false)
+                    RatingId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DrinkID = table.Column<int>(type: "int", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false),
+                    DrinkId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     RatingValue = table.Column<double>(type: "float", nullable: true),
                     RatingDate = table.Column<DateTime>(type: "datetime", nullable: true),
                     IsActive = table.Column<byte>(type: "tinyint", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ratings", x => x.RatingID);
+                    table.PrimaryKey("PK_Ratings", x => x.RatingId);
                     table.ForeignKey(
-                        name: "FK_Ratings_Drinks_DrinkID",
-                        column: x => x.DrinkID,
+                        name: "FK_Ratings_Drinks_DrinkId",
+                        column: x => x.DrinkId,
                         principalTable: "Drinks",
                         principalColumn: "DrinkId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Ratings_Users_UserID",
-                        column: x => x.UserID,
+                        name: "FK_Ratings_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Reviews",
                 columns: table => new
                 {
-                    ReviewID = table.Column<int>(type: "int", nullable: false)
+                    ReviewId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RatingID = table.Column<int>(type: "int", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: true),
+                    RatingId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     Content = table.Column<string>(type: "text", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime", nullable: true),
                     IsActive = table.Column<byte>(type: "tinyint", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reviews", x => x.ReviewID);
+                    table.PrimaryKey("PK_Reviews", x => x.ReviewId);
                     table.ForeignKey(
-                        name: "FK_Reviews_Ratings_RatingID",
-                        column: x => x.RatingID,
+                        name: "FK_Reviews_Ratings_RatingId",
+                        column: x => x.RatingId,
                         principalTable: "Ratings",
-                        principalColumn: "RatingID",
+                        principalColumn: "RatingId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Reviews_Users_UserID",
-                        column: x => x.UserID,
+                        name: "FK_Reviews_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "UserId");
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ratings_DrinkID",
+                name: "IX_Ratings_DrinkId",
                 table: "Ratings",
-                column: "DrinkID");
+                column: "DrinkId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ratings_UserID",
+                name: "IX_Ratings_UserId_DrinkId",
                 table: "Ratings",
-                column: "UserID");
+                columns: new[] { "UserId", "DrinkId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_RatingID",
+                name: "IX_Reviews_RatingId",
                 table: "Reviews",
-                column: "RatingID");
+                column: "RatingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_UserID",
+                name: "IX_Reviews_UserId",
                 table: "Reviews",
-                column: "UserID");
+                column: "UserId");
         }
 
         /// <inheritdoc />

@@ -9,6 +9,9 @@ namespace WinUiApp.Data.Configurations
         public void Configure(EntityTypeBuilder<Brand> builder)
         {
             builder.HasKey(brand => brand.BrandId);
+
+            builder.Property(brand => brand.BrandId)
+                   .ValueGeneratedOnAdd();
         }
     }
 }

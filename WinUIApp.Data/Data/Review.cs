@@ -4,9 +4,9 @@ namespace WinUiApp.Data.Data
 {
     public class Review
     {
-        public int ReviewID { get; set; }
-        public int RatingID { get; set; }
-        public int? UserID { get; set; }
+        public int ReviewId { get; set; }
+        public int RatingId { get; set; }
+        public int UserId { get; set; }
         public string Content { get; set; }
         public DateTime? CreationDate { get; set; }
         public bool? IsActive { get; set; }
