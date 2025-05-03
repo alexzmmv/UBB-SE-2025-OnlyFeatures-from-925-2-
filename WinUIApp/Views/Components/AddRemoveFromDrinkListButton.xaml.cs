@@ -45,7 +45,7 @@ namespace WinUIApp.Views.Components
         /// </summary>
         public AddRemoveFromDrinkListButton()
         {
-            this.drinkService = new DrinkService();
+            this.drinkService = new ProxyDrinkService();
             this.userService = new UserService();
             this.InitializeComponent();
             this.Loaded += this.AddRemoveFromDrinkListButton_Loaded;
