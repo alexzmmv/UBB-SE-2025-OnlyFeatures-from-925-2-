@@ -9,7 +9,7 @@ namespace WinUIApp.Tests.UnitTests.Database
     using Microsoft.Data.SqlClient;
     using Xunit;
     using Moq;
-    using WinUIApp.Database;
+    using WinUIApp.WebAPI.Database;
 
     /// <summary>
     /// Test class for the DatabaseConnection.
