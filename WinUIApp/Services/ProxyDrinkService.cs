@@ -1,4 +1,4 @@
-﻿// <copyright file="ProxyDrinkService.cs" company="PlaceholderCompany">
+// <copyright file="ProxyDrinkService.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
@@ -28,13 +28,9 @@ namespace WinUIApp.Services
         /// </summary>
         public ProxyDrinkService()
         {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(AppContext.BaseDirectory)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .Build();
             this.httpClient = new HttpClient
             {
-                BaseAddress = new Uri(configuration.GetValue<string>("ApiUrl")),
+                BaseAddress = new Uri(this.GetApiUrl()),
             };
         }
 
@@ -364,6 +360,15 @@ namespace WinUIApp.Services
             {
                 throw new Exception("Error getting drink of the day:", exception);
             }
+        }
+
+        private string GetApiUrl()
+        {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+            return configuration.GetValue<string>("ApiUrl");
         }
     }
 }
