@@ -36,14 +36,15 @@ namespace WinUIApp.WebAPI.Repositories
         /// Adds a new review to the data store.
         /// </summary>
         /// <param name="review">The review to add.</param>
-        /// <returns>The id of the newly added review.</returns>
-        int AddReview(Review review);
+        /// <returns>The added review with its generated ID.</returns>
+        Review AddReview(Review review);
 
         /// <summary>
         /// Updates an existing review in the data store.
         /// </summary>
         /// <param name="review">The review with updated information.</param>
-        void UpdateReview(Review review);
+        /// <returns>The updated review.</returns>
+        Review UpdateReview(Review review);
 
         /// <summary>
         /// Deletes a review by its unique identifier.

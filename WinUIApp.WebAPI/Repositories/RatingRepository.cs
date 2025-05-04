@@ -11,9 +11,9 @@ namespace WinUIApp.WebAPI.Repositories
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.EntityFrameworkCore;
     using WinUiApp.Data;
     using WinUiApp.Data.Data;
+    using WinUIApp.WebAPI.Constants.ErrorMessages;
 
     /// <summary>
     /// Repository for managing rating-related operations.
@@ -53,24 +53,26 @@ namespace WinUIApp.WebAPI.Repositories
         }
 
         /// <inheritdoc/>
-        public void AddRating(Rating rating)
+        public Rating AddRating(Rating rating)
         {
             rating.RatingDate ??= DateTime.UtcNow;
             rating.IsActive ??= true;
 
             this.dbContext.Ratings.Add(rating);
             this.dbContext.SaveChanges();
+            
+            return rating;
         }
 
         /// <inheritdoc/>
-        public void UpdateRating(Rating rating)
+        public Rating UpdateRating(Rating rating)
         {
             var existingRating = this.dbContext.Ratings
                 .FirstOrDefault(existingRating => existingRating.RatingId == rating.RatingId);
 
             if (existingRating == null)
             {
-                throw new Exception("No rating found with the provided Id.");
+                throw new Exception(RepositoryErrorMessages.EntityNotFound);
             }
 
             existingRating.DrinkId = rating.DrinkId;
@@ -80,6 +82,8 @@ namespace WinUIApp.WebAPI.Repositories
             existingRating.IsActive = rating.IsActive ?? existingRating.IsActive;
 
             this.dbContext.SaveChanges();
+            
+            return existingRating;
         }
 
         /// <inheritdoc/>
@@ -90,7 +94,7 @@ namespace WinUIApp.WebAPI.Repositories
 
             if (rating == null)
             {
-                throw new Exception("No rating found with the provided Id.");
+                throw new Exception(RepositoryErrorMessages.EntityNotFound);
             }
 
             this.dbContext.Ratings.Remove(rating);

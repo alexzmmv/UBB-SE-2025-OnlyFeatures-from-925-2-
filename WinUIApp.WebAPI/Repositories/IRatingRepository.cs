@@ -36,13 +36,15 @@ namespace WinUIApp.WebAPI.Repositories
         /// Adds a new rating to the data store.
         /// </summary>
         /// <param name="rating">The rating to add.</param>
-        void AddRating(Rating rating);
+        /// <returns>The added rating with its generated ID.</returns>
+        Rating AddRating(Rating rating);
 
         /// <summary>
         /// Updates an existing rating in the data store.
         /// </summary>
         /// <param name="rating">The rating with updated information.</param>
-        void UpdateRating(Rating rating);
+        /// <returns>The updated rating.</returns>
+        Rating UpdateRating(Rating rating);
 
         /// <summary>
         /// Deletes a rating by its unique identifier.
