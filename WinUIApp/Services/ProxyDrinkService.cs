@@ -67,11 +67,21 @@ namespace WinUIApp.Services
         {
             try
             {
+                List<WinUiApp.Data.Data.Category> convertedCategories = new List<WinUiApp.Data.Data.Category>();
+                foreach (var category in inputtedDrinkCategories)
+                {
+                    convertedCategories.Add(new WinUiApp.Data.Data.Category
+                    {
+                        CategoryId = category.CategoryId,
+                        CategoryName = category.CategoryName,
+                    });
+                }
+
                 var request = new AddDrinkRequest
                 {
                     inputtedDrinkName = inputtedDrinkName,
                     inputtedDrinkPath = inputtedDrinkPath,
-                    inputtedDrinkCategories = inputtedDrinkCategories,
+                    inputtedDrinkCategories = convertedCategories,
                     inputtedDrinkBrandName = inputtedDrinkBrandName,
                     inputtedAlcoholPercentage = inputtedAlcoholPercentage,
                 };
@@ -87,9 +97,18 @@ namespace WinUIApp.Services
 
         public void UpdateDrink(Drink drink)
         {
+            WinUiApp.Data.Data.Drink convertedDrink = new WinUiApp.Data.Data.Drink
+            {
+                DrinkId = drink.DrinkId,
+                DrinkName = drink.DrinkName,
+                DrinkURL = drink.DrinkImageUrl,
+                AlcoholContent = (decimal)drink.AlcoholContent,
+                BrandId = drink.DrinkBrand.BrandId,
+            };
+
             try
             {
-                var request = new UpdateDrinkRequest { drink = drink };
+                var request = new UpdateDrinkRequest { drink = convertedDrink };
                 var response = httpClient.PutAsJsonAsync("Drink/update", request).Result;
                 response.EnsureSuccessStatusCode();
             }
