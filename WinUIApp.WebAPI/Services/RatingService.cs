@@ -80,6 +80,8 @@ namespace WinUIApp.WebAPI.Services
         /// <param name="ratingId">The rating identifier.</param>
         public void DeleteRatingById(int ratingId) => this.ratingRepository.DeleteRating(ratingId);
 
+
+        private const double NoRatingsValue = 0.0;
         /// <summary>
         /// Calculates the average value of all ratings for a drink.
         /// </summary>
@@ -87,22 +89,18 @@ namespace WinUIApp.WebAPI.Services
         /// <returns>The average rating value, or 0 if no ratings are present.</returns>
         public double GetAverageRating(int drinkId)
         {
-            // Get all ratings for the drink
             var allRatings = this.ratingRepository.GetRatingsByDrinkId(drinkId).ToList();
 
-            // Filter out ratings with null values
             var validRatings = allRatings
                 .Where(rating => rating.RatingValue.HasValue)
                 .Select(rating => rating.RatingValue.Value)
                 .ToList();
 
-            // Return 0 if no valid ratings are found
-            if (validRatings.Count == 0)
+            if (!validRatings.Any())
             {
-                return 0;
+                return NoRatingsValue;
             }
 
-            // Calculate the average of all valid rating values
             return (double)validRatings.Average();
         }
     }
