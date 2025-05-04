@@ -402,5 +402,4 @@ FodyWeavers.xsd
 /App.config
 
 .idea/
-/WinUIApp/appsettings.json
 /WinUIApp.WebAPI/appsettings.json
