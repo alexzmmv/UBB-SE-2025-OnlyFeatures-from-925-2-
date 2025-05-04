@@ -1,339 +1,339 @@
-﻿//// <copyright file="DrinkService.cs" company="PlaceholderCompany">
-//// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿//// <copyright file="drinkservice.cs" company="placeholdercompany">
+//// copyright (c) placeholdercompany. all rights reserved.
 //// </copyright>
 
-//namespace WinUIApp.Services
+//namespace winuiapp.services
 //{
-//    using System;
-//    using System.Collections.Generic;
-//    using System.Linq;
-//    using WinUiApp.Data.Data;
-//    using WinUIApp.Repositories;
+//    using system;
+//    using system.collections.generic;
+//    using system.linq;
+//    using winuiapp.data.data;
+//    using winuiapp.repositories;
 
 //    /// <summary>
-//    /// Drink service for managing drink-related operations.
+//    /// drink service for managing drink-related operations.
 //    /// </summary>
-//    public class DrinkService : IDrinkService
+//    public class drinkservice : idrinkservice
 //    {
-//        private const int DefaultPersonalDrinkCount = 1;
-//        private IDrinkRepository drinkRepository;
+//        private const int defaultpersonaldrinkcount = 1;
+//        private idrinkrepository drinkrepository;
 
 //        /// <summary>
-//        /// Initializes a new instance of the <see cref="DrinkService"/> class.
+//        /// initializes a new instance of the <see cref="drinkservice"/> class.
 //        /// </summary>
-//        public DrinkService()
+//        public drinkservice()
 //        {
-//            this.drinkRepository = new DrinkRepository();
+//            this.drinkrepository = new drinkrepository();
 //        }
 
 //        /// <summary>
-//        /// Initializes a new instance of the <see cref="DrinkService"/> class with a specified drink model.
+//        /// initializes a new instance of the <see cref="drinkservice"/> class with a specified drink model.
 //        /// </summary>
-//        /// <param name="drinkRepository"> Drink Repository. </param>
-//        public DrinkService(IDrinkRepository drinkRepository)
+//        /// <param name="drinkrepository"> drink repository. </param>
+//        public drinkservice(idrinkrepository drinkrepository)
 //        {
-//            this.drinkRepository = drinkRepository;
+//            this.drinkrepository = drinkrepository;
 //        }
 
 //        /// <summary>
-//        /// Gets the drink by ID.
-//        /// </summary>
-//        /// <param name="drinkId"> Drink id. </param>
-//        /// <returns> The drink. </returns>
-//        /// <exception cref="Exception"> Any issues. </exception>
-//        public Drink? GetDrinkById(int drinkId)
+//        /// gets the drink by id.
+/// </summary>
+//        /// <param name="drinkid"> drink id. </param>
+//        /// <returns> the drink. </returns>
+//        /// <exception cref="exception"> any issues. </exception>
+//        public drink? getdrinkbyid(int drinkid)
 //        {
 //            try
 //            {
-//                return this.drinkRepository.GetDrinkById(drinkId);
+//                return this.drinkrepository.getdrinkbyid(drinkid);
 //            }
-//            catch (Exception drinkRetrievalException)
+//            catch (exception drinkretrievalexception)
 //            {
-//                throw new Exception($"Error happened while getting drink with ID {drinkId}:", drinkRetrievalException);
+//                throw new exception($"error happened while getting drink with id {drinkid}:", drinkretrievalexception);
 //            }
 //        }
 
 //        /// <summary>
-//        /// Gets drinks based on various filters and ordering criteria.
+//        /// gets drinks based on various filters and ordering criteria.
 //        /// </summary>
-//        /// <param name="searchKeyword"> search term. </param>
-//        /// <param name="drinkBrandNameFilter"> brand filter. </param>
-//        /// <param name="drinkCategoryFilter"> category filter. </param>
-//        /// <param name="minimumAlcoholPercentage"> minimum alcohol content. </param>
-//        /// <param name="maximumAlcoholPercentage"> maximum alcohol content. </param>
-//        /// <param name="orderingCriteria"> order criteria. </param>
-//        /// <returns> List of drinks. </returns>
-//        /// <exception cref="Exception"> Any issues. </exception>
-//        public List<Drink> GetDrinks(string? searchKeyword, List<string>? drinkBrandNameFilter, List<string>? drinkCategoryFilter, float? minimumAlcoholPercentage, float? maximumAlcoholPercentage, Dictionary<string, bool>? orderingCriteria)
+//        /// <param name="searchkeyword"> search term. </param>
+//        /// <param name="drinkbrandnamefilter"> brand filter. </param>
+//        /// <param name="drinkcategoryfilter"> category filter. </param>
+//        /// <param name="minimumalcoholpercentage"> minimum alcohol content. </param>
+//        /// <param name="maximumalcoholpercentage"> maximum alcohol content. </param>
+//        /// <param name="orderingcriteria"> order criteria. </param>
+//        /// <returns> list of drinks. </returns>
+//        /// <exception cref="exception"> any issues. </exception>
+//        public list<drink> getdrinks(string? searchkeyword, list<string>? drinkbrandnamefilter, list<string>? drinkcategoryfilter, float? minimumalcoholpercentage, float? maximumalcoholpercentage, dictionary<string, bool>? orderingcriteria)
 //        {
 //            try
 //            {
-//                List<Drink> allDrinks = this.drinkRepository.GetDrinks();
-//                List<Drink> filteredDrinks = allDrinks;
+//                list<drink> alldrinks = this.drinkrepository.getdrinks();
+//                list<drink> filtereddrinks = alldrinks;
 
-//                if (minimumAlcoholPercentage != null)
+//                if (minimumalcoholpercentage != null)
 //                {
-//                    filteredDrinks = filteredDrinks.FindAll(drink => drink.AlcoholContent >= minimumAlcoholPercentage);
+//                    filtereddrinks = filtereddrinks.findall(drink => drink.alcoholcontent >= minimumalcoholpercentage);
 //                }
 
-//                if (maximumAlcoholPercentage != null)
+//                if (maximumalcoholpercentage != null)
 //                {
-//                    filteredDrinks = filteredDrinks.FindAll(drink => drink.AlcoholContent <= maximumAlcoholPercentage);
+//                    filtereddrinks = filtereddrinks.findall(drink => drink.alcoholcontent <= maximumalcoholpercentage);
 //                }
 
-//                if (searchKeyword != null && searchKeyword != string.Empty)
+//                if (searchkeyword != null && searchkeyword != string.empty)
 //                {
-//                    filteredDrinks = filteredDrinks.FindAll(drink => drink.DrinkName.ToLower().Contains(searchKeyword.ToLower()));
+//                    filtereddrinks = filtereddrinks.findall(drink => drink.drinkname.tolower().contains(searchkeyword.tolower()));
 //                }
 
-//                if (drinkBrandNameFilter != null && drinkBrandNameFilter.Count > 0)
+//                if (drinkbrandnamefilter != null && drinkbrandnamefilter.count > 0)
 //                {
-//                    filteredDrinks = filteredDrinks.FindAll(drink => drinkBrandNameFilter.Contains(drink.DrinkBrand.BrandName));
+//                    filtereddrinks = filtereddrinks.findall(drink => drinkbrandnamefilter.contains(drink.drinkbrand.brandname));
 //                }
 
-//                if (drinkCategoryFilter != null && drinkCategoryFilter.Count > 0)
+//                if (drinkcategoryfilter != null && drinkcategoryfilter.count > 0)
 //                {
-//                    filteredDrinks = filteredDrinks.FindAll(drink =>
-//                        drinkCategoryFilter.TrueForAll(categoryFilter =>
-//                            drink.CategoryList.Any(category => category.CategoryName == categoryFilter)));
+//                    filtereddrinks = filtereddrinks.findall(drink =>
+//                        drinkcategoryfilter.trueforall(categoryfilter =>
+//                            drink.categorylist.any(category => category.categoryname == categoryfilter)));
 //                }
 
-//                if (orderingCriteria != null && orderingCriteria.Count == 1)
+//                if (orderingcriteria != null && orderingcriteria.count == 1)
 //                {
-//                    string orderingKey = orderingCriteria.Keys.First();
-//                    bool isAscending = orderingCriteria[orderingKey];
+//                    string orderingkey = orderingcriteria.keys.first();
+//                    bool isascending = orderingcriteria[orderingkey];
 
-//                    if (orderingKey == "DrinkName")
+//                    if (orderingkey == "drinkname")
 //                    {
-//                        if (isAscending)
+//                        if (isascending)
 //                        {
-//                            filteredDrinks = filteredDrinks.OrderBy(drink => drink.DrinkName).ToList();
+//                            filtereddrinks = filtereddrinks.orderby(drink => drink.drinkname).tolist();
 //                        }
 //                        else
 //                        {
-//                            filteredDrinks = filteredDrinks.OrderByDescending(drink => drink.DrinkName).ToList();
+//                            filtereddrinks = filtereddrinks.orderbydescending(drink => drink.drinkname).tolist();
 //                        }
 //                    }
-//                    else if (orderingKey == "AlcoholContent")
+//                    else if (orderingkey == "alcoholcontent")
 //                    {
-//                        if (isAscending)
+//                        if (isascending)
 //                        {
-//                            filteredDrinks = filteredDrinks.OrderBy(drink => drink.AlcoholContent).ToList();
+//                            filtereddrinks = filtereddrinks.orderby(drink => drink.alcoholcontent).tolist();
 //                        }
 //                        else
 //                        {
-//                            filteredDrinks = filteredDrinks.OrderByDescending(drink => drink.AlcoholContent).ToList();
+//                            filtereddrinks = filtereddrinks.orderbydescending(drink => drink.alcoholcontent).tolist();
 //                        }
 //                    }
 //                }
 
-//                return filteredDrinks;
+//                return filtereddrinks;
 //            }
-//            catch (Exception drinksRetrievalException)
+//            catch (exception drinksretrievalexception)
 //            {
-//                throw new Exception("Error happened while getting drinks:", drinksRetrievalException);
+//                throw new exception("error happened while getting drinks:", drinksretrievalexception);
 //            }
 //        }
 
 //        /// <summary>
-//        /// Adds a drink to the database.
+//        /// adds a drink to the database.
 //        /// </summary>
-//        /// <param name="inputtedDrinkName"> Name. </param>
-//        /// <param name="inputtedDrinkPath"> ImagePath. </param>
-//        /// <param name="inputtedDrinkCategories"> Categories. </param>
-//        /// <param name="inputtedDrinkBrandName"> Brand. </param>
-//        /// <param name="inputtedAlcoholPercentage"> Alcohol. </param>
-//        /// <exception cref="Exception"> Any issues. </exception>
-//        public void AddDrink(string inputtedDrinkName, string inputtedDrinkPath, List<Category> inputtedDrinkCategories, string inputtedDrinkBrandName, float inputtedAlcoholPercentage)
+//        /// <param name="inputteddrinkname"> name. </param>
+//        /// <param name="inputteddrinkpath"> imagepath. </param>
+//        /// <param name="inputteddrinkcategories"> categories. </param>
+//        /// <param name="inputteddrinkbrandname"> brand. </param>
+//        /// <param name="inputtedalcoholpercentage"> alcohol. </param>
+//        /// <exception cref="exception"> any issues. </exception>
+//        public void adddrink(string inputteddrinkname, string inputteddrinkpath, list<category> inputteddrinkcategories, string inputteddrinkbrandname, float inputtedalcoholpercentage)
 //        {
 //            try
 //            {
-//                this.drinkRepository.AddDrink(inputtedDrinkName, inputtedDrinkPath, inputtedDrinkCategories, inputtedDrinkBrandName, inputtedAlcoholPercentage);
+//                this.drinkrepository.adddrink(inputteddrinkname, inputteddrinkpath, inputteddrinkcategories, inputteddrinkbrandname, inputtedalcoholpercentage);
 //            }
-//            catch (Exception addingDrinkException)
+//            catch (exception addingdrinkexception)
 //            {
-//                throw new Exception("Error happened while adding a drink:", addingDrinkException);
+//                throw new exception("error happened while adding a drink:", addingdrinkexception);
 //            }
 //        }
 
 //        /// <summary>
-//        /// Updates a drink in the database.
+//        /// updates a drink in the database.
 //        /// </summary>
-//        /// <param name="drink"> Drink. </param>
-//        /// <exception cref="Exception"> Any issues. </exception>
-//        public void UpdateDrink(Drink drink)
+//        /// <param name="drink"> drink. </param>
+//        /// <exception cref="exception"> any issues. </exception>
+//        public void updatedrink(drink drink)
 //        {
 //            try
 //            {
-//                this.drinkRepository.UpdateDrink(drink);
+//                this.drinkrepository.updatedrink(drink);
 //            }
-//            catch (Exception updateDrinkException)
+//            catch (exception updatedrinkexception)
 //            {
-//                throw new Exception("Error happened while updating a drink:", updateDrinkException);
+//                throw new exception("error happened while updating a drink:", updatedrinkexception);
 //            }
 //        }
 
 //        /// <summary>
-//        /// Deletes a drink from the database.
+//        /// deletes a drink from the database.
 //        /// </summary>
-//        /// <param name="drinkId"> Drink id. </param>
-//        /// <exception cref="Exception"> Any issues. </exception>
-//        public void DeleteDrink(int drinkId)
+//        /// <param name="drinkid"> drink id. </param>
+//        /// <exception cref="exception"> any issues. </exception>
+//        public void deletedrink(int drinkid)
 //        {
 //            try
 //            {
-//                this.drinkRepository.DeleteDrink(drinkId);
+//                this.drinkrepository.deletedrink(drinkid);
 //            }
-//            catch (Exception deleteDrinkException)
+//            catch (exception deletedrinkexception)
 //            {
-//                throw new Exception("Error happened while deleting a drink:", deleteDrinkException);
+//                throw new exception("error happened while deleting a drink:", deletedrinkexception);
 //            }
 //        }
 
 //        /// <summary>
-//        /// Retrieves a random drink ID from the database.
+//        /// retrieves a random drink id from the database.
 //        /// </summary>
-//        /// <returns> List of categories. </returns>
-//        /// <exception cref="Exception"> Any issues. </exception>
-//        public List<Category> GetDrinkCategories()
+//        /// <returns> list of categories. </returns>
+//        /// <exception cref="exception"> any issues. </exception>
+//        public list<category> getdrinkcategories()
 //        {
 //            try
 //            {
-//                return this.drinkRepository.GetDrinkCategories();
+//                return this.drinkrepository.getdrinkcategories();
 //            }
-//            catch (Exception drinkCategoriesRetrievalException)
+//            catch (exception drinkcategoriesretrievalexception)
 //            {
-//                throw new Exception("Error happened while getting drink categories:", drinkCategoriesRetrievalException);
+//                throw new exception("error happened while getting drink categories:", drinkcategoriesretrievalexception);
 //            }
 //        }
 
 //        /// <summary>
-//        /// Retrieves a list of drink brands.
+//        /// retrieves a list of drink brands.
 //        /// </summary>
-//        /// <returns> List of brands. </returns>
-//        /// <exception cref="Exception"> Any issues. </exception>
-//        public List<Brand> GetDrinkBrandNames()
+//        /// <returns> list of brands. </returns>
+//        /// <exception cref="exception"> any issues. </exception>
+//        public list<brand> getdrinkbrandnames()
 //        {
 //            try
 //            {
-//                return this.drinkRepository.GetDrinkBrands();
+//                return this.drinkrepository.getdrinkbrands();
 //            }
-//            catch (Exception drinkBrandNamesRetrievalException)
+//            catch (exception drinkbrandnamesretrievalexception)
 //            {
-//                throw new Exception("Error happened while getting drink brands:", drinkBrandNamesRetrievalException);
+//                throw new exception("error happened while getting drink brands:", drinkbrandnamesretrievalexception);
 //            }
 //        }
 
 //        /// <summary>
-//        /// Retrieves a random drink ID from the database.
+//        /// retrieves a random drink id from the database.
 //        /// </summary>
-//        /// <param name="userId"> User id. </param>
-//        /// <param name="maximumDrinkCount"> Not sure. </param>
-//        /// <returns> Personal list. </returns>
-//        /// <exception cref="Exception"> Any issues. </exception>
-//        public List<Drink> GetUserPersonalDrinkList(int userId, int maximumDrinkCount = DefaultPersonalDrinkCount)
+//        /// <param name="userid"> user id. </param>
+//        /// <param name="maximumdrinkcount"> not sure. </param>
+//        /// <returns> personal list. </returns>
+//        /// <exception cref="exception"> any issues. </exception>
+//        public list<drink> getuserpersonaldrinklist(int userid, int maximumdrinkcount = defaultpersonaldrinkcount)
 //        {
 //            try
 //            {
-//                return this.drinkRepository.GetPersonalDrinkList(userId);
+//                return this.drinkrepository.getpersonaldrinklist(userid);
 //            }
-//            catch (Exception personalDrinkListRetrievalException)
+//            catch (exception personaldrinklistretrievalexception)
 //            {
-//                throw new Exception("Error getting personal drink list:", personalDrinkListRetrievalException);
+//                throw new exception("error getting personal drink list:", personaldrinklistretrievalexception);
 //            }
 //        }
 
 //        /// <summary>
-//        /// Checks if a drink is already in the user's personal drink list.
+//        /// checks if a drink is already in the user's personal drink list.
 //        /// </summary>
-//        /// <param name="userId"> User id. </param>
-//        /// <param name="drinkId"> Drink id. </param>
+//        /// <param name="userid"> user id. </param>
+//        /// <param name="drinkid"> drink id. </param>
 //        /// <returns> true, if yes, false otherwise. </returns>
-//        /// <exception cref="Exception"> Any issues. </exception>
-//        public bool IsDrinkInUserPersonalList(int userId, int drinkId)
+//        /// <exception cref="exception"> any issues. </exception>
+//        public bool isdrinkinuserpersonallist(int userid, int drinkid)
 //        {
 //            try
 //            {
-//                return this.drinkRepository.IsDrinkInPersonalList(userId, drinkId);
+//                return this.drinkrepository.isdrinkinpersonallist(userid, drinkid);
 //            }
-//            catch (Exception checkingUserPersonalListException)
+//            catch (exception checkinguserpersonallistexception)
 //            {
-//                throw new Exception("Error checking if the drink is in the user's personal list.", checkingUserPersonalListException);
+//                throw new exception("error checking if the drink is in the user's personal list.", checkinguserpersonallistexception);
 //            }
 //        }
 
 //        /// <summary>
-//        /// Adds a drink to the user's personal drink list.
+//        /// adds a drink to the user's personal drink list.
 //        /// </summary>
-//        /// <param name="userId"> User id. </param>
-//        /// <param name="drinkId"> Drink id. </param>
-//        /// <returns> True, if successfull, false otherwise. </returns>
-//        /// <exception cref="Exception"> Any issues. </exception>
-//        public bool AddToUserPersonalDrinkList(int userId, int drinkId)
+//        /// <param name="userid"> user id. </param>
+//        /// <param name="drinkid"> drink id. </param>
+//        /// <returns> true, if successfull, false otherwise. </returns>
+//        /// <exception cref="exception"> any issues. </exception>
+//        public bool addtouserpersonaldrinklist(int userid, int drinkid)
 //        {
 //            try
 //            {
-//                return this.drinkRepository.AddToPersonalDrinkList(userId, drinkId);
+//                return this.drinkrepository.addtopersonaldrinklist(userid, drinkid);
 //            }
-//            catch (Exception addDrinkToUserPersonalListException)
+//            catch (exception adddrinktouserpersonallistexception)
 //            {
-//                throw new Exception("Error adding drink to personal list:", addDrinkToUserPersonalListException);
+//                throw new exception("error adding drink to personal list:", adddrinktouserpersonallistexception);
 //            }
 //        }
 
 //        /// <summary>
-//        /// Deletes a drink from the user's personal drink list.
+//        /// deletes a drink from the user's personal drink list.
 //        /// </summary>
-//        /// <param name="userId"> User id. </param>
-//        /// <param name="drinkId"> Drink id. </param>
-//        /// <returns> True, if successfull, false otherwise. </returns>
-//        /// <exception cref="Exception"> Any issues. </exception>
-//        public bool DeleteFromUserPersonalDrinkList(int userId, int drinkId)
+//        /// <param name="userid"> user id. </param>
+//        /// <param name="drinkid"> drink id. </param>
+//        /// <returns> true, if successfull, false otherwise. </returns>
+//        /// <exception cref="exception"> any issues. </exception>
+//        public bool deletefromuserpersonaldrinklist(int userid, int drinkid)
 //        {
 //            try
 //            {
-//                return this.drinkRepository.DeleteFromPersonalDrinkList(userId, drinkId);
+//                return this.drinkrepository.deletefrompersonaldrinklist(userid, drinkid);
 //            }
-//            catch (Exception deleteFromUserPersonalDrinkListException)
+//            catch (exception deletefromuserpersonaldrinklistexception)
 //            {
-//                throw new Exception("Error deleting drink from personal list:", deleteFromUserPersonalDrinkListException);
+//                throw new exception("error deleting drink from personal list:", deletefromuserpersonaldrinklistexception);
 //            }
 //        }
 
 //        /// <summary>
-//        /// Votes for the drink of the day.
+//        /// votes for the drink of the day.
 //        /// </summary>
-//        /// <param name="userId"> User id. </param>
-//        /// <param name="drinkId"> Drink id. </param>
-//        /// <returns> The drink. </returns>
-//        /// <exception cref="Exception"> Any issues. </exception>
-//        public Drink VoteDrinkOfTheDay(int userId, int drinkId)
+//        /// <param name="userid"> user id. </param>
+//        /// <param name="drinkid"> drink id. </param>
+//        /// <returns> the drink. </returns>
+//        /// <exception cref="exception"> any issues. </exception>
+//        public drink votedrinkoftheday(int userid, int drinkid)
 //        {
 //            try
 //            {
-//                this.drinkRepository.VoteDrinkOfTheDay(userId, drinkId);
-//                return this.drinkRepository.GetDrinkById(drinkId) ?? throw new Exception("Drink not found after voting.");
+//                this.drinkrepository.votedrinkoftheday(userid, drinkid);
+//                return this.drinkrepository.getdrinkbyid(drinkid) ?? throw new exception("drink not found after voting.");
 //            }
-//            catch (Exception voteDrinkOfTheDayException)
+//            catch (exception votedrinkofthedayexception)
 //            {
-//                throw new Exception("Error voting drink:", voteDrinkOfTheDayException);
+//                throw new exception("error voting drink:", votedrinkofthedayexception);
 //            }
 //        }
 
 //        /// <summary>
-//        /// Retrieves the drink of the day.
+//        /// retrieves the drink of the day.
 //        /// </summary>
-//        /// <returns> The drink. </returns>
-//        /// <exception cref="Exception"> Any issues. </exception>
-//        public Drink GetDrinkOfTheDay()
+//        /// <returns> the drink. </returns>
+//        /// <exception cref="exception"> any issues. </exception>
+//        public drink getdrinkoftheday()
 //        {
 //            try
 //            {
-//                return this.drinkRepository.GetDrinkOfTheDay();
+//                return this.drinkrepository.getdrinkoftheday();
 //            }
-//            catch (Exception e)
+//            catch (exception e)
 //            {
-//                throw new Exception("Error getting drink of the day:" + e.Message, e);
+//                throw new exception("error getting drink of the day:" + e.message, e);
 //            }
 //        }
 //    }
