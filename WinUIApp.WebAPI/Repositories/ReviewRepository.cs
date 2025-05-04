@@ -11,9 +11,9 @@ namespace WinUIApp.WebAPI.Repositories
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.EntityFrameworkCore;
     using WinUiApp.Data;
     using WinUiApp.Data.Data;
+    using WinUIApp.WebAPI.Constants.ErrorMessages;
 
     /// <summary>
     /// Repository for managing review-related operations.
@@ -53,11 +53,11 @@ namespace WinUIApp.WebAPI.Repositories
         }
 
         /// <inheritdoc/>
-        public int AddReview(Review review)
+        public Review AddReview(Review review)
         {
             if (string.IsNullOrWhiteSpace(review.Content))
             {
-                throw new ArgumentException("Review content cannot be null or empty.", nameof(review.Content));
+                throw new ArgumentException(RepositoryErrorMessages.EmptyReviewContent, nameof(review.Content));
             }
 
             review.CreationDate ??= DateTime.UtcNow;
@@ -66,15 +66,15 @@ namespace WinUIApp.WebAPI.Repositories
             this.dbContext.Reviews.Add(review);
             this.dbContext.SaveChanges();
 
-            return review.ReviewId;
+            return review;
         }
 
         /// <inheritdoc/>
-        public void UpdateReview(Review review)
+        public Review UpdateReview(Review review)
         {
             if (string.IsNullOrWhiteSpace(review.Content))
             {
-                throw new ArgumentException("Review content cannot be null or empty.", nameof(review.Content));
+                throw new ArgumentException(RepositoryErrorMessages.EmptyReviewContent, nameof(review.Content));
             }
 
             var existingReview = this.dbContext.Reviews
@@ -82,7 +82,7 @@ namespace WinUIApp.WebAPI.Repositories
 
             if (existingReview == null)
             {
-                throw new Exception("No review found with the provided Id.");
+                throw new Exception(RepositoryErrorMessages.EntityNotFound);
             }
 
             existingReview.RatingId = review.RatingId;
@@ -92,6 +92,8 @@ namespace WinUIApp.WebAPI.Repositories
             existingReview.IsActive = review.IsActive ?? existingReview.IsActive;
 
             this.dbContext.SaveChanges();
+
+            return existingReview;
         }
 
         /// <inheritdoc/>
@@ -102,7 +104,7 @@ namespace WinUIApp.WebAPI.Repositories
 
             if (review == null)
             {
-                throw new Exception("No review found with the provided Id.");
+                throw new Exception(RepositoryErrorMessages.EntityNotFound);
             }
 
             this.dbContext.Reviews.Remove(review);
