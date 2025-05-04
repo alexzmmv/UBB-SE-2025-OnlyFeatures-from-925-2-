@@ -70,7 +70,7 @@ CREATE TABLE UserDrink (
 );
 
 -- Inserts for Brand
-INSERT INTO Brand (BrandName) VALUES 
+INSERT INTO Brands (BrandName) VALUES 
 ('Ursugi'), ('Bergenbir'), ('Duvel'), ('Heineken'), ('Guinness'),
 ('Stella Artois'), ('Corona'), ('BrewDog'), ('Chimay'), ('Trappistes Rochefort');
 
@@ -133,3 +133,13 @@ SELECT * FROM [User];
 SELECT * FROM Vote;
 SELECT * FROM DrinkOfTheDay;
 SELECT * FROM UserDrink;
+
+
+
+INSERT INTO Brands (BrandName) VALUES 
+('Ursugi'), ('Bergenbir'), ('Duvel'), ('Heineken'), ('Guinness'),
+('Stella Artois'), ('Corona'), ('BrewDog'), ('Chimay'), ('Trappistes Rochefort');
+
+INSERT INTO Category (CategoryName) VALUES 
+('Lager'), ('IPA'), ('Stout'), ('Pilsner'), ('Wheat Beer'),
+('Pale Ale'), ('Sour'), ('Porter'), ('Belgian Dubbel'), ('Belgian Tripel'), ('Lambic');

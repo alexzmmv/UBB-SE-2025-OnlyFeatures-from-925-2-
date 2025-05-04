@@ -21,7 +21,7 @@ namespace WinUIApp.Services
         {
             this.httpClient = new HttpClient
             {
-                BaseAddress = new Uri("https://localhost:5001/"),
+                BaseAddress = new Uri("https://localhost:7079/"),
             };
         }
 
