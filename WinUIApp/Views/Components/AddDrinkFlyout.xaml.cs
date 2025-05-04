@@ -67,7 +67,7 @@ namespace WinUIApp.Views.Components
 
         private void AddDrinkFlyout_Loaded(object sender, RoutedEventArgs eventArguments)
         {
-            var drinkService = new DrinkService();
+            var drinkService = new ProxyDrinkService();
             var userService = new UserService();
             bool isAdmin = this.adminService.IsAdmin(this.UserId);
 

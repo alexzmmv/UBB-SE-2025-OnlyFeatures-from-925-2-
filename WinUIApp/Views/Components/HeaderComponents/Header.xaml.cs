@@ -24,7 +24,7 @@ namespace WinUIApp.Views.Components.HeaderComponents
         public Header()
         {
             this.InitializeComponent();
-            this.viewModel = new HeaderViewModel(new Services.DrinkService());
+            this.viewModel = new HeaderViewModel(new Services.ProxyDrinkService());
             this.CategoryMenu.PopulateCategories(this.viewModel.GetCategories());
         }
 

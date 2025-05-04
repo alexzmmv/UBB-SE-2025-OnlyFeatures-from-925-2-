@@ -24,7 +24,7 @@ namespace WinUIApp.Views.Pages
         public MainPage()
         {
             this.InitializeComponent();
-            this.viewModel = new MainPageViewModel(new DrinkService(), new UserService());
+            this.viewModel = new MainPageViewModel(new ProxyDrinkService(), new UserService());
             this.DataContext = this.viewModel;
         }
 
