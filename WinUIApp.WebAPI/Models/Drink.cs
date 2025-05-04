@@ -20,6 +20,8 @@ namespace WinUIApp.WebAPI.Models
         private List<Category> categoryList;
         private float alcoholContent;
 
+        public Drink() { }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Drink"/> class.
         /// </summary>
