@@ -17,8 +17,6 @@ namespace WinUIApp.Views.Components.HeaderComponents
     using Microsoft.UI.Xaml.Input;
     using Microsoft.UI.Xaml.Media;
     using Microsoft.UI.Xaml.Navigation;
-    using Windows.Foundation;
-    using Windows.Foundation.Collections;
     using WinUIApp.Models;
 
     /// <summary>
