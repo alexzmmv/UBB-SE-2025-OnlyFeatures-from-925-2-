@@ -20,14 +20,14 @@ namespace WinUIApp.WebAPI.Repositories
         /// Retrieves a list of all drinks.
         /// </summary>
         /// <returns> List of drinks. </returns>
-        List<Drink> GetDrinks();
+        List<DrinkDTO> GetDrinks();
 
         /// <summary>
         /// Retrieves a drink by its unique identifier.
         /// </summary>
         /// <param name="drinkId"> Drink id. </param>
         /// <returns> The drink. </returns>
-        Drink? GetDrinkById(int drinkId);
+        DrinkDTO? GetDrinkById(int drinkId);
 
         /// <summary>
         /// Adds a new drink to the database.
@@ -37,13 +37,13 @@ namespace WinUIApp.WebAPI.Repositories
         /// <param name="categories"> List of categories. </param>
         /// <param name="brandName"> Brand name. </param>
         /// <param name="alcoholContent"> Alcohol content. </param>
-        void AddDrink(string drinkName, string drinkUrl, List<Category> categories, string brandName, float alcoholContent);
+        void AddDrink(string drinkName, string drinkUrl, List<CategoryDTO> categories, string brandName, float alcoholContent);
 
         /// <summary>
         /// Updates the details of an existing drink in the database.
         /// </summary>
-        /// <param name="drink"> The drink with updated info. </param>
-        void UpdateDrink(Drink drink);
+        /// <param name="drinkDto"> The drink with updated info. </param>
+        void UpdateDrink(DrinkDTO drinkDto);
 
         /// <summary>
         /// Deletes a drink from the database.
@@ -55,7 +55,7 @@ namespace WinUIApp.WebAPI.Repositories
         /// Retrieves the drink of the day.
         /// </summary>
         /// <returns> Drink of the day. </returns>
-        Drink GetDrinkOfTheDay();
+        DrinkDTO GetDrinkOfTheDay();
 
         /// <summary>
         /// Resets the Drink of the Day to the new top-voted drink for today.
@@ -74,7 +74,7 @@ namespace WinUIApp.WebAPI.Repositories
         /// </summary>
         /// <param name="userId"> User id. </param>
         /// <returns> The list of drinks for the user. </returns>
-        List<Drink> GetPersonalDrinkList(int userId);
+        List<DrinkDTO> GetPersonalDrinkList(int userId);
 
         /// <summary>
         /// Checks if a drink is already in the user's personal drink list.
@@ -116,27 +116,27 @@ namespace WinUIApp.WebAPI.Repositories
         /// Retrieves a list of all available drink categories.
         /// </summary>
         /// <returns> List of all categories. </returns>
-        List<Category> GetDrinkCategories();
+        List<CategoryDTO> GetDrinkCategories();
 
         /// <summary>
         /// Retrieves a list of drink categories by drink id.
         /// </summary>
         /// <param name="drinkId"> Id of the drink. </param>
         /// <returns> Categories for the specific drink. </returns>
-        List<Category> GetDrinkCategoriesById(int drinkId);
+        List<CategoryDTO> GetDrinkCategoriesById(int drinkId);
 
         /// <summary>
         /// Retrieves a list of all available drink brands.
         /// </summary>
         /// <returns> List of all brands. </returns>
-        List<Brand> GetDrinkBrands();
+        List<BrandDTO> GetDrinkBrands();
 
         /// <summary>
         /// Retrieves the drink brand for the drink id.
         /// </summary>
         /// <param name="drinkId"> Drink id. </param>
         /// <returns> Brand. </returns>
-        Brand GetBrandById(int drinkId);
+        BrandDTO GetBrandById(int drinkId);
 
         /// <summary>
         /// Checks if a drink brand is already in the database.

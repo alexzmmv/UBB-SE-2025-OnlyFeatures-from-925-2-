@@ -37,7 +37,7 @@ namespace WinUIApp.Tests.UnitTests.Services
         {
             // Arrange
             int drinkId = 1;
-            var expectedDrink = new Drink(drinkId, "Test Drink", "test.jpg", new List<Category>(), new Brand(1, "Test Brand"), 5.0f);
+            var expectedDrink = new DrinkDTO(drinkId, "Test Drink", "test.jpg", new List<CategoryDTO>(), new BrandDTO(1, "Test Brand"), 5.0f);
             this.mockRepository.Setup(repository => repository.GetDrinkById(drinkId)).Returns(expectedDrink);
 
             // Act
@@ -72,10 +72,10 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void GetDrinks_NoFilters_ReturnsAllDrinks()
         {
             // Arrange
-            var expectedDrinks = new List<Drink>
+            var expectedDrinks = new List<DrinkDTO>
             {
-                new Drink(1, "Test Drink 1", "test1.jpg", new List<Category>(), new Brand(1, "Brand 1"), 5.0f),
-                new Drink(2, "Test Drink 2", "test2.jpg", new List<Category>(), new Brand(2, "Brand 2"), 8.0f)
+                new DrinkDTO(1, "Test Drink 1", "test1.jpg", new List<CategoryDTO>(), new BrandDTO(1, "Brand 1"), 5.0f),
+                new DrinkDTO(2, "Test Drink 2", "test2.jpg", new List<CategoryDTO>(), new BrandDTO(2, "Brand 2"), 8.0f)
             };
             this.mockRepository.Setup(repository => repository.GetDrinks()).Returns(expectedDrinks);
 
@@ -98,10 +98,10 @@ namespace WinUIApp.Tests.UnitTests.Services
         {
             // Arrange
             float minAlcohol = 6.0f;
-            var allDrinks = new List<Drink>
+            var allDrinks = new List<DrinkDTO>
             {
-                new Drink(1, "Test Drink 1", "test1.jpg", new List<Category>(), new Brand(1, "Brand 1"), 5.0f),
-                new Drink(2, "Test Drink 2", "test2.jpg", new List<Category>(), new Brand(2, "Brand 2"), 8.0f)
+                new DrinkDTO(1, "Test Drink 1", "test1.jpg", new List<CategoryDTO>(), new BrandDTO(1, "Brand 1"), 5.0f),
+                new DrinkDTO(2, "Test Drink 2", "test2.jpg", new List<CategoryDTO>(), new BrandDTO(2, "Brand 2"), 8.0f)
             };
             this.mockRepository.Setup(repository => repository.GetDrinks()).Returns(allDrinks);
 
@@ -124,10 +124,10 @@ namespace WinUIApp.Tests.UnitTests.Services
         {
             // Arrange
             float maxAlcohol = 6.0f;
-            var allDrinks = new List<Drink>
+            var allDrinks = new List<DrinkDTO>
             {
-                new Drink(1, "Test Drink 1", "test1.jpg", new List<Category>(), new Brand(1, "Brand 1"), 5.0f),
-                new Drink(2, "Test Drink 2", "test2.jpg", new List<Category>(), new Brand(2, "Brand 2"), 8.0f)
+                new DrinkDTO(1, "Test Drink 1", "test1.jpg", new List<CategoryDTO>(), new BrandDTO(1, "Brand 1"), 5.0f),
+                new DrinkDTO(2, "Test Drink 2", "test2.jpg", new List<CategoryDTO>(), new BrandDTO(2, "Brand 2"), 8.0f)
             };
             this.mockRepository.Setup(repository => repository.GetDrinks()).Returns(allDrinks);
 
@@ -149,10 +149,10 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void GetDrinks_WithOrderingByAlcoholAscending_ReturnsOrderedDrinks()
         {
             // Arrange
-            var allDrinks = new List<Drink>
+            var allDrinks = new List<DrinkDTO>
             {
-                new Drink(2, "Test Drink 2", "test2.jpg", new List<Category>(), new Brand(2, "Brand 2"), 8.0f),
-                new Drink(1, "Test Drink 1", "test1.jpg", new List<Category>(), new Brand(1, "Brand 1"), 5.0f)
+                new DrinkDTO(2, "Test Drink 2", "test2.jpg", new List<CategoryDTO>(), new BrandDTO(2, "Brand 2"), 8.0f),
+                new DrinkDTO(1, "Test Drink 1", "test1.jpg", new List<CategoryDTO>(), new BrandDTO(1, "Brand 1"), 5.0f)
             };
             this.mockRepository.Setup(repository => repository.GetDrinks()).Returns(allDrinks);
 
@@ -177,10 +177,10 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void GetDrinks_WithOrderingByAlcoholDescending_ReturnsOrderedDrinks()
         {
             // Arrange
-            var allDrinks = new List<Drink>
+            var allDrinks = new List<DrinkDTO>
             {
-                new Drink(1, "Test Drink 1", "test1.jpg", new List<Category>(), new Brand(1, "Brand 1"), 5.0f),
-                new Drink(2, "Test Drink 2", "test2.jpg", new List<Category>(), new Brand(2, "Brand 2"), 8.0f)
+                new DrinkDTO(1, "Test Drink 1", "test1.jpg", new List<CategoryDTO>(), new BrandDTO(1, "Brand 1"), 5.0f),
+                new DrinkDTO(2, "Test Drink 2", "test2.jpg", new List<CategoryDTO>(), new BrandDTO(2, "Brand 2"), 8.0f)
             };
             this.mockRepository.Setup(repository => repository.GetDrinks()).Returns(allDrinks);
 
@@ -226,7 +226,7 @@ namespace WinUIApp.Tests.UnitTests.Services
             // Arrange
             string drinkName = "New Drink";
             string drinkUrl = "new.jpg";
-            var categories = new List<Category> { new Category(1, "Test Category") };
+            var categories = new List<CategoryDTO> { new CategoryDTO(1, "Test Category") };
             string brandName = "Test Brand";
             float alcoholContent = 5.0f;
 
@@ -246,7 +246,7 @@ namespace WinUIApp.Tests.UnitTests.Services
             // Arrange
             string drinkName = "New Drink";
             string drinkUrl = "new.jpg";
-            var categories = new List<Category> { new Category(1, "Test Category") };
+            var categories = new List<CategoryDTO> { new CategoryDTO(1, "Test Category") };
             string brandName = "Test Brand";
             float alcoholContent = 5.0f;
             var exception = new Exception("Repository error");
@@ -268,7 +268,7 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void UpdateDrink_ValidDrink_CallsRepository()
         {
             // Arrange
-            var drink = new Drink(1, "Updated Drink", "updated.jpg", new List<Category>(), new Brand(1, "Brand"), 7.5f);
+            var drink = new DrinkDTO(1, "Updated Drink", "updated.jpg", new List<CategoryDTO>(), new BrandDTO(1, "Brand"), 7.5f);
 
             // Act
             this.drinkService.UpdateDrink(drink);
@@ -284,7 +284,7 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void UpdateDrink_RepositoryThrowsException_WrapException()
         {
             // Arrange
-            var drink = new Drink(1, "Updated Drink", "updated.jpg", new List<Category>(), new Brand(1, "Brand"), 7.5f);
+            var drink = new DrinkDTO(1, "Updated Drink", "updated.jpg", new List<CategoryDTO>(), new BrandDTO(1, "Brand"), 7.5f);
             var exception = new Exception("Repository error");
             this.mockRepository.Setup(repository => repository.UpdateDrink(drink)).Throws(exception);
 
@@ -334,10 +334,10 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void GetDrinkCategories_NoErrors_ReturnsCategories()
         {
             // Arrange
-            var expectedCategories = new List<Category>
+            var expectedCategories = new List<CategoryDTO>
             {
-                new Category(1, "Category 1"),
-                new Category(2, "Category 2")
+                new CategoryDTO(1, "Category 1"),
+                new CategoryDTO(2, "Category 2")
             };
             this.mockRepository.Setup(repository => repository.GetDrinkCategories()).Returns(expectedCategories);
 
@@ -356,10 +356,10 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void GetDrinks_WithSearchKeyword_ReturnsFilteredDrinks()
         {
             // Arrange
-            var allDrinks = new List<Drink>
+            var allDrinks = new List<DrinkDTO>
             {
-                new Drink(1, "Lime Shot", "lime.jpg", new List<Category>(), new Brand(1, "Brand A"), 5.0f),
-                new Drink(2, "Berry Juice", "berry.jpg", new List<Category>(), new Brand(2, "Brand B"), 4.0f)
+                new DrinkDTO(1, "Lime Shot", "lime.jpg", new List<CategoryDTO>(), new BrandDTO(1, "Brand A"), 5.0f),
+                new DrinkDTO(2, "Berry Juice", "berry.jpg", new List<CategoryDTO>(), new BrandDTO(2, "Brand B"), 4.0f)
             };
             this.mockRepository.Setup(repository => repository.GetDrinks()).Returns(allDrinks);
 
@@ -377,10 +377,10 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void GetDrinks_WithBrandFilter_ReturnsFilteredDrinks()
         {
             // Arrange
-            var allDrinks = new List<Drink>
+            var allDrinks = new List<DrinkDTO>
             {
-                new Drink(1, "Drink A", "a.jpg", new List<Category>(), new Brand(1, "TargetBrand"), 5.0f),
-                new Drink(2, "Drink B", "b.jpg", new List<Category>(), new Brand(2, "OtherBrand"), 5.0f)
+                new DrinkDTO(1, "Drink A", "a.jpg", new List<CategoryDTO>(), new BrandDTO(1, "TargetBrand"), 5.0f),
+                new DrinkDTO(2, "Drink B", "b.jpg", new List<CategoryDTO>(), new BrandDTO(2, "OtherBrand"), 5.0f)
             };
             this.mockRepository.Setup(repository => repository.GetDrinks()).Returns(allDrinks);
 
@@ -398,10 +398,10 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void GetDrinks_WithCategoryFilter_ReturnsFilteredDrinks()
         {
             // Arrange
-            var allDrinks = new List<Drink>
+            var allDrinks = new List<DrinkDTO>
             {
-                new Drink(1, "Drink A", "a.jpg", new List<Category> { new Category(1, "Shot") }, new Brand(1, "Brand"), 5.0f),
-                new Drink(2, "Drink B", "b.jpg", new List<Category> { new Category(2, "Cocktail") }, new Brand(1, "Brand"), 5.0f)
+                new DrinkDTO(1, "Drink A", "a.jpg", new List<CategoryDTO> { new CategoryDTO(1, "Shot") }, new BrandDTO(1, "Brand"), 5.0f),
+                new DrinkDTO(2, "Drink B", "b.jpg", new List<CategoryDTO> { new CategoryDTO(2, "Cocktail") }, new BrandDTO(1, "Brand"), 5.0f)
             };
             this.mockRepository.Setup(repository => repository .GetDrinks()).Returns(allDrinks);
 
@@ -419,10 +419,10 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void GetDrinks_WithOrderingByNameAscending_ReturnsOrderedDrinks()
         {
             // Arrange
-            var allDrinks = new List<Drink>
+            var allDrinks = new List<DrinkDTO>
             {
-                new Drink(1, "Zeta", "z.jpg", new List<Category>(), new Brand(1, "Brand A"), 5.0f),
-                new Drink(2, "Alpha", "a.jpg", new List<Category>(), new Brand(2, "Brand B"), 5.0f)
+                new DrinkDTO(1, "Zeta", "z.jpg", new List<CategoryDTO>(), new BrandDTO(1, "Brand A"), 5.0f),
+                new DrinkDTO(2, "Alpha", "a.jpg", new List<CategoryDTO>(), new BrandDTO(2, "Brand B"), 5.0f)
             };
             this.mockRepository.Setup(repository => repository.GetDrinks()).Returns(allDrinks);
 
@@ -442,10 +442,10 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void GetDrinks_WithOrderingByNameDescending_ReturnsOrderedDrinks()
         {
             // Arrange
-            var allDrinks = new List<Drink>
+            var allDrinks = new List<DrinkDTO>
             {
-                new Drink(1, "Alpha", "a.jpg", new List<Category>(), new Brand(1, "Brand A"), 5.0f),
-                new Drink(2, "Zeta", "z.jpg", new List<Category>(), new Brand(2, "Brand B"), 5.0f)
+                new DrinkDTO(1, "Alpha", "a.jpg", new List<CategoryDTO>(), new BrandDTO(1, "Brand A"), 5.0f),
+                new DrinkDTO(2, "Zeta", "z.jpg", new List<CategoryDTO>(), new BrandDTO(2, "Brand B"), 5.0f)
             };
             this.mockRepository.Setup(repository => repository.GetDrinks()).Returns(allDrinks);
 
@@ -465,10 +465,10 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void GetDrinks_WithMultipleOrderingKeys_IgnoresOrdering()
         {
             // Arrange
-            var allDrinks = new List<Drink>
+            var allDrinks = new List<DrinkDTO>
             {
-                new Drink(1, "B Drink", "b.jpg", new List<Category>(), new Brand(1, "Brand"), 5.0f),
-                new Drink(2, "A Drink", "a.jpg", new List<Category>(), new Brand(2, "Brand"), 8.0f)
+                new DrinkDTO(1, "B Drink", "b.jpg", new List<CategoryDTO>(), new BrandDTO(1, "Brand"), 5.0f),
+                new DrinkDTO(2, "A Drink", "a.jpg", new List<CategoryDTO>(), new BrandDTO(2, "Brand"), 8.0f)
             };
             this.mockRepository.Setup(repository => repository.GetDrinks()).Returns(allDrinks);
 
@@ -492,10 +492,10 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void GetDrinks_WithEmptySearchKeyword_IgnoresSearch()
         {
             // Arrange
-            var allDrinks = new List<Drink>
+            var allDrinks = new List<DrinkDTO>
             {
-                new Drink(1, "Drink One", "1.jpg", new List<Category>(), new Brand(1, "Brand"), 5.0f),
-                new Drink(2, "Drink Two", "2.jpg", new List<Category>(), new Brand(1, "Brand"), 5.0f)
+                new DrinkDTO(1, "Drink One", "1.jpg", new List<CategoryDTO>(), new BrandDTO(1, "Brand"), 5.0f),
+                new DrinkDTO(2, "Drink Two", "2.jpg", new List<CategoryDTO>(), new BrandDTO(1, "Brand"), 5.0f)
             };
             this.mockRepository.Setup(repository => repository.GetDrinks()).Returns(allDrinks);
 
@@ -512,10 +512,10 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void GetDrinks_WithSearchBrandAndCategoryFilters_ReturnsFilteredDrink()
         {
             // Arrange
-            var allDrinks = new List<Drink>
+            var allDrinks = new List<DrinkDTO>
             {
-                new Drink(1, "Lemon Shot", "img1.jpg", new List<Category> { new Category(1, "Shot") }, new Brand(1, "CoolBrand"), 5.0f),
-                new Drink(2, "Berry Vodka", "img2.jpg", new List<Category> { new Category(2, "Vodka") }, new Brand(2, "OtherBrand"), 5.0f)
+                new DrinkDTO(1, "Lemon Shot", "img1.jpg", new List<CategoryDTO> { new CategoryDTO(1, "Shot") }, new BrandDTO(1, "CoolBrand"), 5.0f),
+                new DrinkDTO(2, "Berry Vodka", "img2.jpg", new List<CategoryDTO> { new CategoryDTO(2, "Vodka") }, new BrandDTO(2, "OtherBrand"), 5.0f)
             };
             this.mockRepository.Setup(repository => repository.GetDrinks()).Returns(allDrinks);
 
@@ -533,10 +533,10 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void GetDrinks_WithBrandCategoryAndAlcoholRangeFilters_ReturnsFilteredDrink()
         {
             // Arrange
-            var allDrinks = new List<Drink>
+            var allDrinks = new List<DrinkDTO>
             {
-                new Drink(1, "Zippy Ale", "img1.jpg", new List<Category> { new Category(1, "Ale") }, new Brand(1, "HopBrand"), 6.5f),
-                new Drink(2, "Dark Lager", "img2.jpg", new List<Category> { new Category(2, "Lager") }, new Brand(2, "BrewBrand"), 9.0f)
+                new DrinkDTO(1, "Zippy Ale", "img1.jpg", new List<CategoryDTO> { new CategoryDTO(1, "Ale") }, new BrandDTO(1, "HopBrand"), 6.5f),
+                new DrinkDTO(2, "Dark Lager", "img2.jpg", new List<CategoryDTO> { new CategoryDTO(2, "Lager") }, new BrandDTO(2, "BrewBrand"), 9.0f)
             };
             this.mockRepository.Setup(repository => repository.GetDrinks()).Returns(allDrinks);
 
@@ -554,10 +554,10 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void GetDrinks_WithAllFiltersAndAlcoholOrderingDesc_ReturnsSortedDrink()
         {
             // Arrange
-            var allDrinks = new List<Drink>
+            var allDrinks = new List<DrinkDTO>
             {
-                new Drink(1, "Citrus Pop", "img1.jpg", new List<Category> { new Category(1, "Cocktail") }, new Brand(1, "ZingBrand"), 4.5f),
-                new Drink(2, "Citrus Bomb", "img2.jpg", new List<Category> { new Category(1, "Cocktail") }, new Brand(1, "ZingBrand"), 6.5f)
+                new DrinkDTO(1, "Citrus Pop", "img1.jpg", new List<CategoryDTO> { new CategoryDTO(1, "Cocktail") }, new BrandDTO(1, "ZingBrand"), 4.5f),
+                new DrinkDTO(2, "Citrus Bomb", "img2.jpg", new List<CategoryDTO> { new CategoryDTO(1, "Cocktail") }, new BrandDTO(1, "ZingBrand"), 6.5f)
             };
             this.mockRepository.Setup(repository => repository.GetDrinks()).Returns(allDrinks);
 
@@ -577,10 +577,10 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void GetDrinks_WithSearchAndAlcoholRange_ReturnsFilteredDrink()
         {
             // Arrange
-            var allDrinks = new List<Drink>
+            var allDrinks = new List<DrinkDTO>
             {
-                new Drink(1, "Rum Delight", "rum1.jpg", new List<Category>(), new Brand(1, "Brand X"), 6.0f),
-                new Drink(2, "Rum Strong", "rum2.jpg", new List<Category>(), new Brand(2, "Brand Y"), 9.0f)
+                new DrinkDTO(1, "Rum Delight", "rum1.jpg", new List<CategoryDTO>(), new BrandDTO(1, "Brand X"), 6.0f),
+                new DrinkDTO(2, "Rum Strong", "rum2.jpg", new List<CategoryDTO>(), new BrandDTO(2, "Brand Y"), 9.0f)
             };
             this.mockRepository.Setup(repository => repository.GetDrinks()).Returns(allDrinks);
 
@@ -598,10 +598,10 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void GetDrinks_WithSearchAndOrderingByNameAscending_ReturnsOrderedDrinks()
         {
             // Arrange
-            var allDrinks = new List<Drink>
+            var allDrinks = new List<DrinkDTO>
             {
-                new Drink(1, "Mint Storm", "m1.jpg", new List<Category>(), new Brand(1, "Fresh"), 5.0f),
-                new Drink(2, "Mint Breeze", "m2.jpg", new List<Category>(), new Brand(1, "Fresh"), 5.0f)
+                new DrinkDTO(1, "Mint Storm", "m1.jpg", new List<CategoryDTO>(), new BrandDTO(1, "Fresh"), 5.0f),
+                new DrinkDTO(2, "Mint Breeze", "m2.jpg", new List<CategoryDTO>(), new BrandDTO(1, "Fresh"), 5.0f)
             };
             this.mockRepository.Setup(repository => repository.GetDrinks()).Returns(allDrinks);
 
@@ -621,10 +621,10 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void GetDrinks_WithBrandFilterAndOrderingByNameDescending_ReturnsOrderedDrinks()
         {
             // Arrange
-            var allDrinks = new List<Drink>
+            var allDrinks = new List<DrinkDTO>
             {
-                new Drink(1, "Berry", "b.jpg", new List<Category>(), new Brand(1, "ChillBrand"), 5.0f),
-                new Drink(2, "Apple", "a.jpg", new List<Category>(), new Brand(1, "ChillBrand"), 5.0f)
+                new DrinkDTO(1, "Berry", "b.jpg", new List<CategoryDTO>(), new BrandDTO(1, "ChillBrand"), 5.0f),
+                new DrinkDTO(2, "Apple", "a.jpg", new List<CategoryDTO>(), new BrandDTO(1, "ChillBrand"), 5.0f)
             };
             this.mockRepository.Setup(repository => repository.GetDrinks()).Returns(allDrinks);
 
@@ -644,10 +644,10 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void GetDrinks_WithCategoryAndMinAlcoholFilter_ReturnsFilteredDrink()
         {
             // Arrange
-            var allDrinks = new List<Drink>
+            var allDrinks = new List<DrinkDTO>
             {
-                new Drink(1, "Gin Fizz", "g1.jpg", new List<Category> { new Category(1, "Cocktail") }, new Brand(1, "Brand A"), 7.0f),
-                new Drink(2, "Gin Light", "g2.jpg", new List<Category> { new Category(1, "Cocktail") }, new Brand(1, "Brand A"), 4.0f)
+                new DrinkDTO(1, "Gin Fizz", "g1.jpg", new List<CategoryDTO> { new CategoryDTO(1, "Cocktail") }, new BrandDTO(1, "Brand A"), 7.0f),
+                new DrinkDTO(2, "Gin Light", "g2.jpg", new List<CategoryDTO> { new CategoryDTO(1, "Cocktail") }, new BrandDTO(1, "Brand A"), 4.0f)
             };
             this.mockRepository.Setup(repository => repository.GetDrinks()).Returns(allDrinks);
 
@@ -665,10 +665,10 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void GetDrinks_WithSearchBrandCategoryAndNameOrderingAsc_ReturnsOrderedDrink()
         {
             // Arrange
-            var allDrinks = new List<Drink>
+            var allDrinks = new List<DrinkDTO>
             {
-                new Drink(1, "Berry Boost", "bb.jpg", new List<Category> { new Category(1, "Juice") }, new Brand(1, "FruitBrand"), 4.5f),
-                new Drink(2, "Berry Blast", "bl.jpg", new List<Category> { new Category(1, "Juice") }, new Brand(1, "FruitBrand"), 4.5f)
+                new DrinkDTO(1, "Berry Boost", "bb.jpg", new List<CategoryDTO> { new CategoryDTO(1, "Juice") }, new BrandDTO(1, "FruitBrand"), 4.5f),
+                new DrinkDTO(2, "Berry Blast", "bl.jpg", new List<CategoryDTO> { new CategoryDTO(1, "Juice") }, new BrandDTO(1, "FruitBrand"), 4.5f)
             };
             this.mockRepository.Setup(repository => repository.GetDrinks()).Returns(allDrinks);
 
@@ -689,7 +689,7 @@ namespace WinUIApp.Tests.UnitTests.Services
             // Arrange
             int userId = 1;
             int drinkId = 42;
-            var expectedDrink = new Drink(drinkId, "Lager", "lager.png", new List<Category>(), new Brand(1, "Brand"), 5.0f);
+            var expectedDrink = new DrinkDTO(drinkId, "Lager", "lager.png", new List<CategoryDTO>(), new BrandDTO(1, "Brand"), 5.0f);
 
             this.mockRepository.Setup(repository => repository.VoteDrinkOfTheDay(userId, drinkId));
             this.mockRepository.Setup(repository => repository.GetDrinkById(drinkId)).Returns(expectedDrink);
@@ -712,7 +712,7 @@ namespace WinUIApp.Tests.UnitTests.Services
             // Arrange
             int userId = 2;
             int drinkId = 7;
-            var expectedDrink = new Drink(drinkId, "Stout", "stout.jpg", new List<Category>(), new Brand(2, "Brew"), 6.5f);
+            var expectedDrink = new DrinkDTO(drinkId, "Stout", "stout.jpg", new List<CategoryDTO>(), new BrandDTO(2, "Brew"), 6.5f);
 
             this.mockRepository.Setup(repository => repository.VoteDrinkOfTheDay(userId, drinkId));
             this.mockRepository.Setup(repository => repository.GetDrinkById(drinkId)).Returns(expectedDrink);
@@ -752,7 +752,7 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void GetDrinkOfTheDay_RepositoryReturnsDrink_ReturnsDrink()
         {
             // Arrange
-            var expectedDrink = new Drink(1, "Daily Special", "daily.jpg", new List<Category>(), new Brand(1, "Brand X"), 6.5f);
+            var expectedDrink = new DrinkDTO(1, "Daily Special", "daily.jpg", new List<CategoryDTO>(), new BrandDTO(1, "Brand X"), 6.5f);
             this.mockRepository.Setup(repository => repository.GetDrinkOfTheDay()).Returns(expectedDrink);
 
             // Act

@@ -33,53 +33,52 @@ namespace WinUIApp.WebAPI.Services
         /// Retrieves a rating by its unique identifier.
         /// </summary>
         /// <param name="ratingId">The rating identifier.</param>
-        /// <returns>The corresponding rating or null if it doesnt exist.<see cref="Rating"/>.</returns>
-        public Rating? GetRatingById(int ratingId) => this.ratingRepository.GetRatingById(ratingId).ToModel();
+        /// <returns>The corresponding rating or null if it doesnt exist.<see cref="RatingDTO"/>.</returns>
+        public RatingDTO? GetRatingById(int ratingId) =>
+            this.ratingRepository.GetRatingById(ratingId).ToModel();
 
         /// <summary>
         /// Retrieves all ratings associated with a specific drink.
         /// </summary>
         /// <param name="drinkId">The drink identifier.</param>
-        /// <returns>A collection of <see cref="Rating"/> instances for the drink.</returns>
-        public IEnumerable<Rating> GetRatingsByDrink(int drinkId) => this.ratingRepository.GetRatingsByDrinkId(drinkId).ToModels();
+        /// <returns>A collection of <see cref="RatingDTO"/> instances for the drink.</returns>
+        public IEnumerable<RatingDTO> GetRatingsByDrink(int drinkId) => 
+            this.ratingRepository.GetRatingsByDrinkId(drinkId).ToModels();
 
         /// <summary>
         /// Creates a new rating.
         /// </summary>
-        /// <param name="rating">The rating to create.</param>
-        /// <returns>The created <see cref="Rating"/> instance.</returns>
+        /// <param name="ratingDto">The rating to create.</param>
+        /// <returns>The created <see cref="RatingDTO"/> instance.</returns>
         /// <exception cref="System.ArgumentException">Thrown when the rating is invalid.</exception>
-        public Rating CreateRating(Rating rating)
+        public RatingDTO CreateRating(RatingDTO ratingDto)
         {
-            if (!rating.IsValid())
-            {
+            if (!ratingDto.IsValid())
                 throw new ArgumentException(ServiceErrorMessages.InvalidRatingValue);
-            }
-
-            return this.ratingRepository.AddRating(rating.ToDataModel()).ToModel();
+            
+            return this.ratingRepository.AddRating(ratingDto.ToDataModel()).ToModel();
         }
 
         /// <summary>
         /// Updates an existing rating.
         /// </summary>
-        /// <param name="rating">The rating to update.</param>
-        /// <returns>The updated <see cref="Rating"/> instance.</returns>
+        /// <param name="ratingDto">The rating to update.</param>
+        /// <returns>The updated <see cref="RatingDTO"/> instance.</returns>
         /// <exception cref="System.ArgumentException">Thrown when the rating is invalid.</exception>
-        public Rating UpdateRating(Rating rating)
+        public RatingDTO UpdateRating(RatingDTO ratingDto)
         {
-            if (!rating.IsValid())
-            {
+            if (!ratingDto.IsValid())
                 throw new ArgumentException(ServiceErrorMessages.InvalidRatingValue);
-            }
 
-            return this.ratingRepository.UpdateRating(rating.ToDataModel()).ToModel();
+            return this.ratingRepository.UpdateRating(ratingDto.ToDataModel()).ToModel();
         }
 
         /// <summary>
         /// Deletes a rating by its unique identifier.
         /// </summary>
         /// <param name="ratingId">The rating identifier.</param>
-        public void DeleteRatingById(int ratingId) => this.ratingRepository.DeleteRating(ratingId);
+        public void DeleteRatingById(int ratingId) => 
+            this.ratingRepository.DeleteRating(ratingId);
 
 
         private const double NoRatingsValue = 0.0;
@@ -98,9 +97,7 @@ namespace WinUIApp.WebAPI.Services
                 .ToList();
 
             if (!validRatings.Any())
-            {
                 return NoRatingsValue;
-            }
 
             return (double)validRatings.Average();
         }

@@ -21,7 +21,7 @@ namespace WinUIApp.WebAPI.Services
         /// <param name="inputtedDrinkBrandName"> Brand. </param>
         /// <param name="inputtedAlcoholPercentage"> Alcohol. </param>
         /// <exception cref="Exception"> Any issues. </exception>
-        void AddDrink(string inputtedDrinkName, string inputtedDrinkPath, List<Category> inputtedDrinkCategories, string inputtedDrinkBrandName, float inputtedAlcoholPercentage);
+        void AddDrink(string inputtedDrinkName, string inputtedDrinkPath, List<CategoryDTO> inputtedDrinkCategories, string inputtedDrinkBrandName, float inputtedAlcoholPercentage);
 
         /// <summary>
         /// Adds a drink to the user's personal drink list.
@@ -53,7 +53,7 @@ namespace WinUIApp.WebAPI.Services
         /// </summary>
         /// <returns> List of brands. </returns>
         /// <exception cref="Exception"> Any issues. </exception>
-        List<Brand> GetDrinkBrandNames();
+        List<BrandDTO> GetDrinkBrandNames();
 
         /// <summary>
         /// Gets the drink by ID.
@@ -61,21 +61,21 @@ namespace WinUIApp.WebAPI.Services
         /// <param name="drinkId"> Drink id. </param>
         /// <returns> The drink. </returns>
         /// <exception cref="Exception"> Any issues. </exception>
-        Drink? GetDrinkById(int drinkId);
+        DrinkDTO? GetDrinkById(int drinkId);
 
         /// <summary>
         /// Retrieves a random drink ID from the database.
         /// </summary>
         /// <returns> List of categories. </returns>
         /// <exception cref="Exception"> Any issues. </exception>
-        List<Category> GetDrinkCategories();
+        List<CategoryDTO> GetDrinkCategories();
 
         /// <summary>
         /// Retrieves the drink of the day.
         /// </summary>
         /// <returns> The drink. </returns>
         /// <exception cref="Exception"> Any issues. </exception>
-        Drink GetDrinkOfTheDay();
+        DrinkDTO GetDrinkOfTheDay();
 
         /// <summary>
         /// Gets drinks based on various filters and ordering criteria.
@@ -88,7 +88,7 @@ namespace WinUIApp.WebAPI.Services
         /// <param name="orderingCriteria"> order criteria. </param>
         /// <returns> List of drinks. </returns>
         /// <exception cref="Exception"> Any issues. </exception>
-        List<Drink> GetDrinks(string? searchKeyword, List<string>? drinkBrandNameFilter, List<string>? drinkCategoryFilter, float? minimumAlcoholPercentage, float? maximumAlcoholPercentage, Dictionary<string, bool>? orderingCriteria);
+        List<DrinkDTO> GetDrinks(string? searchKeyword, List<string>? drinkBrandNameFilter, List<string>? drinkCategoryFilter, float? minimumAlcoholPercentage, float? maximumAlcoholPercentage, Dictionary<string, bool>? orderingCriteria);
 
         /// <summary>
         /// Retrieves a random drink ID from the database.
@@ -97,7 +97,7 @@ namespace WinUIApp.WebAPI.Services
         /// <param name="maximumDrinkCount"> Not sure. </param>
         /// <returns> Personal list. </returns>
         /// <exception cref="Exception"> Any issues. </exception>
-        List<Drink> GetUserPersonalDrinkList(int userId, int maximumDrinkCount = 1);
+        List<DrinkDTO> GetUserPersonalDrinkList(int userId, int maximumDrinkCount = 1);
 
         /// <summary>
         /// Checks if a drink is already in the user's personal drink list.
@@ -111,9 +111,9 @@ namespace WinUIApp.WebAPI.Services
         /// <summary>
         /// Updates a drink in the database.
         /// </summary>
-        /// <param name="drink"> Drink. </param>
+        /// <param name="drinkDto"> Drink. </param>
         /// <exception cref="Exception"> Any issues. </exception>
-        void UpdateDrink(Drink drink);
+        void UpdateDrink(DrinkDTO drinkDto);
 
         /// <summary>
         /// Votes for the drink of the day.
@@ -122,6 +122,6 @@ namespace WinUIApp.WebAPI.Services
         /// <param name="drinkId"> Drink id. </param>
         /// <returns> The drink. </returns>
         /// <exception cref="Exception"> Any issues. </exception>
-        Drink VoteDrinkOfTheDay(int userId, int drinkId);
+        DrinkDTO VoteDrinkOfTheDay(int userId, int drinkId);
     }
 }

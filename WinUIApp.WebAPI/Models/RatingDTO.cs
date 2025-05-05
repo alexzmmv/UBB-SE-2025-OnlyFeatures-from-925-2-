@@ -2,7 +2,7 @@ using WinUIApp.WebAPI.Constants;
 
 namespace WinUIApp.WebAPI.Models;
 
-public class Rating
+public class RatingDTO
 {
     /// <summary>
     /// Gets or sets the unique identifier for the rating.
