@@ -1,6 +1,7 @@
 // <copyright file="ReviewService.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
+using WinUIApp.WebAPI.Models;
 
 namespace WinUIApp.WebAPI.Services
 {
@@ -41,7 +42,7 @@ namespace WinUIApp.WebAPI.Services
         /// <param name="reviewDto">The review to add.</param>
         /// <returns>The added <see cref="Review"/> instance.</returns>
         /// <exception cref="ArgumentException">Thrown when the review is invalid.</exception>
-        public Review AddReview(Models.ReviewDTO reviewDto)
+        public Review AddReview(ReviewDTO reviewDto)
         {
             var reviewToAdd = reviewDto.ToDataModel();
 

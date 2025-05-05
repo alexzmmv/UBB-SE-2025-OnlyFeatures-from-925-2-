@@ -33,10 +33,4 @@ public class RatingDTO
     /// Gets or sets a value indicating whether the rating is active.
     /// </summary>
     public bool IsActive { get; set; }
-
-    /// <summary>
-    /// Validates that the rating value is within the acceptable range (1 to 5).
-    /// </summary>
-    /// <returns>True if the rating value is valid; otherwise, false.</returns>
-    public bool IsValid() => this.RatingValue >= RatingDomainConstants.MinRatingValue && this.RatingValue <= RatingDomainConstants.MaxRatingValue;
 }
