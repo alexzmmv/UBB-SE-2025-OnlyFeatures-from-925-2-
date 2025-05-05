@@ -33,9 +33,6 @@ namespace WinUIApp.WebAPI.Extensions
         /// <param name="review">The review to activate.</param>
         public static void Activate(this Review review)
         {
-            if (review == null)
-                throw new ArgumentNullException(nameof(review));
-
             review.IsActive = true;
             review.CreationDate = DateTime.Now;
         }

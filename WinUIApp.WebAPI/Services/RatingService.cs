@@ -8,7 +8,7 @@ namespace WinUIApp.WebAPI.Services
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
+    using WinUiApp.Data.Data;
     using WinUIApp.WebAPI.Constants.ErrorMessages;
     using WinUIApp.WebAPI.Extensions;
     using WinUIApp.WebAPI.Repositories;
@@ -53,10 +53,13 @@ namespace WinUIApp.WebAPI.Services
         /// <exception cref="System.ArgumentException">Thrown when the rating is invalid.</exception>
         public RatingDTO CreateRating(RatingDTO ratingDto)
         {
-            if (!ratingDto.IsValid())
+            var rating = ratingDto.ToDataModel();
+
+            if (!rating.IsValid())
                 throw new ArgumentException(ServiceErrorMessages.InvalidRatingValue);
-            
-            return this.ratingRepository.AddRating(ratingDto.ToDataModel()).ToModel();
+
+            var createdRating = this.ratingRepository.AddRating(rating);
+            return createdRating.ToModel();
         }
 
         /// <summary>
@@ -67,10 +70,13 @@ namespace WinUIApp.WebAPI.Services
         /// <exception cref="System.ArgumentException">Thrown when the rating is invalid.</exception>
         public RatingDTO UpdateRating(RatingDTO ratingDto)
         {
-            if (!ratingDto.IsValid())
+            var rating = ratingDto.ToDataModel();
+
+            if (!rating.IsValid())
                 throw new ArgumentException(ServiceErrorMessages.InvalidRatingValue);
 
-            return this.ratingRepository.UpdateRating(ratingDto.ToDataModel()).ToModel();
+            var updatedRating = this.ratingRepository.UpdateRating(rating);
+            return updatedRating.ToModel();
         }
 
         /// <summary>

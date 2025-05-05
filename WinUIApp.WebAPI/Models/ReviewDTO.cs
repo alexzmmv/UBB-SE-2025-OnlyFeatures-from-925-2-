@@ -47,18 +47,5 @@ namespace WinUIApp.WebAPI.Models
         /// Validates that the review content is not empty and does not exceed the maximum length.
         /// </summary>
         /// <returns>True if the review is valid; otherwise, false.</returns>
-        public bool IsValid()
-        {
-            return !string.IsNullOrWhiteSpace(this.Content) && this.Content.Length <= MaxContentLength;
-        }
-
-        /// <summary>
-        /// Activates the review, setting its creation date to the current time.
-        /// </summary>
-        public void Activate()
-        {
-            this.IsActive = true;
-            this.CreationDate = DateTime.Now;
-        }
     }
 }
