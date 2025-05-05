@@ -2,11 +2,12 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using WinUIApp.WebAPI.Models;
+
 namespace WinUIApp.WebAPI.Services
 {
     using System;
     using System.Collections.Generic;
-    using WinUiApp.Data.Data;
 
     /// <summary>
     /// Interface for managing rating-related operations.
