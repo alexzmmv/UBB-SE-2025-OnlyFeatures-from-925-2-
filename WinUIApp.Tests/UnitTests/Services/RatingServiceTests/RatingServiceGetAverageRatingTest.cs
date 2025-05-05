@@ -35,7 +35,7 @@ namespace WinUIApp.Tests.UnitTests.Services
                 new Rating { RatingValue = thirdRatingValue}
             };
             var expectedAverage = (firstRatingValue + secondRatingValue + thirdRatingValue) / numberOfRatings;
-            repository.Setup(repo => repo.GetRatingsByDrinkId(DrinkId)).Returns(ratings);
+            repository.Setup(repository => repository.GetRatingsByDrinkId(DrinkId)).Returns(ratings);
 
             // Act
             var result = service.GetAverageRating(DrinkId);
@@ -49,7 +49,7 @@ namespace WinUIApp.Tests.UnitTests.Services
         {
             // Arrange
             var ratings = new List<Rating>();
-            repository.Setup(repo => repo.GetRatingsByDrinkId(DrinkId)).Returns(ratings);
+            repository.Setup(repository => repository.GetRatingsByDrinkId(DrinkId)).Returns(ratings);
 
             // Act
             var result = service.GetAverageRating(DrinkId);

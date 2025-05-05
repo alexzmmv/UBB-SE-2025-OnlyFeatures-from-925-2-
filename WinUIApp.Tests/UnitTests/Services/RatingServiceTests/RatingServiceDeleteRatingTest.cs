@@ -26,7 +26,7 @@ namespace WinUIApp.Tests.UnitTests.Services
             service.DeleteRatingById(ratingId);
 
             // Assert
-            repository.Verify(repo => repo.DeleteRating(ratingId), Times.Once);
+            repository.Verify(repository => repository.DeleteRating(ratingId), Times.Once);
         }
     }
 }

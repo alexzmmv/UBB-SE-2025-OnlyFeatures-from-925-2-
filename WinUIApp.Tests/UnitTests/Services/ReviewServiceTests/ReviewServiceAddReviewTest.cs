@@ -33,9 +33,9 @@ namespace WinUIApp.Tests.UnitTests.Services
 
             Review? savedReview = null;
 
-            repository.Setup(r => r.AddReview(It.IsAny<Review>()))
-                       .Callback<Review>(r => savedReview = r)
-                       .Returns<Review>(r => r);
+            repository.Setup(repository => repository.AddReview(It.IsAny<Review>()))
+                       .Callback<Review>(review => savedReview = review)
+                       .Returns<Review>(review => review);
 
             // Act
             var result = service.AddReview(dto);
@@ -56,8 +56,8 @@ namespace WinUIApp.Tests.UnitTests.Services
             };
 
             // Act & Assert
-            var ex = Assert.Throws<ArgumentException>(() => service.AddReview(dto));
-            Assert.Equal(ServiceErrorMessages.InvalidReview, ex.Message);
+            var exception = Assert.Throws<ArgumentException>(() => service.AddReview(dto));
+            Assert.Equal(ServiceErrorMessages.InvalidReview, exception.Message);
         }
 
         [Fact]
@@ -72,8 +72,8 @@ namespace WinUIApp.Tests.UnitTests.Services
             };
 
             // Act & Assert
-            var ex = Assert.Throws<ArgumentException>(() => service.AddReview(dto));
-            Assert.Equal(ServiceErrorMessages.InvalidReview, ex.Message);
+            var exception = Assert.Throws<ArgumentException>(() => service.AddReview(dto));
+            Assert.Equal(ServiceErrorMessages.InvalidReview, exception.Message);
         }
     }
 }

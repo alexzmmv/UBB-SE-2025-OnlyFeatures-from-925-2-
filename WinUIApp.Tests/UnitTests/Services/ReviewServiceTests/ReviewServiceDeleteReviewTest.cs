@@ -26,7 +26,7 @@ namespace WinUIApp.Tests.UnitTests.Services
             service.DeleteReviewById(reviewId);
 
             // Assert
-            repository.Verify(r => r.DeleteReview(reviewId), Times.Once);
+            repository.Verify(repository => repository.DeleteReview(reviewId), Times.Once);
         }
     }
 }

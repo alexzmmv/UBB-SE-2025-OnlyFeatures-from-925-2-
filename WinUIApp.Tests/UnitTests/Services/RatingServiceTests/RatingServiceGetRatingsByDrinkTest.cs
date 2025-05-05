@@ -25,7 +25,7 @@ namespace WinUIApp.Tests.UnitTests.Services
         {
             // Arrange
             var ratings = new List<Rating> { new Rating(), new Rating() };
-            repository.Setup(repo => repo.GetRatingsByDrinkId(DrinkId)).Returns(ratings);
+            repository.Setup(repository => repository.GetRatingsByDrinkId(DrinkId)).Returns(ratings);
 
             // Act
             var result = service.GetRatingsByDrink(DrinkId);
@@ -38,7 +38,7 @@ namespace WinUIApp.Tests.UnitTests.Services
         public void GetRatingsByDrink_WhenNoRatingsExist_ReturnsEmptyCollection()
         {
             // Arrange
-            repository.Setup(repo => repo.GetRatingsByDrinkId(DrinkId)).Returns(new List<Rating>());
+            repository.Setup(repository => repository.GetRatingsByDrinkId(DrinkId)).Returns(new List<Rating>());
 
             // Act
             var result = service.GetRatingsByDrink(DrinkId);

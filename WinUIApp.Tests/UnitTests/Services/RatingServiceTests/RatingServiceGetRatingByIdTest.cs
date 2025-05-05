@@ -28,7 +28,7 @@ namespace WinUIApp.Tests.UnitTests.Services
                 RatingId = ratingId
             };
 
-            repository.Setup(repo => repo.GetRatingById(ratingId))
+            repository.Setup(repository => repository.GetRatingById(ratingId))
                        .Returns(expectedDataModel);
 
             // Act
@@ -44,7 +44,7 @@ namespace WinUIApp.Tests.UnitTests.Services
             // Arrange
             var ratingId = 999;
 
-            repository.Setup(repo => repo.GetRatingById(ratingId))
+            repository.Setup(repository => repository.GetRatingById(ratingId))
                        .Returns((Rating)null);
 
             // Act

@@ -30,7 +30,7 @@ namespace WinUIApp.Tests.UnitTests.Services
                 new Review { RatingId = ratingId, Content = "Loved it!" }
             };
 
-            repository.Setup(r => r.GetReviewsByRatingId(ratingId)).Returns(expectedReviews);
+            repository.Setup(repository => repository.GetReviewsByRatingId(ratingId)).Returns(expectedReviews);
 
             // Act
             var result = service.GetReviewsByRating(ratingId);

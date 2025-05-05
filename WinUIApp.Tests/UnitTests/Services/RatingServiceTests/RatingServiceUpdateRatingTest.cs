@@ -44,7 +44,7 @@ namespace WinUIApp.Tests.UnitTests.Services
                 IsActive = dto.IsActive
             };
 
-            repository.Setup(repo => repo.UpdateRating(It.IsAny<Rating>()))
+            repository.Setup(repository => repository.UpdateRating(It.IsAny<Rating>()))
                        .Returns(returnedDataModel);
 
             // Act
@@ -67,14 +67,14 @@ namespace WinUIApp.Tests.UnitTests.Services
                 IsActive = true
             };
 
-            repository.Setup(repo => repo.UpdateRating(It.IsAny<Rating>()))
+            repository.Setup(repository => repository.UpdateRating(It.IsAny<Rating>()))
                        .Returns(dto.ToDataModel());
 
             // Act
             service.UpdateRating(dto);
 
             // Assert
-            repository.Verify(repo => repo.UpdateRating(It.IsAny<Rating>()), Times.Once);
+            repository.Verify(repository => repository.UpdateRating(It.IsAny<Rating>()), Times.Once);
         }
 
         [Fact]
@@ -84,8 +84,8 @@ namespace WinUIApp.Tests.UnitTests.Services
             var invalidDto = new RatingDTO { DrinkId = 1, UserId = 1, RatingValue = 8 };
 
             // Act & Assert
-            var ex = Assert.Throws<ArgumentException>(() => service.UpdateRating(invalidDto));
-            Assert.Equal(ServiceErrorMessages.InvalidRatingValue, ex.Message);
+            var exception = Assert.Throws<ArgumentException>(() => service.UpdateRating(invalidDto));
+            Assert.Equal(ServiceErrorMessages.InvalidRatingValue, exception.Message);
         }
     }
 }
