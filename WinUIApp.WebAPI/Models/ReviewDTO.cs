@@ -9,7 +9,7 @@ namespace WinUIApp.WebAPI.Models
     /// <summary>
     /// Represents a user review for a drink.
     /// </summary>
-    public class Review
+    public class ReviewDTO
     {
         private const int MaxContentLength = 500;
 

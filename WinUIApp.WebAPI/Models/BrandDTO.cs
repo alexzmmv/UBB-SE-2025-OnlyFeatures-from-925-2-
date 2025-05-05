@@ -9,17 +9,17 @@ namespace WinUIApp.WebAPI.Models
     /// <summary>
     /// Represents a drink brand.
     /// </summary>
-    public class Brand
+    public class BrandDTO
     {
         private string brandName;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Brand"/> class.
+        /// Initializes a new instance of the <see cref="BrandDTO"/> class.
         /// </summary>
         /// <param name="brandId">Unique identifier for the brand.</param>
         /// <param name="brandName">Name of the brand.</param>
         /// <exception cref="ArgumentException">Thrown when brandName is null or empty.</exception>
-        public Brand(int brandId, string brandName)
+        public BrandDTO(int brandId, string brandName)
         {
             this.BrandId = brandId;
             this.BrandName = brandName;

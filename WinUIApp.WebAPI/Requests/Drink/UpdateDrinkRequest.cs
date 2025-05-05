@@ -4,6 +4,6 @@ namespace WinUIApp.WebAPI.Requests.Drink
 {
     public class UpdateDrinkRequest
     {
-        public WinUIApp.WebAPI.Models.Drink drink { get; set; }
+        public WinUIApp.WebAPI.Models.DrinkDTO DrinkDto { get; set; }
     }
 }

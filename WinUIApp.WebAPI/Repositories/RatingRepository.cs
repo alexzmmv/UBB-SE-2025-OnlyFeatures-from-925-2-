@@ -71,9 +71,7 @@ namespace WinUIApp.WebAPI.Repositories
                 .FirstOrDefault(existingRating => existingRating.RatingId == rating.RatingId);
 
             if (existingRating == null)
-            {
                 throw new Exception(RepositoryErrorMessages.EntityNotFound);
-            }
 
             existingRating.DrinkId = rating.DrinkId;
             existingRating.UserId = rating.UserId;
@@ -93,9 +91,7 @@ namespace WinUIApp.WebAPI.Repositories
                 .FirstOrDefault(rating => rating.RatingId == ratingId);
 
             if (rating == null)
-            {
                 throw new Exception(RepositoryErrorMessages.EntityNotFound);
-            }
 
             this.dbContext.Ratings.Remove(rating);
             this.dbContext.SaveChanges();

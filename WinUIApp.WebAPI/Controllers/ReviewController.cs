@@ -9,28 +9,28 @@ namespace WinUIApp.WebAPI.Controllers
     [Route("[controller]")]
     public class ReviewController : ControllerBase
     {
-        private readonly IReviewService _reviewService;
+        private readonly IReviewService reviewService;
 
         public ReviewController(IReviewService reviewService)
         {
-            _reviewService = reviewService;
+            this.reviewService = reviewService;
         }
 
         [HttpGet("get-by-rating")]
         public IActionResult GetReviewsByRating([FromQuery] int ratingId)
         {
-            var reviews = _reviewService.GetReviewsByRating(ratingId);
+            var reviews = reviewService.GetReviewsByRating(ratingId);
             return Ok(reviews);
         }
 
         [HttpPost("add")]
-        public IActionResult AddReview([FromBody] Review review)
+        public IActionResult AddReview([FromBody] ReviewDTO reviewDto)
         {
-            ArgumentNullException.ThrowIfNull(review);
+            ArgumentNullException.ThrowIfNull(reviewDto);
 
             try
             {
-                var addedReview = _reviewService.AddReview(review);
+                var addedReview = reviewService.AddReview(reviewDto);
                 return Ok(addedReview);
             }
             catch (ArgumentException ex)
@@ -42,7 +42,7 @@ namespace WinUIApp.WebAPI.Controllers
         [HttpDelete("delete")]
         public IActionResult DeleteReview([FromQuery] int reviewId)
         {
-            _reviewService.DeleteReviewById(reviewId);
+            reviewService.DeleteReviewById(reviewId);
             return Ok();
         }
     }

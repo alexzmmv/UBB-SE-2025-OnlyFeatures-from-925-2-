@@ -10,35 +10,35 @@ namespace WinUIApp.WebAPI.Models
     /// <summary>
     /// Represents a drink with associated brand, image, alcohol content, and categories.
     /// </summary>
-    public class Drink
+    public class DrinkDTO
     {
         private const float MaximumAlcoholContent = 100.0f;
         private const int MinimumAlcohoolContent = 0;
 
         private string? drinkName;
         private string drinkImageUrl = string.Empty;
-        private List<Category> categoryList;
+        private List<CategoryDTO> categoryList;
         private float alcoholContent;
 
-        public Drink() { }
+        public DrinkDTO() { }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Drink"/> class.
+        /// Initializes a new instance of the <see cref="DrinkDTO"/> class.
         /// </summary>
         /// <param name="id">Unique identifier for the drink.</param>
         /// <param name="drinkName">Name of the drink.</param>
         /// <param name="imageUrl">URL of the drink image.</param>
         /// <param name="categories">Categories associated with the drink.</param>
-        /// <param name="brand">Brand of the drink.</param>
+        /// <param name="brandDto">Brand of the drink.</param>
         /// <param name="alcoholContent">Alcohol content percentage.</param>
         /// <exception cref="ArgumentNullException">Thrown when brand is null.</exception>
-        public Drink(int id, string? drinkName, string imageUrl, List<Category> categories, Brand brand, float alcoholContent)
+        public DrinkDTO(int id, string? drinkName, string imageUrl, List<CategoryDTO> categories, BrandDTO brandDto, float alcoholContent)
         {
             this.DrinkId = id;
             this.DrinkName = drinkName;
             this.DrinkImageUrl = imageUrl;
             this.CategoryList = categories;
-            this.DrinkBrand = brand ?? throw new ArgumentNullException(nameof(brand), "Brand cannot be null");
+            this.DrinkBrandDto = brandDto ?? throw new ArgumentNullException(nameof(brandDto), "Brand cannot be null");
             this.AlcoholContent = alcoholContent;
         }
 
@@ -68,7 +68,7 @@ namespace WinUIApp.WebAPI.Models
         /// <summary>
         /// Gets or sets the list of categories associated with the drink.
         /// </summary>
-        public List<Category> CategoryList
+        public List<CategoryDTO> CategoryList
         {
             get => this.categoryList;
             set => this.categoryList = value;
@@ -77,7 +77,7 @@ namespace WinUIApp.WebAPI.Models
         /// <summary>
         /// Gets or sets the brand of the drink.
         /// </summary>
-        public Brand DrinkBrand { get; set; }
+        public BrandDTO DrinkBrandDto { get; set; }
 
         /// <summary>
         /// Gets or sets the alcohol content of the drink as a percentage.

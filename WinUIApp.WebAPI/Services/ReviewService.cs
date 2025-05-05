@@ -33,19 +33,17 @@ namespace WinUIApp.WebAPI.Services
         /// <param name="ratingId">The rating identifier.</param>
         /// <returns>A collection of <see cref="Review"/> instances for the rating.</returns>
         public IEnumerable<Review> GetReviewsByRating(int ratingId)
-        {
-            return this.reviewRepository.GetReviewsByRatingId(ratingId);
-        }
+            => this.reviewRepository.GetReviewsByRatingId(ratingId);
 
         /// <summary>
         /// Adds a new review after validating it.
         /// </summary>
-        /// <param name="review">The review to add.</param>
+        /// <param name="reviewDto">The review to add.</param>
         /// <returns>The added <see cref="Review"/> instance.</returns>
         /// <exception cref="ArgumentException">Thrown when the review is invalid.</exception>
-        public Review AddReview(WinUIApp.WebAPI.Models.Review review)
+        public Review AddReview(Models.ReviewDTO reviewDto)
         {
-            var reviewToAdd = review.ToDataModel();
+            var reviewToAdd = reviewDto.ToDataModel();
 
             if (!reviewToAdd.IsValid())
             {
@@ -61,8 +59,6 @@ namespace WinUIApp.WebAPI.Services
         /// </summary>
         /// <param name="reviewId">The review identifier.</param>
         public void DeleteReviewById(int reviewId)
-        {
-            this.reviewRepository.DeleteReview(reviewId);
-        }
+            => this.reviewRepository.DeleteReview(reviewId);
     }
 }
