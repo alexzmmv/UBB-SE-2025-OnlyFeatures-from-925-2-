@@ -2,12 +2,13 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using WinUIApp.WebAPI.Models;
+
 namespace WinUIApp.WebAPI.Services
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using WinUiApp.Data.Data;
     using WinUIApp.WebAPI.Constants.ErrorMessages;
     using WinUIApp.WebAPI.Extensions;
     using WinUIApp.WebAPI.Repositories;
@@ -33,14 +34,14 @@ namespace WinUIApp.WebAPI.Services
         /// </summary>
         /// <param name="ratingId">The rating identifier.</param>
         /// <returns>The corresponding rating or null if it doesnt exist.<see cref="Rating"/>.</returns>
-        public Rating? GetRatingById(int ratingId) => this.ratingRepository.GetRatingById(ratingId);
+        public Rating? GetRatingById(int ratingId) => this.ratingRepository.GetRatingById(ratingId).ToModel();
 
         /// <summary>
         /// Retrieves all ratings associated with a specific drink.
         /// </summary>
         /// <param name="drinkId">The drink identifier.</param>
         /// <returns>A collection of <see cref="Rating"/> instances for the drink.</returns>
-        public IEnumerable<Rating> GetRatingsByDrink(int drinkId) => this.ratingRepository.GetRatingsByDrinkId(drinkId);
+        public IEnumerable<Rating> GetRatingsByDrink(int drinkId) => this.ratingRepository.GetRatingsByDrinkId(drinkId).ToModels();
 
         /// <summary>
         /// Creates a new rating.
@@ -55,7 +56,7 @@ namespace WinUIApp.WebAPI.Services
                 throw new ArgumentException(ServiceErrorMessages.InvalidRatingValue);
             }
 
-            return this.ratingRepository.AddRating(rating);
+            return this.ratingRepository.AddRating(rating.ToDataModel()).ToModel();
         }
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace WinUIApp.WebAPI.Services
                 throw new ArgumentException(ServiceErrorMessages.InvalidRatingValue);
             }
 
-            return this.ratingRepository.UpdateRating(rating);
+            return this.ratingRepository.UpdateRating(rating.ToDataModel()).ToModel();
         }
 
         /// <summary>
