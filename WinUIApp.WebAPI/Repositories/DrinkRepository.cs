@@ -184,11 +184,11 @@ namespace WinUIApp.WebAPI.Repositories
             try
             {
                 var brand = dbContext.Brands
-                                     .FirstOrDefault(brand => brand.BrandName == drinkDto.DrinkBrandDto.BrandName);
+                                     .FirstOrDefault(brand => brand.BrandName == drinkDto.DrinkBrand.BrandName);
 
                 if (brand == null)
                 {
-                    brand = new Brand { BrandName = drinkDto.DrinkBrandDto.BrandName };
+                    brand = new Brand { BrandName = drinkDto.DrinkBrand.BrandName };
                     dbContext.Brands.Add(brand);
                     dbContext.SaveChanges();
                 }
@@ -361,12 +361,14 @@ namespace WinUIApp.WebAPI.Repositories
             if (!drinkIds.Any())
                 return new List<Models.DrinkDTO>();
 
-            var drinks = dbContext.Drinks
+            var drinkEntities = dbContext.Drinks
                 .Include(drink => drink.Brand)
                 .Include(drink => drink.DrinkCategories)
                 .ThenInclude(drinkCategory => drinkCategory.Category)
                 .Where(drink => drinkIds.Contains(drink.DrinkId))
-                .Select(drink => new Models.DrinkDTO(
+                .AsNoTracking()
+                .ToList(); // materialize before projection
+            var drinks = drinkEntities.Select(drink => new Models.DrinkDTO(
                     drink.DrinkId,
                     drink.DrinkName,
                     drink.DrinkURL,
@@ -382,7 +384,6 @@ namespace WinUIApp.WebAPI.Repositories
                 .ToList();
 
             return drinks;
-
         }
 
         /// <summary>

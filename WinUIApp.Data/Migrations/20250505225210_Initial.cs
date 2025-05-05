@@ -75,9 +75,7 @@ namespace WinUIApp.Data.Migrations
                 columns: table => new
                 {
                     DrinkId = table.Column<int>(type: "int", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
-                    CategoryId1 = table.Column<int>(type: "int", nullable: true),
-                    DrinkId1 = table.Column<int>(type: "int", nullable: true)
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,21 +87,11 @@ namespace WinUIApp.Data.Migrations
                         principalColumn: "CategoryId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DrinkCategories_Categories_CategoryId1",
-                        column: x => x.CategoryId1,
-                        principalTable: "Categories",
-                        principalColumn: "CategoryId");
-                    table.ForeignKey(
                         name: "FK_DrinkCategories_Drinks_DrinkId",
                         column: x => x.DrinkId,
                         principalTable: "Drinks",
                         principalColumn: "DrinkId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DrinkCategories_Drinks_DrinkId1",
-                        column: x => x.DrinkId1,
-                        principalTable: "Drinks",
-                        principalColumn: "DrinkId");
                 });
 
             migrationBuilder.CreateTable(
@@ -122,6 +110,35 @@ namespace WinUIApp.Data.Migrations
                         principalTable: "Drinks",
                         principalColumn: "DrinkId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Ratings",
+                columns: table => new
+                {
+                    RatingId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DrinkId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    RatingValue = table.Column<double>(type: "float", nullable: true),
+                    RatingDate = table.Column<DateTime>(type: "datetime", nullable: true),
+                    IsActive = table.Column<byte>(type: "tinyint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ratings", x => x.RatingId);
+                    table.ForeignKey(
+                        name: "FK_Ratings_Drinks_DrinkId",
+                        column: x => x.DrinkId,
+                        principalTable: "Drinks",
+                        principalColumn: "DrinkId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Ratings_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -199,6 +216,35 @@ namespace WinUIApp.Data.Migrations
                         principalColumn: "UserId");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Reviews",
+                columns: table => new
+                {
+                    ReviewId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RatingId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Content = table.Column<string>(type: "text", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime", nullable: true),
+                    IsActive = table.Column<byte>(type: "tinyint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reviews", x => x.ReviewId);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Ratings_RatingId",
+                        column: x => x.RatingId,
+                        principalTable: "Ratings",
+                        principalColumn: "RatingId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Categories_CategoryName",
                 table: "Categories",
@@ -211,19 +257,30 @@ namespace WinUIApp.Data.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DrinkCategories_CategoryId1",
-                table: "DrinkCategories",
-                column: "CategoryId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DrinkCategories_DrinkId1",
-                table: "DrinkCategories",
-                column: "DrinkId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Drinks_BrandId",
                 table: "Drinks",
                 column: "BrandId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ratings_DrinkId",
+                table: "Ratings",
+                column: "DrinkId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ratings_UserId_DrinkId",
+                table: "Ratings",
+                columns: new[] { "UserId", "DrinkId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_RatingId",
+                table: "Reviews",
+                column: "RatingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_UserId",
+                table: "Reviews",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserDrinks_DrinkId",
@@ -271,6 +328,9 @@ namespace WinUIApp.Data.Migrations
                 name: "DrinkOfTheDays");
 
             migrationBuilder.DropTable(
+                name: "Reviews");
+
+            migrationBuilder.DropTable(
                 name: "UserDrinks");
 
             migrationBuilder.DropTable(
@@ -278,6 +338,9 @@ namespace WinUIApp.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Ratings");
 
             migrationBuilder.DropTable(
                 name: "Drinks");

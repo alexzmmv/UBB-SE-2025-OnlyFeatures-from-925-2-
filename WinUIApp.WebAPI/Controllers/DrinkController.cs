@@ -88,7 +88,7 @@ namespace WinUIApp.WebAPI.Controllers
         [HttpPut("update")]
         public IActionResult UpdateDrink([FromBody] UpdateDrinkRequest request)
         {
-            drinkService.UpdateDrink(request.DrinkDto);
+            drinkService.UpdateDrink(request.Drink);
             return Ok();
         }
 
