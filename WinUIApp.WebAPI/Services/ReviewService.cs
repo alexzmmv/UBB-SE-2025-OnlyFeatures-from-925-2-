@@ -45,23 +45,7 @@ namespace WinUIApp.WebAPI.Services
         /// <exception cref="ArgumentException">Thrown when the review is invalid.</exception>
         public Review AddReview(WinUIApp.WebAPI.Models.Review review)
         {
-            var rating = new Rating
-            {
-                DrinkId = review.DrinkId,
-                UserId = review.ReviewerUserId,
-                RatingValue = review.ReviewScore,
-                RatingDate = review.ReviewPostedDateTime,
-                IsActive = true
-            };
-
-            var reviewToAdd = new Review
-            {
-                UserId = review.ReviewerUserId,
-                Content = $"{review.ReviewTitle}\n\n{review.ReviewDescription}",
-                CreationDate = review.ReviewPostedDateTime,
-                IsActive = true,
-                Rating = rating
-            };
+            var reviewToAdd = review.ToDataModel();
 
             if (!reviewToAdd.IsValid())
             {
