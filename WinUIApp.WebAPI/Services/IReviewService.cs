@@ -28,7 +28,7 @@ namespace WinUIApp.WebAPI.Services
         /// <returns>The added <see cref="Review"/> instance.</returns>
         /// <exception cref="ArgumentException">Thrown when the review is invalid.</exception>
         /// <exception cref="Exception"> Any issues. </exception>
-        public Review AddReview(Review review);
+        public Review AddReview(WinUIApp.WebAPI.Models.Review review);
 
         /// <summary>
         /// Deletes a review by its unique identifier.

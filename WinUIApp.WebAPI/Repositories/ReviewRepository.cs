@@ -48,7 +48,7 @@ namespace WinUIApp.WebAPI.Repositories
         public List<Review> GetReviewsByRatingId(int ratingId)
         {
             return this.dbContext.Reviews
-                .Where(rating => rating.RatingId == ratingId)
+                .Where(rating => rating.Rating.RatingId == ratingId)
                 .ToList();
         }
 

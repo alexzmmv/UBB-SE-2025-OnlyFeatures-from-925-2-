@@ -43,15 +43,17 @@ namespace WinUIApp.WebAPI.Services
         /// <param name="review">The review to add.</param>
         /// <returns>The added <see cref="Review"/> instance.</returns>
         /// <exception cref="ArgumentException">Thrown when the review is invalid.</exception>
-        public Review AddReview(Review review)
+        public Review AddReview(WinUIApp.WebAPI.Models.Review review)
         {
-            if (!review.IsValid())
+            var reviewToAdd = review.ToDataModel();
+
+            if (!reviewToAdd.IsValid())
             {
                 throw new ArgumentException(ServiceErrorMessages.InvalidReview);
             }
 
-            review.Activate();
-            return this.reviewRepository.AddReview(review);
+            reviewToAdd.Activate();
+            return this.reviewRepository.AddReview(reviewToAdd);
         }
 
         /// <summary>
