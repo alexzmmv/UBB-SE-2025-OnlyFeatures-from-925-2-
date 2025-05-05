@@ -21,7 +21,7 @@ namespace WinUIApp.Models
         /// <summary>
         /// Gets or sets the identifier of the associated product.
         /// </summary>
-        public int ProductId { get; set; }
+        public int DrinkId { get; set; }
 
         /// <summary>
         /// Gets or sets the identifier of the user who submitted the rating.

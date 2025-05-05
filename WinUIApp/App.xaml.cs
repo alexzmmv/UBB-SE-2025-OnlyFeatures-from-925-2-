@@ -63,7 +63,7 @@ namespace WinUIApp
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .Build();
             services.AddSingleton<IConfiguration>(configuration);
-            services.AddSingleton<IRatingService, RatingService>();
+            services.AddSingleton<IRatingService, ProxyRatingService>();
             services.AddSingleton<IReviewService, ReviewService>();
             services.AddSingleton<IRatingRepository, DatabaseRatingRepository>();
             services.AddSingleton<IReviewRepository, DatabaseReviewRepository>();

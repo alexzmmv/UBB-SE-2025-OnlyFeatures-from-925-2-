@@ -25,7 +25,7 @@ namespace WinUIApp.Repositories
         public static SqlCommand CreateAddRatingCommand(SqlConnection connection, Rating rating)
         {
             SqlCommand addCommand = new SqlCommand(RatingQueries.AddRatingQuery, connection);
-            addCommand.Parameters.AddWithValue("@ProductId", rating.ProductId);
+            addCommand.Parameters.AddWithValue("@ProductId", rating.DrinkId);
             addCommand.Parameters.AddWithValue("@UserId", rating.UserId);
             addCommand.Parameters.AddWithValue("@RatingValue", rating.RatingValue);
             addCommand.Parameters.AddWithValue("@RatingDate", rating.RatingDate);
@@ -44,7 +44,7 @@ namespace WinUIApp.Repositories
         {
             SqlCommand updateCommand = new SqlCommand(RatingQueries.UpdateRatingQuery, connection);
             updateCommand.Parameters.AddWithValue("@RatingId", rating.RatingId);
-            updateCommand.Parameters.AddWithValue("@ProductId", rating.ProductId);
+            updateCommand.Parameters.AddWithValue("@ProductId", rating.DrinkId);
             updateCommand.Parameters.AddWithValue("@UserId", rating.UserId);
             updateCommand.Parameters.AddWithValue("@RatingValue", rating.RatingValue);
             updateCommand.Parameters.AddWithValue("@RatingDate", rating.RatingDate);
@@ -131,7 +131,7 @@ namespace WinUIApp.Repositories
                 ratings.Add(new Rating
                 {
                     RatingId = reader.GetInt32(reader.GetOrdinal("RatingId")),
-                    ProductId = reader.GetInt32(reader.GetOrdinal("DrinkId")),
+                    DrinkId = reader.GetInt32(reader.GetOrdinal("DrinkId")),
                     UserId = reader.GetInt32(reader.GetOrdinal("UserId")),
                     RatingValue = reader.GetDouble(reader.GetOrdinal("RatingValue")),
                     RatingDate = reader.GetDateTime(reader.GetOrdinal("RatingDate")),

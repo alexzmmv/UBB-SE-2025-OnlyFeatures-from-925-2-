@@ -120,8 +120,9 @@ namespace WinUIApp.ViewModels
 
             var rating = new Rating
             {
-                ProductId = productId,  // Use the passed parameter instead of this.ProductID
+                DrinkId = productId,  // Use the passed parameter instead of this.ProductID
                 RatingValue = this.RatingScore,
+                RatingDate = DateTime.Now,
                 UserId = this.GetUserId(),
             };
 

@@ -14,7 +14,6 @@ namespace WinUIApp.Services.DummyServices
     /// </summary>
     public class DrinkReviewService : IDrinkReviewService
     {
-        private readonly HashSet<Review> dummyReviews = [];
 
         /// <summary>
         /// Retrieves all reviews for a specific drink by its ID.
