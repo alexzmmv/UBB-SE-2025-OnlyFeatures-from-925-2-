@@ -7,9 +7,11 @@ namespace WinUIApp.ViewModels
     using System;
     using System.Collections.ObjectModel;
     using System.Diagnostics;
+    using Windows.Security.Authentication.OnlineId;
     using WinUIApp.Models;
     using WinUIApp.Services;
     using WinUIApp.Services;
+    using WinUIApp.Services.DummyServices;
     using WinUIApp.ViewModels;
 
     /// <summary>
@@ -17,21 +19,22 @@ namespace WinUIApp.ViewModels
     /// </summary>
     public class ReviewViewModel : ViewModelBase
     {
-        private const int DefaultUserId = 999;
 
         private readonly IReviewService reviewService;
         private ObservableCollection<Review> reviews;
         private Review? selectedReview;
         private string reviewContent = string.Empty;
+        private int userId;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ReviewViewModel"/> class.
         /// </summary>
         /// <param name="reviewService">The service used to manage reviews.</param>
-        public ReviewViewModel(IReviewService reviewService)
+        public ReviewViewModel(IReviewService reviewService, IUserService userService)
         {
             this.reviewService = reviewService ?? throw new ArgumentNullException(nameof(reviewService));
             this.reviews = new ObservableCollection<Review>();
+            this.userId = userService.CurrentUserId;
         }
 
         /// <summary>
@@ -94,7 +97,7 @@ namespace WinUIApp.ViewModels
             var newReview = new Review
             {
                 RatingId = ratingId,
-                UserId = DefaultUserId,
+                UserId = this.userId,
                 Content = this.ReviewContent
             };
 

@@ -107,10 +107,11 @@ namespace WinUIApp.Views.Pages
                 var configuration = App.GetService<IConfiguration>();
                 var ratingService = App.GetService<IRatingService>();
                 var reviewService = App.GetService<IReviewService>();
+                var userService = App.GetService<IUserService>();
 
-                // 1. Create and initialize ViewModels
-                var ratingViewModel = new RatingViewModel(ratingService);
-                var reviewViewModel = new ReviewViewModel(reviewService);
+            // 1. Create and initialize ViewModels
+            var ratingViewModel = new RatingViewModel(ratingService);
+                var reviewViewModel = new ReviewViewModel(reviewService, userService);
 
                 // 2. Create main ViewModel with productId
                 var mainVm = new RatingMainPageViewModel(

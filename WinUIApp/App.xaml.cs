@@ -23,6 +23,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using WinUIApp.Services;
 using WinUIApp.Repositories;
+using WinUIApp.Services.DummyServices;
 
 namespace WinUIApp
 {
@@ -64,7 +65,8 @@ namespace WinUIApp
                 .Build();
             services.AddSingleton<IConfiguration>(configuration);
             services.AddSingleton<IRatingService, ProxyRatingService>();
-            services.AddSingleton<IReviewService, ReviewService>();
+            services.AddSingleton<IReviewService, ProxyReviewService>();
+            services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<IRatingRepository, DatabaseRatingRepository>();
             services.AddSingleton<IReviewRepository, DatabaseReviewRepository>();
             services.AddTransient<DatabaseConnection>();
