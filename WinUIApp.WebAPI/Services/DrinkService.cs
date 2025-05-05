@@ -81,7 +81,7 @@ namespace WinUIApp.WebAPI.Services
 
                 if (drinkBrandNameFilter != null && drinkBrandNameFilter.Count > NoDrinkBrand)
                     filteredDrinks = filteredDrinks.FindAll(
-                        drink => drinkBrandNameFilter.Contains(drink.DrinkBrandDto.BrandName));
+                        drink => drinkBrandNameFilter.Contains(drink.DrinkBrand.BrandName));
 
                 if (drinkCategoryFilter != null && drinkCategoryFilter.Count > NoDrinkCategory)
                 {

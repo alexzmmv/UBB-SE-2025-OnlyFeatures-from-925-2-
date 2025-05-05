@@ -98,19 +98,9 @@ namespace WinUIApp.Data.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CategoryId1")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DrinkId1")
-                        .HasColumnType("int");
-
                     b.HasKey("DrinkId", "CategoryId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("CategoryId1");
-
-                    b.HasIndex("DrinkId1");
 
                     b.ToTable("DrinkCategories");
                 });
@@ -280,24 +270,16 @@ namespace WinUIApp.Data.Migrations
             modelBuilder.Entity("WinUiApp.Data.Data.DrinkCategory", b =>
                 {
                     b.HasOne("WinUiApp.Data.Data.Category", "Category")
-                        .WithMany()
+                        .WithMany("DrinkCategories")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WinUiApp.Data.Data.Category", null)
-                        .WithMany("DrinkCategories")
-                        .HasForeignKey("CategoryId1");
-
                     b.HasOne("WinUiApp.Data.Data.Drink", "Drink")
-                        .WithMany()
+                        .WithMany("DrinkCategories")
                         .HasForeignKey("DrinkId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("WinUiApp.Data.Data.Drink", null)
-                        .WithMany("DrinkCategories")
-                        .HasForeignKey("DrinkId1");
 
                     b.Navigation("Category");
 

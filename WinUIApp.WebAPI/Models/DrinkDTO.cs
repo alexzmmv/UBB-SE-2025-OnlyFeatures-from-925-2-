@@ -38,7 +38,7 @@ namespace WinUIApp.WebAPI.Models
             this.DrinkName = drinkName;
             this.DrinkImageUrl = imageUrl;
             this.CategoryList = categories;
-            this.DrinkBrandDto = brandDto ?? throw new ArgumentNullException(nameof(brandDto), "Brand cannot be null");
+            this.DrinkBrand = brandDto ?? throw new ArgumentNullException(nameof(brandDto), "Brand cannot be null");
             this.AlcoholContent = alcoholContent;
         }
 
@@ -77,7 +77,7 @@ namespace WinUIApp.WebAPI.Models
         /// <summary>
         /// Gets or sets the brand of the drink.
         /// </summary>
-        public BrandDTO DrinkBrandDto { get; set; }
+        public BrandDTO DrinkBrand { get; set; }
 
         /// <summary>
         /// Gets or sets the alcohol content of the drink as a percentage.
