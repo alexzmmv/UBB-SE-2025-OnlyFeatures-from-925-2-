@@ -60,6 +60,9 @@
     <None Update="Styles\GlobalStyles.xaml">
         <Generator>MSBuild:Compile</Generator>
     </None>
+    <Page Update="Styles\DefaultStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\Components\SearchPageComponents\RatingFilterComponent.xaml">
         <Generator>MSBuild:Compile</Generator>
     </Page>

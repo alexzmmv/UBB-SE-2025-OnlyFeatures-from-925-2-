@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -19,6 +21,9 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using WinUIApp.Services;
+using WinUIApp.Repositories;
+using WinUIApp.Services.DummyServices;
 
 namespace WinUIApp
 {
@@ -37,14 +42,44 @@ namespace WinUIApp
             this.InitializeComponent();
         }
 
+        private static IServiceProvider? serviceProvider;
+        private readonly IRatingService ratingService;
+        private readonly IReviewService reviewService;
+        public static T GetService<T>() where T : class
+        {
+            return serviceProvider!.GetRequiredService<T>();
+        }
+
         /// <summary>
         /// Invoked when the application is launched.
         /// </summary>
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+            var services = new ServiceCollection();
+
+            // Add IConfiguration
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .Build();
+            services.AddSingleton<IConfiguration>(configuration);
+            services.AddSingleton<IRatingService, ProxyRatingService>();
+            services.AddSingleton<IReviewService, ProxyReviewService>();
+            services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<IRatingRepository, DatabaseRatingRepository>();
+            services.AddSingleton<IReviewRepository, DatabaseReviewRepository>();
+            services.AddTransient<DatabaseConnection>();
+            services.AddTransient<IRatingRepository, DatabaseRatingRepository>();
+
+
+
+            // Build and assign the service provider
+            serviceProvider = services.BuildServiceProvider();
+
             this.window = new Views.MainWindow();
             this.window.Activate();
         }
+
     }
 }
