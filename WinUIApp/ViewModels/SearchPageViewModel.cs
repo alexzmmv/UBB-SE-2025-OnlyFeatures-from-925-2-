@@ -120,7 +120,7 @@ namespace WinUIApp.ViewModels
                 displayItems = new List<DrinkDisplayItem>();
                 foreach (Drink drink in drinks)
                 {
-                    float averageScore = this.reviewService.GetReviewAverageByID(drink.DrinkId);
+                    float averageScore = this.reviewService.GetReviewAverageByDrinkID(drink.DrinkId);
                     if (this.minRatingFilter == null)
                     {
                         displayItems.Add(new DrinkDisplayItem(drink, averageScore));
@@ -147,7 +147,7 @@ namespace WinUIApp.ViewModels
                 displayItems = new List<DrinkDisplayItem>();
                 foreach (Drink drink in drinks)
                 {
-                    float averageScore = this.reviewService.GetReviewAverageByID(drink.DrinkId);
+                    float averageScore = this.reviewService.GetReviewAverageByDrinkID(drink.DrinkId);
                     if (this.minRatingFilter == null)
                     {
                         displayItems.Add(new DrinkDisplayItem(drink, averageScore));

@@ -5,6 +5,7 @@
 namespace WinUIApp.Views
 {
     using System;
+    using global::Windows.Graphics;
     using Microsoft.UI;
     using Microsoft.UI.Windowing;
     using Microsoft.UI.Xaml;
@@ -44,8 +45,7 @@ namespace WinUIApp.Views
             IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
             var windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
             var appWindow = AppWindow.GetFromWindowId(windowId);
-
-            appWindow.Resize(new Windows.Graphics.SizeInt32(width, height));
+            appWindow.Resize(new SizeInt32(width, height));
         }
     }
 }

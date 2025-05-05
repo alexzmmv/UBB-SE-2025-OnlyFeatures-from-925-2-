@@ -11,7 +11,7 @@ namespace WinUIApp.Views.ViewModels
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using Windows.Management.Deployment;
+    using Microsoft.Windows.Management.Deployment;
     using WinUIApp.Models;
     using WinUIApp.Services;
     using WinUIApp.Services.DummyServices;
@@ -104,8 +104,8 @@ namespace WinUIApp.Views.ViewModels
         public void LoadDrink(int drinkId)
         {
             this.Drink = this.drinkService.GetDrinkById(drinkId);
-            this.AverageReviewScore = this.reviewService.GetReviewAverageByID(drinkId);
-            List<Review> reviews = this.reviewService.GetReviewsByID(drinkId);
+            this.AverageReviewScore = this.reviewService.GetReviewAverageByDrinkID(drinkId);
+            List<Review> reviews = this.reviewService.GetReviewsByDrinkID(drinkId);
             this.Reviews.Clear();
             foreach (Review review in reviews)
             {
