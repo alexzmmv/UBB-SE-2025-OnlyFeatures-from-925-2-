@@ -11,11 +11,11 @@ namespace WinUiApp.Data.Configurations
             builder.HasKey(drinkCategory => new { drinkCategory.DrinkId, drinkCategory.CategoryId });
 
             builder.HasOne(drinkCategory => drinkCategory.Drink)
-                   .WithMany()
+                   .WithMany(drink => drink.DrinkCategories)
                    .HasForeignKey(drinkCategory => drinkCategory.DrinkId);
 
             builder.HasOne(drinkCategory => drinkCategory.Category)
-                   .WithMany()
+                   .WithMany(category => category.DrinkCategories)
                    .HasForeignKey(drinkCategory => drinkCategory.CategoryId);
         }
     }
