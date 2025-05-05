@@ -12,7 +12,7 @@ using WinUiApp.Data;
 namespace WinUIApp.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250505153638_SeedData")]
+    [Migration("20250505225211_SeedData")]
     partial class SeedData
     {
         /// <inheritdoc />
