@@ -7,7 +7,6 @@ namespace WinUIApp.WebAPI.Services.DummyServices
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    
     using Windows.System;
 
     /// <summary>
