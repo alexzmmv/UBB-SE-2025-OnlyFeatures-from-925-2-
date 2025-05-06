@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using WinUiApp.Data;
 using WinUIApp.WebAPI.Repositories;
 using WinUIApp.WebAPI.Services;
+using WinUIApp.WebAPI.Services.DummyServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IDrinkService, DrinkService>();
 builder.Services.AddScoped<IDrinkRepository, DrinkRepository>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
