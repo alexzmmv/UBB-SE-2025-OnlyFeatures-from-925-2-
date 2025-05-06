@@ -206,7 +206,13 @@ namespace WinUIApp.WebAPI.Repositories
                 existingDrink.AlcoholContent = (int)drink.AlcoholContent;
                 existingDrink.BrandId = brand.BrandId; 
 
-                existingDrink.DrinkCategories.Clear();
+                // Remove all DrinkCategory rows for this drink
+                var oldCategories = dbContext.DrinkCategories
+                    .Where(dc => dc.DrinkId == existingDrink.DrinkId)
+                    .ToList();
+                dbContext.DrinkCategories.RemoveRange(oldCategories);
+
+                // Add new DrinkCategory rows
                 foreach (var category in drink.CategoryList)
                 {
                     var drinkCategory = new DrinkCategory
@@ -214,7 +220,6 @@ namespace WinUIApp.WebAPI.Repositories
                         DrinkId = existingDrink.DrinkId,
                         CategoryId = category.CategoryId
                     };
-
                     dbContext.DrinkCategories.Add(drinkCategory);
                 }
 
