@@ -6,6 +6,7 @@ namespace WinUIApp.WebAPI.Extensions
 {
     using System;
     using WinUiApp.Data.Data;
+    using WinUIApp.WebAPI.Models;
     using WinUIApp.WebAPI.Constants;
 
     /// <summary>
@@ -13,6 +14,7 @@ namespace WinUIApp.WebAPI.Extensions
     /// </summary>
     public static class RatingExtensions
     {
+        private const int NoRatingValue = 0;
         /// <summary>
         /// Checks if a rating is valid.
         /// </summary>
@@ -24,6 +26,40 @@ namespace WinUIApp.WebAPI.Extensions
                 && rating.RatingValue.HasValue 
                 && rating.RatingValue >= RatingDomainConstants.MinRatingValue 
                 && rating.RatingValue <= RatingDomainConstants.MaxRatingValue;
+        }
+        
+        public static Rating? ToDataModel(this RatingDTO? ratingDto)
+        {
+            if (ratingDto == null) return null;
+
+            return new Rating
+            {
+                RatingDate = ratingDto.RatingDate,
+                RatingValue = ratingDto.RatingValue,
+                UserId = ratingDto.UserId,
+                DrinkId = ratingDto.DrinkId,
+                IsActive = ratingDto.IsActive,
+            };
+        }
+
+        public static RatingDTO? ToModel(this Rating? rating)
+        {
+            if (rating == null) return null;
+        
+            return new RatingDTO
+            {
+                RatingId = rating.RatingId,
+                RatingDate = rating.RatingDate ?? new DateTime(),
+                RatingValue = rating.RatingValue ?? NoRatingValue,
+                UserId = rating.UserId,
+                DrinkId = rating.DrinkId,
+                IsActive = rating.IsActive ?? false,
+            };
+        }
+
+        public static IEnumerable<RatingDTO?> ToModels(this IEnumerable<Rating?> ratings)
+        {
+            return ratings.Select(rating => rating.ToModel());
         }
     }
 } 

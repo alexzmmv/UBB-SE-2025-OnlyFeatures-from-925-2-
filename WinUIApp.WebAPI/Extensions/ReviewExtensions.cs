@@ -2,6 +2,8 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using WinUIApp.WebAPI.Models;
+
 namespace WinUIApp.WebAPI.Extensions
 {
     using System;
@@ -31,13 +33,23 @@ namespace WinUIApp.WebAPI.Extensions
         /// <param name="review">The review to activate.</param>
         public static void Activate(this Review review)
         {
-            if (review == null)
-            {
-                throw new ArgumentNullException(nameof(review));
-            }
-
             review.IsActive = true;
             review.CreationDate = DateTime.Now;
+        }
+
+        public static Review? ToDataModel(this ReviewDTO? reviewDto)
+        {
+            if (reviewDto == null) return null;
+            
+            return new Review
+            {
+                ReviewId = reviewDto.ReviewId,
+                RatingId = reviewDto.RatingId,
+                UserId = reviewDto.UserId,
+                Content = reviewDto.Content,
+                CreationDate = reviewDto.CreationDate,
+                IsActive = reviewDto.IsActive
+            };
         }
     }
 } 

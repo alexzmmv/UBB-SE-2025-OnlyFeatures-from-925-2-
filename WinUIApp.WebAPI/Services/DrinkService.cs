@@ -17,6 +17,9 @@ namespace WinUIApp.WebAPI.Services
     public class DrinkService : IDrinkService
     {
         private const int DefaultPersonalDrinkCount = 1;
+        private const int NoDrinkBrand = 0;
+        private const int NoDrinkCategory = 0;
+        private const int SingleOrderingCriteria = 1;
         private IDrinkRepository drinkRepository;
 
         /// <summary>
@@ -34,7 +37,7 @@ namespace WinUIApp.WebAPI.Services
         /// <param name="drinkId"> Drink id. </param>
         /// <returns> The drink. </returns>
         /// <exception cref="Exception"> Any issues. </exception>
-        public Drink? GetDrinkById(int drinkId)
+        public DrinkDTO? GetDrinkById(int drinkId)
         {
             try
             {
@@ -57,41 +60,37 @@ namespace WinUIApp.WebAPI.Services
         /// <param name="orderingCriteria"> order criteria. </param>
         /// <returns> List of drinks. </returns>
         /// <exception cref="Exception"> Any issues. </exception>
-        public List<Drink> GetDrinks(string? searchKeyword, List<string>? drinkBrandNameFilter, List<string>? drinkCategoryFilter, float? minimumAlcoholPercentage, float? maximumAlcoholPercentage, Dictionary<string, bool>? orderingCriteria)
+        public List<DrinkDTO> GetDrinks(string? searchKeyword, List<string>? drinkBrandNameFilter, List<string>? drinkCategoryFilter, float? minimumAlcoholPercentage, float? maximumAlcoholPercentage, Dictionary<string, bool>? orderingCriteria)
         {
             try
             {
-                List<Drink> allDrinks = this.drinkRepository.GetDrinks();
-                List<Drink> filteredDrinks = allDrinks;
+                List<DrinkDTO> allDrinks = this.drinkRepository.GetDrinks();
+                List<DrinkDTO> filteredDrinks = allDrinks;
 
                 if (minimumAlcoholPercentage != null)
-                {
-                    filteredDrinks = filteredDrinks.FindAll(drink => drink.AlcoholContent >= minimumAlcoholPercentage);
-                }
+                    filteredDrinks = filteredDrinks.FindAll(
+                        drink => drink.AlcoholContent >= minimumAlcoholPercentage);
 
                 if (maximumAlcoholPercentage != null)
-                {
-                    filteredDrinks = filteredDrinks.FindAll(drink => drink.AlcoholContent <= maximumAlcoholPercentage);
-                }
+                    filteredDrinks = filteredDrinks.FindAll(
+                        drink => drink.AlcoholContent <= maximumAlcoholPercentage);
 
-                if (searchKeyword != null && searchKeyword != string.Empty)
-                {
-                    filteredDrinks = filteredDrinks.FindAll(drink => drink.DrinkName.ToLower().Contains(searchKeyword.ToLower()));
-                }
+                if (!String.IsNullOrEmpty(searchKeyword))
+                    filteredDrinks = filteredDrinks.FindAll(
+                        drink => drink.DrinkName.ToLower().Contains(searchKeyword.ToLower()));
 
-                if (drinkBrandNameFilter != null && drinkBrandNameFilter.Count > 0)
-                {
-                    filteredDrinks = filteredDrinks.FindAll(drink => drinkBrandNameFilter.Contains(drink.DrinkBrand.BrandName));
-                }
+                if (drinkBrandNameFilter != null && drinkBrandNameFilter.Count > NoDrinkBrand)
+                    filteredDrinks = filteredDrinks.FindAll(
+                        drink => drinkBrandNameFilter.Contains(drink.DrinkBrand.BrandName));
 
-                if (drinkCategoryFilter != null && drinkCategoryFilter.Count > 0)
+                if (drinkCategoryFilter != null && drinkCategoryFilter.Count > NoDrinkCategory)
                 {
                     filteredDrinks = filteredDrinks.FindAll(drink =>
                         drinkCategoryFilter.TrueForAll(categoryFilter =>
                             drink.CategoryList.Any(category => category.CategoryName == categoryFilter)));
                 }
 
-                if (orderingCriteria != null && orderingCriteria.Count == 1)
+                if (orderingCriteria != null && orderingCriteria.Count == SingleOrderingCriteria)
                 {
                     string orderingKey = orderingCriteria.Keys.First();
                     bool isAscending = orderingCriteria[orderingKey];
@@ -99,24 +98,16 @@ namespace WinUIApp.WebAPI.Services
                     if (orderingKey == "DrinkName")
                     {
                         if (isAscending)
-                        {
                             filteredDrinks = filteredDrinks.OrderBy(drink => drink.DrinkName).ToList();
-                        }
                         else
-                        {
                             filteredDrinks = filteredDrinks.OrderByDescending(drink => drink.DrinkName).ToList();
-                        }
                     }
                     else if (orderingKey == "AlcoholContent")
                     {
                         if (isAscending)
-                        {
                             filteredDrinks = filteredDrinks.OrderBy(drink => drink.AlcoholContent).ToList();
-                        }
                         else
-                        {
                             filteredDrinks = filteredDrinks.OrderByDescending(drink => drink.AlcoholContent).ToList();
-                        }
                     }
                 }
 
@@ -137,7 +128,7 @@ namespace WinUIApp.WebAPI.Services
         /// <param name="inputtedDrinkBrandName"> Brand. </param>
         /// <param name="inputtedAlcoholPercentage"> Alcohol. </param>
         /// <exception cref="Exception"> Any issues. </exception>
-        public void AddDrink(string inputtedDrinkName, string inputtedDrinkPath, List<Category> inputtedDrinkCategories, string inputtedDrinkBrandName, float inputtedAlcoholPercentage)
+        public void AddDrink(string inputtedDrinkName, string inputtedDrinkPath, List<CategoryDTO> inputtedDrinkCategories, string inputtedDrinkBrandName, float inputtedAlcoholPercentage)
         {
             try
             {
@@ -152,13 +143,13 @@ namespace WinUIApp.WebAPI.Services
         /// <summary>
         /// Updates a drink in the database.
         /// </summary>
-        /// <param name="drink"> Drink. </param>
+        /// <param name="drinkDto"> Drink. </param>
         /// <exception cref="Exception"> Any issues. </exception>
-        public void UpdateDrink(Drink drink)
+        public void UpdateDrink(DrinkDTO drinkDto)
         {
             try
             {
-                this.drinkRepository.UpdateDrink(drink);
+                this.drinkRepository.UpdateDrink(drinkDto);
             }
             catch (Exception updateDrinkException)
             {
@@ -188,7 +179,7 @@ namespace WinUIApp.WebAPI.Services
         /// </summary>
         /// <returns> List of categories. </returns>
         /// <exception cref="Exception"> Any issues. </exception>
-        public List<Category> GetDrinkCategories()
+        public List<CategoryDTO> GetDrinkCategories()
         {
             try
             {
@@ -205,7 +196,7 @@ namespace WinUIApp.WebAPI.Services
         /// </summary>
         /// <returns> List of brands. </returns>
         /// <exception cref="Exception"> Any issues. </exception>
-        public List<Brand> GetDrinkBrandNames()
+        public List<BrandDTO> GetDrinkBrandNames()
         {
             try
             {
@@ -224,7 +215,7 @@ namespace WinUIApp.WebAPI.Services
         /// <param name="maximumDrinkCount"> Not sure. </param>
         /// <returns> Personal list. </returns>
         /// <exception cref="Exception"> Any issues. </exception>
-        public List<Drink> GetUserPersonalDrinkList(int userId, int maximumDrinkCount = DefaultPersonalDrinkCount)
+        public List<DrinkDTO> GetUserPersonalDrinkList(int userId, int maximumDrinkCount = DefaultPersonalDrinkCount)
         {
             try
             {
@@ -300,7 +291,7 @@ namespace WinUIApp.WebAPI.Services
         /// <param name="drinkId"> Drink id. </param>
         /// <returns> The drink. </returns>
         /// <exception cref="Exception"> Any issues. </exception>
-        public Drink VoteDrinkOfTheDay(int userId, int drinkId)
+        public DrinkDTO VoteDrinkOfTheDay(int userId, int drinkId)
         {
             try
             {
@@ -318,15 +309,15 @@ namespace WinUIApp.WebAPI.Services
         /// </summary>
         /// <returns> The drink. </returns>
         /// <exception cref="Exception"> Any issues. </exception>
-        public Drink GetDrinkOfTheDay()
+        public DrinkDTO GetDrinkOfTheDay()
         {
             try
             {
                 return this.drinkRepository.GetDrinkOfTheDay();
             }
-            catch (Exception e)
+            catch (Exception getDrinkOfTheDayException)
             {
-                throw new Exception("Error getting drink of the day:" + e.Message, e);
+                throw new Exception("Error getting drink of the day:" + getDrinkOfTheDayException.Message, getDrinkOfTheDayException);
             }
         }
     }

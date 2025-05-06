@@ -24,11 +24,11 @@ namespace WinUIApp.WebAPI.Services
         /// <summary>
         /// Adds a new review after validating it.
         /// </summary>
-        /// <param name="review">The review to add.</param>
+        /// <param name="reviewDto">The review to add.</param>
         /// <returns>The added <see cref="Review"/> instance.</returns>
         /// <exception cref="ArgumentException">Thrown when the review is invalid.</exception>
         /// <exception cref="Exception"> Any issues. </exception>
-        public Review AddReview(Review review);
+        public Review AddReview(WinUIApp.WebAPI.Models.ReviewDTO reviewDto);
 
         /// <summary>
         /// Deletes a review by its unique identifier.

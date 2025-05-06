@@ -17,13 +17,13 @@ namespace WinUIApp.Services.DummyServices
         /// </summary>
         /// <param name="drinkID"> Drink id. </param>
         /// <returns> Average review. </returns>
-        float GetReviewAverageByID(int drinkID);
+        float GetReviewAverageByDrinkID(int drinkID);
 
         /// <summary>
         /// Retrieves all reviews for a specific drink by its ID.
         /// </summary>
         /// <param name="drinkID"> Drink id. </param>
         /// <returns> All reviews. </returns>
-        List<Review> GetReviewsByID(int drinkID);
+        List<Review> GetReviewsByDrinkID(int drinkID);
     }
 }

@@ -15,6 +15,7 @@
                 <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>
             <!-- Other app resources here -->
+            <FontFamily x:Key="DefaultFontFamily">Abadi MT</FontFamily>
             <converters:ImagePathConverter x:Key="ImageUrlConverter"/>
             <converters:CategoriesConverter x:Key="CategoriesConverter"/>
             <converters:AlcoholContentConverter x:Key="AlcoholContentConverter"/>
