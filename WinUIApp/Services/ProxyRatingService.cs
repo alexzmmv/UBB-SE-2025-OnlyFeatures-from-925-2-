@@ -76,9 +76,9 @@
         {
             try
             {
-                var request = new AddRatingRequest
+                var request = new AddRating
                 {
-                    rating = rating
+                    ratingDto = rating
                 };
 
                 var response = this.httpClient.PostAsJsonAsync("Rating/add", request).Result;
@@ -104,7 +104,7 @@
             {
                 var request = new UpdateRatingRequest
                 {
-                    rating = rating
+                    ratingDto = rating
                 };
 
                 var response = this.httpClient.PutAsJsonAsync("Rating/update", request).Result;

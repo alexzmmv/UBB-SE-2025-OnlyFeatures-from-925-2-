@@ -206,6 +206,12 @@ namespace WinUIApp.WebAPI.Repositories
                 existingDrink.BrandId = brand.BrandId; 
 
                 existingDrink.DrinkCategories.Clear();
+                var oldCategories = dbContext.DrinkCategories
+                    .Where(dc => dc.DrinkId == existingDrink.DrinkId)
+                    .ToList();
+                dbContext.DrinkCategories.RemoveRange(oldCategories);
+
+                // Add new DrinkCategory rows
                 foreach (var category in drinkDto.CategoryList)
                 {
                     var drinkCategory = new DrinkCategory
