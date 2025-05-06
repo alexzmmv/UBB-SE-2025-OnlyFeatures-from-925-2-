@@ -10,18 +10,18 @@ namespace WinUIApp.WebAPI.Controllers
     [Route("[controller]")]
     public class DrinkController : ControllerBase
     {
-        IDrinkService _drinkService;
+        private readonly IDrinkService drinkService;
 
         public DrinkController(IDrinkService drinkService)
         {
-            _drinkService = drinkService;
+            this.drinkService = drinkService;
         }
 
         [HttpPost("get-all")]
         public IActionResult GetAllDrinks([FromBody] GetDrinksRequest request)
         {
             return Ok(
-                _drinkService.GetDrinks(
+                drinkService.GetDrinks(
                     request.searchKeyword,
                     request.drinkBrandNameFilter,
                     request.drinkCategoryFilter,
@@ -33,30 +33,30 @@ namespace WinUIApp.WebAPI.Controllers
         [HttpGet("get-one")]
         public IActionResult GetDrinkById([FromQuery] int drinkId)
         {
-            return Ok(_drinkService.GetDrinkById(drinkId));
+            return Ok(drinkService.GetDrinkById(drinkId));
         }
 
         [HttpGet("get-drink-brands")]
         public IActionResult GetDrinkBrands()
         {
-            return Ok(_drinkService.GetDrinkBrandNames());
+            return Ok(drinkService.GetDrinkBrandNames());
         }
 
         [HttpGet("get-drink-categories")]
         public IActionResult GetDrinkCategories() {
-            return Ok(_drinkService.GetDrinkCategories());
+            return Ok(drinkService.GetDrinkCategories());
         }
 
         [HttpGet("get-drink-of-the-day")]
         public IActionResult GetDrinkOfTheDay()
         {
-            return Ok(_drinkService.GetDrinkOfTheDay());
+            return Ok(drinkService.GetDrinkOfTheDay());
         }
 
         [HttpPost("get-user-drink-list")]
         public IActionResult GetUserPersonalDrinkList([FromBody] GetUserDrinkListRequest request)
         {
-            return Ok(_drinkService.GetUserPersonalDrinkList(request.userId));
+            return Ok(drinkService.GetUserPersonalDrinkList(request.userId));
         }
         
         [HttpPost("add")]
@@ -64,7 +64,7 @@ namespace WinUIApp.WebAPI.Controllers
         {
             ArgumentNullException.ThrowIfNull(request);
 
-            _drinkService.AddDrink(
+            drinkService.AddDrink(
                 request.inputtedDrinkName,
                 request.inputtedDrinkPath,
                 request.inputtedDrinkCategories,
@@ -76,33 +76,33 @@ namespace WinUIApp.WebAPI.Controllers
         [HttpPost("add-to-user-drink-list")]
         public IActionResult AddToUserPersonalDrinkList([FromBody] AddToUserPersonalDrinkListRequest request)
         {
-            return Ok(_drinkService.AddToUserPersonalDrinkList(request.userId, request.drinkId));
+            return Ok(drinkService.AddToUserPersonalDrinkList(request.userId, request.drinkId));
         }
 
         [HttpPost("vote-drink-of-the-day")]
         public IActionResult VoteDrinkOfTheDay(VoteDrinkOfTheDayRequest request)
         {
-            return Ok(_drinkService.VoteDrinkOfTheDay(request.userId,request.drinkId));
+            return Ok(drinkService.VoteDrinkOfTheDay(request.userId,request.drinkId));
         }
 
         [HttpPut("update")]
         public IActionResult UpdateDrink([FromBody] UpdateDrinkRequest request)
         {
-            _drinkService.UpdateDrink(request.drink);
+            drinkService.UpdateDrink(request.Drink);
             return Ok();
         }
 
         [HttpDelete("delete")]
         public IActionResult DeleteDrink([FromBody] DeleteDrinkRequest request)
         {
-            _drinkService.DeleteDrink(request.drinkId);
+            drinkService.DeleteDrink(request.drinkId);
             return Ok();
         }
 
         [HttpDelete("delete-from-user-drink-list")]
         public IActionResult DeleteFromUserPersonalDrinkList([FromBody] DeleteFromUserPersonalDrinkListRequest request)
         {
-            return Ok(_drinkService.DeleteFromUserPersonalDrinkList(request.userId, request.drinkId));
+            return Ok(drinkService.DeleteFromUserPersonalDrinkList(request.userId, request.drinkId));
         }
     }
 }

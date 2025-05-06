@@ -48,7 +48,7 @@ namespace WinUIApp.WebAPI.Repositories
         public List<Review> GetReviewsByRatingId(int ratingId)
         {
             return this.dbContext.Reviews
-                .Where(rating => rating.RatingId == ratingId)
+                .Where(rating => rating.Rating.RatingId == ratingId)
                 .ToList();
         }
 
@@ -56,9 +56,7 @@ namespace WinUIApp.WebAPI.Repositories
         public Review AddReview(Review review)
         {
             if (string.IsNullOrWhiteSpace(review.Content))
-            {
                 throw new ArgumentException(RepositoryErrorMessages.EmptyReviewContent, nameof(review.Content));
-            }
 
             review.CreationDate ??= DateTime.UtcNow;
             review.IsActive ??= true;
@@ -73,17 +71,13 @@ namespace WinUIApp.WebAPI.Repositories
         public Review UpdateReview(Review review)
         {
             if (string.IsNullOrWhiteSpace(review.Content))
-            {
                 throw new ArgumentException(RepositoryErrorMessages.EmptyReviewContent, nameof(review.Content));
-            }
 
             var existingReview = this.dbContext.Reviews
                 .FirstOrDefault(existingReview => existingReview.ReviewId == review.ReviewId);
 
             if (existingReview == null)
-            {
                 throw new Exception(RepositoryErrorMessages.EntityNotFound);
-            }
 
             existingReview.RatingId = review.RatingId;
             existingReview.UserId = review.UserId;
@@ -103,9 +97,7 @@ namespace WinUIApp.WebAPI.Repositories
                 .FirstOrDefault(review => review.ReviewId == reviewId);
 
             if (review == null)
-            {
                 throw new Exception(RepositoryErrorMessages.EntityNotFound);
-            }
 
             this.dbContext.Reviews.Remove(review);
             this.dbContext.SaveChanges();

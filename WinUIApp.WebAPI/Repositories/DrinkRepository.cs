@@ -21,6 +21,7 @@ namespace WinUIApp.WebAPI.Repositories
     /// </summary>
     internal class DrinkRepository : IDrinkRepository
     {
+        private const int NoCategoriesCount = 0;
         AppDbContext dbContext;
 
         /// <summary>
@@ -36,22 +37,22 @@ namespace WinUIApp.WebAPI.Repositories
         /// Retrieves a list of all drinks.
         /// </summary>
         /// <returns> List of drinks. </returns>
-        public List<Models.Drink> GetDrinks()
+        public List<Models.DrinkDTO> GetDrinks()
         {
             return dbContext.Drinks
                 .Include(drink => drink.Brand)
                 .Include(drink => drink.DrinkCategories)
                 .ThenInclude(drinkCategory => drinkCategory.Category)
-                .Select(drink => new Models.Drink(
+                .Select(drink => new Models.DrinkDTO(
                     drink.DrinkId,
                     drink.DrinkName,
                     drink.DrinkURL,
                     drink.DrinkCategories
-                            .Select(drinkCategory => new Models.Category(
+                            .Select(drinkCategory => new Models.CategoryDTO(
                                 drinkCategory.Category!.CategoryId,
                                 drinkCategory.Category.CategoryName))
                             .ToList(),
-                    new Models.Brand(drink.Brand!.BrandId,
+                    new Models.BrandDTO(drink.Brand!.BrandId,
                                         drink.Brand.BrandName),
                     (float)drink.AlcoholContent
                 ))
@@ -63,23 +64,23 @@ namespace WinUIApp.WebAPI.Repositories
         /// </summary>
         /// <param name="drinkId"> Drink id. </param>
         /// <returns> The drink. </returns>
-        public Models.Drink? GetDrinkById(int drinkId)
+        public Models.DrinkDTO? GetDrinkById(int drinkId)
         {
             return dbContext.Drinks
                 .Include(drink => drink.Brand)
                 .Include(drink => drink.DrinkCategories)
                     .ThenInclude(drinkCategory => drinkCategory.Category)
                 .Where(drink => drink.DrinkId == drinkId)
-                .Select(drink => new Models.Drink(
+                .Select(drink => new Models.DrinkDTO(
                     drink.DrinkId,
                     drink.DrinkName,
                     drink.DrinkURL,
                     drink.DrinkCategories
-                        .Select(drinkCategory => new Models.Category(
+                        .Select(drinkCategory => new Models.CategoryDTO(
                             drinkCategory.Category!.CategoryId,
                             drinkCategory.Category.CategoryName))
                         .ToList(),
-                    new Models.Brand(drink.Brand!.BrandId,
+                    new Models.BrandDTO(drink.Brand!.BrandId,
                             drink.Brand.BrandName),
                     (float)drink.AlcoholContent
                 ))
@@ -87,7 +88,7 @@ namespace WinUIApp.WebAPI.Repositories
         }
 
 
-        private WinUiApp.Data.Data.Brand RetrieveBrand(string brandName)
+        private Brand RetrieveBrand(string brandName)
         {
             var brand = dbContext.Brands
                                     .FirstOrDefault(brand => brand.BrandName == brandName);
@@ -105,22 +106,22 @@ namespace WinUIApp.WebAPI.Repositories
             return brand;
         }
 
-        private WinUiApp.Data.Data.Category RetrieveCategory(Models.Category category)
+        private Category RetrieveCategory(Models.CategoryDTO currentCategoryDto)
         {
             var dataCategory = dbContext.Categories
-                    .FirstOrDefault(c => c.CategoryId == category.CategoryId);
+                    .FirstOrDefault(category => category.CategoryId == currentCategoryDto.CategoryId);
 
             if (dataCategory == null)
             {
                 dataCategory = dbContext.Categories
-                    .FirstOrDefault(c => c.CategoryName == category.CategoryName);
+                    .FirstOrDefault(category => category.CategoryName == currentCategoryDto.CategoryName);
             }
 
             if (dataCategory == null)
             {
-                dataCategory = new WinUiApp.Data.Data.Category
+                dataCategory = new Category
                 {
-                    CategoryName = category.CategoryName
+                    CategoryName = currentCategoryDto.CategoryName
                 };
                 dbContext.Categories.Add(dataCategory);
                 dbContext.SaveChanges();
@@ -139,11 +140,11 @@ namespace WinUIApp.WebAPI.Repositories
         /// <param name="brandName"> Brand name. </param>
         /// <param name="alcoholContent"> Alcohol content. </param>
         /// 
-        public void AddDrink(string drinkName, string drinkUrl, List<Models.Category> categories, string brandName, float alcoholContent)
+        public void AddDrink(string drinkName, string drinkUrl, List<Models.CategoryDTO> categories, string brandName, float alcoholContent)
         {
             var brand = RetrieveBrand(brandName);
 
-            var drink = new WinUiApp.Data.Data.Drink
+            var drink = new Drink
             {
                 DrinkName = drinkName,
                 DrinkURL = drinkUrl,
@@ -177,17 +178,17 @@ namespace WinUIApp.WebAPI.Repositories
         /// <summary>
         /// Updates the details of an existing drink in the database.
         /// </summary>
-        /// <param name="drink"> The drink with updated info. </param>
-        public void UpdateDrink(Models.Drink drink)
+        /// <param name="drinkDto"> The drink with updated info. </param>
+        public void UpdateDrink(Models.DrinkDTO drinkDto)
         {
             try
             {
                 var brand = dbContext.Brands
-                                     .FirstOrDefault(brand => brand.BrandName == drink.DrinkBrand.BrandName);
+                                     .FirstOrDefault(brand => brand.BrandName == drinkDto.DrinkBrand.BrandName);
 
                 if (brand == null)
                 {
-                    brand = new WinUiApp.Data.Data.Brand { BrandName = drink.DrinkBrand.BrandName };
+                    brand = new Brand { BrandName = drinkDto.DrinkBrand.BrandName };
                     dbContext.Brands.Add(brand);
                     dbContext.SaveChanges();
                 }
@@ -197,13 +198,11 @@ namespace WinUIApp.WebAPI.Repositories
                                              .FirstOrDefault(drink => drink.DrinkId == drink.DrinkId);
 
                 if (existingDrink == null)
-                {
                     throw new Exception("No drink found with the provided ID.");
-                }
 
-                existingDrink.DrinkName = drink.DrinkName;
-                existingDrink.DrinkURL = drink.DrinkImageUrl;
-                existingDrink.AlcoholContent = (int)drink.AlcoholContent;
+                existingDrink.DrinkName = drinkDto.DrinkName ?? String.Empty;
+                existingDrink.DrinkURL = drinkDto.DrinkImageUrl;
+                existingDrink.AlcoholContent = (int)drinkDto.AlcoholContent;
                 existingDrink.BrandId = brand.BrandId; 
 
                 // Remove all DrinkCategory rows for this drink
@@ -243,9 +242,7 @@ namespace WinUIApp.WebAPI.Repositories
                                     .FirstOrDefault(drink => drink.DrinkId == drinkId);
 
             if (drink == null)
-            {
                 throw new Exception("No drink found with the provided ID.");
-            }
 
             dbContext.DrinkCategories.RemoveRange(drink.DrinkCategories);
 
@@ -258,7 +255,7 @@ namespace WinUIApp.WebAPI.Repositories
         /// Retrieves the drink of the day.
         /// </summary>
         /// <returns> Drink of the day. </returns>
-        public Models.Drink GetDrinkOfTheDay()
+        public Models.DrinkDTO GetDrinkOfTheDay()
         {
             var today = DateTime.UtcNow.Date;
 
@@ -266,9 +263,7 @@ namespace WinUIApp.WebAPI.Repositories
                 .Any(drink => drink.DrinkTime.Date == today);
 
             if (!hasToday)
-            {
                 ResetDrinkOfTheDay();
-            }
 
             var drinkOfTheDay = dbContext.DrinkOfTheDays
                 .AsNoTracking()    
@@ -282,7 +277,6 @@ namespace WinUIApp.WebAPI.Repositories
                 throw new Exception($"Drink with ID {drinkOfTheDay.DrinkId} not found.");
 
             return drink;
-
         }
 
         /// <summary>
@@ -304,7 +298,39 @@ namespace WinUIApp.WebAPI.Repositories
 
             dbContext.SaveChanges();
         }
-
+        
+        /// <summary>
+        /// Adds a new vote entry for the specified user and drink at the given time.
+        /// </summary>
+        /// <param name="userId">The unique ID of the user casting the vote.</param>
+        /// <param name="drinkId">The ID of the drink being voted for.</param>
+        /// <param name="voteTime">The timestamp when the vote is cast.</param>
+        private void AddNewVote(int userId, int drinkId, DateTime voteTime)
+        {
+            var newVote = new Vote
+            {
+                UserId = userId,
+                DrinkId = drinkId,
+                VoteTime = voteTime
+            };
+            dbContext.Votes.Add(newVote);
+            
+            dbContext.SaveChanges();
+        }
+        
+        /// <summary>
+        /// Updates an existing vote to associate it with a new drink.
+        /// </summary>
+        /// <param name="existingVote">The existing vote record to update.</param>
+        /// <param name="drinkId">The new drink ID to associate with the vote.</param>
+        private void UpdateExistingVote(Vote existingVote, int drinkId)
+        {
+            existingVote.DrinkId = drinkId;
+            dbContext.Votes.Update(existingVote);
+            
+            dbContext.SaveChanges();
+        }
+        
         /// <summary>
         /// Votes for a drink of the day.
         /// </summary>
@@ -318,20 +344,9 @@ namespace WinUIApp.WebAPI.Repositories
                 .FirstOrDefault(vote => vote.UserId == userId && vote.VoteTime.Date == voteTime.Date);
 
             if (existingVote == null)
-            {
-                var newVote = new Vote
-                {
-                    UserId = userId,
-                    DrinkId = drinkId,
-                    VoteTime = voteTime
-                };
-                dbContext.Votes.Add(newVote);
-            }
-            else
-            {
-                existingVote.DrinkId = drinkId;
-                dbContext.Votes.Update(existingVote);
-            }
+                AddNewVote(userId, drinkId, voteTime);
+            else 
+                UpdateExistingVote(existingVote, drinkId);
 
             dbContext.SaveChanges();
         }
@@ -341,7 +356,7 @@ namespace WinUIApp.WebAPI.Repositories
         /// </summary>
         /// <param name="userId"> User id. </param>
         /// <returns> The list of drinks for the user. </returns>
-        public List<Models.Drink> GetPersonalDrinkList(int userId)
+        public List<Models.DrinkDTO> GetPersonalDrinkList(int userId)
         {
             var drinkIds = dbContext.UserDrinks
             .Where(ud => ud.UserId == userId)
@@ -349,32 +364,31 @@ namespace WinUIApp.WebAPI.Repositories
             .ToList();
 
             if (!drinkIds.Any())
-            {
-                return new List<Models.Drink>();
-            }
+                return new List<Models.DrinkDTO>();
 
-            var drinks = dbContext.Drinks
+            var drinkEntities = dbContext.Drinks
                 .Include(drink => drink.Brand)
                 .Include(drink => drink.DrinkCategories)
                 .ThenInclude(drinkCategory => drinkCategory.Category)
                 .Where(drink => drinkIds.Contains(drink.DrinkId))
-                .Select(drink => new Models.Drink(
+                .AsNoTracking()
+                .ToList(); // materialize before projection
+            var drinks = drinkEntities.Select(drink => new Models.DrinkDTO(
                     drink.DrinkId,
                     drink.DrinkName,
                     drink.DrinkURL,
                     drink.DrinkCategories
-                            .Select(drinkCategory => new Models.Category(
+                            .Select(drinkCategory => new Models.CategoryDTO(
                                 drinkCategory.Category!.CategoryId,
                                 drinkCategory.Category.CategoryName))
                             .ToList(),
-                    new Models.Brand(drink.Brand!.BrandId,
+                    new Models.BrandDTO(drink.Brand!.BrandId,
                                         drink.Brand.BrandName),
                     (float)drink.AlcoholContent
                 ))
                 .ToList();
 
             return drinks;
-
         }
 
         /// <summary>
@@ -386,7 +400,9 @@ namespace WinUIApp.WebAPI.Repositories
         public bool IsDrinkInPersonalList(int userId, int drinkId)
         {
             return dbContext.UserDrinks
-                .Any(userDrink => userDrink.UserId == userId && userDrink.DrinkId == drinkId);
+                .Any(userDrink => 
+                    userDrink.UserId == userId && 
+                    userDrink.DrinkId == drinkId);
         }
 
         /// <summary>
@@ -449,12 +465,9 @@ namespace WinUIApp.WebAPI.Repositories
                 .FirstOrDefault();
 
             if (topVotedDrink == null)
-            {
                 return this.GetRandomDrinkId();
-            }
 
             return topVotedDrink.DrinkId;
-
         }
 
         /// <summary>
@@ -468,9 +481,7 @@ namespace WinUIApp.WebAPI.Repositories
             .FirstOrDefault();
 
             if (randomDrink == null)
-            {
                 throw new Exception("No drink found in the database.");
-            }
 
             return randomDrink.DrinkId;
         }
@@ -479,29 +490,27 @@ namespace WinUIApp.WebAPI.Repositories
         /// Retrieves a list of all available drink categories.
         /// </summary>
         /// <returns> List of all categories. </returns>
-        public List<Models.Category> GetDrinkCategories()
+        public List<Models.CategoryDTO> GetDrinkCategories()
         {
             return dbContext.Categories
             .OrderBy(category => category.CategoryId)
-            .Select(category => new Models.Category(
+            .Select(category => new Models.CategoryDTO(
                 category.CategoryId,
                 category.CategoryName))
             .ToList();
-
         }
 
         /// <summary>
         /// Retrieves a list of all available drink brands.
         /// </summary>
         /// <returns> List of all brands. </returns>
-        public List<Models.Brand> GetDrinkBrands()
+        public List<Models.BrandDTO> GetDrinkBrands()
         {
             return dbContext.Brands
-            .Select(brand => new Models.Brand(
+            .Select(brand => new Models.BrandDTO(
                 brand.BrandId,
                 brand.BrandName))
             .ToList();
-
         }
 
         /// <summary>
@@ -509,23 +518,20 @@ namespace WinUIApp.WebAPI.Repositories
         /// </summary>
         /// <param name="drinkId"> Id of the drink. </param>
         /// <returns> Categories for the specific drink. </returns>
-        public List<Models.Category> GetDrinkCategoriesById(int drinkId)
+        public List<Models.CategoryDTO> GetDrinkCategoriesById(int drinkId)
         {
             var categories = dbContext.DrinkCategories
             .Where(drinkCategory => drinkCategory.DrinkId == drinkId)
             .Include(drinkCategory => drinkCategory.Category) 
-            .Select(drinkCategory => new Models.Category(
+            .Select(drinkCategory => new Models.CategoryDTO(
                 drinkCategory.Category!.CategoryId,
                 drinkCategory.Category.CategoryName))
             .ToList();
 
-            if (categories.Count == 0)
-            {
+            if (categories.Count == NoCategoriesCount)
                 throw new Exception("No drink found with the provided ID.");
-            }
 
             return categories;
-
         }
 
         /// <summary>
@@ -533,11 +539,11 @@ namespace WinUIApp.WebAPI.Repositories
         /// </summary>
         /// <param name="drinkId"> Drink id. </param>
         /// <returns> Brand. </returns>
-        public Models.Brand GetBrandById(int drinkId)
+        public Models.BrandDTO GetBrandById(int drinkId)
         {
             var drink = dbContext.Drinks
-            .Include(d => d.Brand)
-            .FirstOrDefault(d => d.DrinkId == drinkId);
+            .Include(drink => drink.Brand)
+            .FirstOrDefault(drink => drink.DrinkId == drinkId);
 
             if (drink == null)
                 throw new Exception("No drink found with the provided ID.");
@@ -545,10 +551,9 @@ namespace WinUIApp.WebAPI.Repositories
             if (drink.Brand == null)
                 throw new Exception("No brand found for the specified drink.");
 
-            return new Models.Brand(
+            return new Models.BrandDTO(
                 drink.Brand.BrandId,
                 drink.Brand.BrandName);
-
         }
 
         /// <summary>
@@ -559,7 +564,7 @@ namespace WinUIApp.WebAPI.Repositories
         public bool IsBrandInDatabase(string brandName)
         {
             return dbContext.Brands
-            .Any(brand => brand.BrandName == brandName);
+                .Any(brand => brand.BrandName == brandName);
         }
 
         /// <summary>
@@ -568,7 +573,7 @@ namespace WinUIApp.WebAPI.Repositories
         /// <param name="brandName"> Brand name. </param>
         public void AddBrand(string brandName)
         {
-            var brand = new WinUiApp.Data.Data.Brand
+            var brand = new Brand
             {
                 BrandName = brandName
             };

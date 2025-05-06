@@ -22,8 +22,11 @@
                x:Name="DrinkImage"
                Height="180"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 5 0 0">
-                <components:AddRemoveFromDrinkListButton DrinkId="{Binding Drink.DrinkId}" />
+                <components:AddRemoveFromDrinkListButton DrinkId="{Binding Drink}" />
                 <components:UpdateDrinkButton x:Name="UpdateButton" Drink="{Binding Drink}" />
+                <Button Content="Add Rating" 
+            Click="AddRatingButton_Click"
+            Margin="5,0" />
                 <Button>
                     <Button.Flyout>
                         <Flyout Placement="Bottom">
@@ -56,14 +59,7 @@
                         <DataTemplate>
                             <Border BorderThickness="1" BorderBrush="Goldenrod" Padding="10" Margin="0 0 0 10">
                                 <StackPanel>
-                                    <TextBlock Text="{Binding ReviewTitle}" FontWeight="Bold" FontSize="16"/>
-                                    <TextBlock Text="{Binding ReviewDescription}" TextWrapping="WrapWholeWords"/>
-                                    <TextBlock Text="{Binding ReviewPostedDateTime}" FontSize="12" Foreground="Gray"/>
-                                    <TextBlock>
-                                    <Run Text="⭐ " />
-                                    <Run Text="{Binding ReviewScore}" />
-                                    <Run Text="/5" />
-                                    </TextBlock>
+                                    <TextBlock Text="{Binding Content}" TextWrapping="WrapWholeWords"/>
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
