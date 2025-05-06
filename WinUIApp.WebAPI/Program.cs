@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WinUiApp.Data;
+using WinUiApp.Data.Interfaces;
 using WinUIApp.WebAPI.Repositories;
 using WinUIApp.WebAPI.Services;
 using WinUIApp.WebAPI.Services.DummyServices;
@@ -16,6 +17,8 @@ builder.Services.AddScoped<IAdminService, AdminService>();
 
 builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+
+builder.Services.AddScoped<IAppDbContext, AppDbContext>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
