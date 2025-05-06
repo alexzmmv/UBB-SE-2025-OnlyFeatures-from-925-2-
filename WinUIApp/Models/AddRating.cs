@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace WinUIApp.Models
 {
-    public class AddRatingRequest
+    public class AddRating
     {
-        public Models.Rating rating { get; set; }
+        public Models.Rating ratingDto { get; set; }
     }
 }

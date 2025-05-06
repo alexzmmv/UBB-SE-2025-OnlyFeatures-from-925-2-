@@ -8,7 +8,7 @@ namespace WinUIApp.Models
 {
     public class UpdateRatingRequest
     {
-        public Models.Rating rating { get; set; }
+        public Models.Rating ratingDto { get; set; }
     }
 
 }
