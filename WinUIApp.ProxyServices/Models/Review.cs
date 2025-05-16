@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace WinUIApp.Models
+namespace WinUIApp.ProxyServices.Models
 {
     using System;
 
@@ -49,7 +49,7 @@ namespace WinUIApp.Models
         /// <returns>True if the review is valid; otherwise, false.</returns>
         public bool IsValid()
         {
-            return !string.IsNullOrWhiteSpace(this.Content) && this.Content.Length <= MaxContentLength;
+            return !string.IsNullOrWhiteSpace(Content) && Content.Length <= MaxContentLength;
         }
 
         /// <summary>
@@ -57,8 +57,8 @@ namespace WinUIApp.Models
         /// </summary>
         public void Activate()
         {
-            this.IsActive = true;
-            this.CreationDate = DateTime.Now;
+            IsActive = true;
+            CreationDate = DateTime.Now;
         }
     }
 }

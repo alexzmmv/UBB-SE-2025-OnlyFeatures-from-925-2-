@@ -2,10 +2,10 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace WinUIApp.Services
+namespace WinUIApp.ProxyServices
 {
     using System.Collections.Generic;
-    using WinUIApp.Models;
+    using WinUIApp.ProxyServices.Models;
 
     /// <summary>
     /// Interface for managing drink-related operations.

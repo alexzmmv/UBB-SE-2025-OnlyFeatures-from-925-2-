@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace WinUIApp.Services
+namespace WinUIApp.ProxyServices
 {
     using Microsoft.Extensions.Configuration;
     using System;
@@ -11,8 +11,9 @@ namespace WinUIApp.Services
     using System.Net.Http;
     using System.Net.Http.Json;
     using WinUIApp.Data.Requests.Drink;
-    using WinUIApp.Models;
-    using WinUIApp.Services.DummyServices;
+    using WinUIApp.ProxyServices.Models;
+    using WinUIApp.ProxyServices;
+
 
     /// <summary>
     /// Proxy service for managing drink-related operations.

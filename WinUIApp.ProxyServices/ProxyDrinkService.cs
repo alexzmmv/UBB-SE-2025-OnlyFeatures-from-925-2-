@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace WinUIApp.Services
+namespace WinUIApp.ProxyServices
 {
     using Microsoft.Extensions.Configuration;
     using System;
@@ -11,7 +11,7 @@ namespace WinUIApp.Services
     using System.Net.Http;
     using System.Net.Http.Json;
     using WinUIApp.Data.Requests.Drink;
-    using WinUIApp.Models;
+    using WinUIApp.ProxyServices.Models;
 
     /// <summary>
     /// Proxy service for managing drink-related operations.
@@ -28,9 +28,9 @@ namespace WinUIApp.Services
         /// </summary>
         public ProxyDrinkService()
         {
-            this.httpClient = new HttpClient
+            httpClient = new HttpClient
             {
-                BaseAddress = new Uri(this.GetApiUrl()),
+                BaseAddress = new Uri(GetApiUrl()),
             };
         }
 
@@ -44,7 +44,7 @@ namespace WinUIApp.Services
         {
             try
             {
-                var response = this.httpClient.GetAsync($"Drink/get-one?drinkId={drinkId}").Result;
+                var response = httpClient.GetAsync($"Drink/get-one?drinkId={drinkId}").Result;
                 response.EnsureSuccessStatusCode();
                 return response.Content.ReadFromJsonAsync<Drink>().Result;
             }
@@ -79,7 +79,7 @@ namespace WinUIApp.Services
                     orderingCriteria = orderingCriteria,
                 };
 
-                var response = this.httpClient.PostAsJsonAsync("Drink/get-all", request).Result;
+                var response = httpClient.PostAsJsonAsync("Drink/get-all", request).Result;
                 response.EnsureSuccessStatusCode();
                 return response.Content.ReadFromJsonAsync<List<Drink>>().Result;
             }
@@ -121,7 +121,7 @@ namespace WinUIApp.Services
                     inputtedAlcoholPercentage = inputtedAlcoholPercentage,
                 };
 
-                var response = this.httpClient.PostAsJsonAsync("Drink/add", request).Result;
+                var response = httpClient.PostAsJsonAsync("Drink/add", request).Result;
                 response.EnsureSuccessStatusCode();
             }
             catch (Exception exception)
@@ -149,7 +149,7 @@ namespace WinUIApp.Services
             try
             {
                 var request = new UpdateDrinkRequest { drink = convertedDrink };
-                var response = this.httpClient.PutAsJsonAsync("Drink/update", request).Result;
+                var response = httpClient.PutAsJsonAsync("Drink/update", request).Result;
                 response.EnsureSuccessStatusCode();
             }
             catch (Exception exception)
@@ -172,7 +172,7 @@ namespace WinUIApp.Services
                 {
                     Content = JsonContent.Create(request),
                 };
-                var response = this.httpClient.SendAsync(message).Result;
+                var response = httpClient.SendAsync(message).Result;
                 response.EnsureSuccessStatusCode();
             }
             catch (Exception exception)
@@ -190,7 +190,7 @@ namespace WinUIApp.Services
         {
             try
             {
-                var response = this.httpClient.GetAsync("Drink/get-drink-categories").Result;
+                var response = httpClient.GetAsync("Drink/get-drink-categories").Result;
                 response.EnsureSuccessStatusCode();
                 return response.Content.ReadFromJsonAsync<List<Category>>().Result;
             }
@@ -209,7 +209,7 @@ namespace WinUIApp.Services
         {
             try
             {
-                var response = this.httpClient.GetAsync("Drink/get-drink-brands").Result;
+                var response = httpClient.GetAsync("Drink/get-drink-brands").Result;
                 response.EnsureSuccessStatusCode();
                 return response.Content.ReadFromJsonAsync<List<Brand>>().Result;
             }
@@ -231,7 +231,7 @@ namespace WinUIApp.Services
             try
             {
                 var request = new GetUserDrinkListRequest { userId = userId };
-                var response = this.httpClient.PostAsJsonAsync("Drink/get-user-drink-list", request).Result;
+                var response = httpClient.PostAsJsonAsync("Drink/get-user-drink-list", request).Result;
                 response.EnsureSuccessStatusCode();
                 return response.Content.ReadFromJsonAsync<List<Drink>>().Result;
             }
@@ -252,7 +252,7 @@ namespace WinUIApp.Services
         {
             try
             {
-                var personalList = this.GetUserPersonalDrinkList(userId);
+                var personalList = GetUserPersonalDrinkList(userId);
                 return personalList.Any(drink => drink.DrinkId == drinkId);
             }
             catch (Exception exception)
@@ -277,7 +277,7 @@ namespace WinUIApp.Services
                     userId = userId,
                     drinkId = drinkId
                 };
-                var response = this.httpClient.PostAsJsonAsync("Drink/add-to-user-drink-list", request).Result;
+                var response = httpClient.PostAsJsonAsync("Drink/add-to-user-drink-list", request).Result;
                 response.EnsureSuccessStatusCode();
                 return response.Content.ReadFromJsonAsync<bool>().Result;
             }
@@ -307,7 +307,7 @@ namespace WinUIApp.Services
                 {
                     Content = JsonContent.Create(request),
                 };
-                var response = this.httpClient.SendAsync(message).Result;
+                var response = httpClient.SendAsync(message).Result;
                 response.EnsureSuccessStatusCode();
                 return response.Content.ReadFromJsonAsync<bool>().Result;
             }
@@ -333,7 +333,7 @@ namespace WinUIApp.Services
                     userId = userId,
                     drinkId = drinkId,
                 };
-                var response = this.httpClient.PostAsJsonAsync("Drink/vote-drink-of-the-day", request).Result;
+                var response = httpClient.PostAsJsonAsync("Drink/vote-drink-of-the-day", request).Result;
                 response.EnsureSuccessStatusCode();
                 return response.Content.ReadFromJsonAsync<Drink>().Result;
             }
@@ -352,7 +352,7 @@ namespace WinUIApp.Services
         {
             try
             {
-                var response = this.httpClient.GetAsync("Drink/get-drink-of-the-day").Result;
+                var response = httpClient.GetAsync("Drink/get-drink-of-the-day").Result;
                 response.EnsureSuccessStatusCode();
                 return response.Content.ReadFromJsonAsync<Drink>().Result ?? throw new Exception("Drink of the day not found");
             }

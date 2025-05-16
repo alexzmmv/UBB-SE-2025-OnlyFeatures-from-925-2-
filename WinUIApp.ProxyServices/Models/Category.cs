@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace WinUIApp.Models
+namespace WinUIApp.ProxyServices.Models
 {
     using System;
 
@@ -24,8 +24,8 @@ namespace WinUIApp.Models
                 throw new ArgumentException("Category name cannot be null or empty.", nameof(categoryName));
             }
 
-            this.CategoryId = categoryId;
-            this.CategoryName = categoryName;
+            CategoryId = categoryId;
+            CategoryName = categoryName;
         }
 
         /// <summary>
@@ -45,13 +45,13 @@ namespace WinUIApp.Models
         /// <returns> True, if equal, false otherwise. </returns>
         public override bool Equals(object? objectToCheck)
         {
-            return objectToCheck is Category other && this.CategoryId == other.CategoryId;
+            return objectToCheck is Category other && CategoryId == other.CategoryId;
         }
 
         /// <summary>
         /// Returns the hash code for the current category.
         /// </summary>
         /// <returns> Returns the int hash code for the current category. </returns>
-        public override int GetHashCode() => this.CategoryId.GetHashCode();
+        public override int GetHashCode() => CategoryId.GetHashCode();
     }
 }

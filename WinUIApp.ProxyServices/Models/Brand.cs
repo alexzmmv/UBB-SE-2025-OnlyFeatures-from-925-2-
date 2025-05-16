@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace WinUIApp.Models
+namespace WinUIApp.ProxyServices.Models
 {
     using System;
 
@@ -21,8 +21,8 @@ namespace WinUIApp.Models
         /// <exception cref="ArgumentException">Thrown when brandName is null or empty.</exception>
         public Brand(int brandId, string brandName)
         {
-            this.BrandId = brandId;
-            this.BrandName = brandName;
+            BrandId = brandId;
+            BrandName = brandName;
         }
 
         /// <summary>
@@ -36,15 +36,15 @@ namespace WinUIApp.Models
         /// <exception cref="ArgumentException">Thrown when value is null or empty.</exception>
         public string BrandName
         {
-            get => this.brandName;
+            get => brandName;
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentException("Brand name cannot be null or empty.", nameof(this.BrandName));
+                    throw new ArgumentException("Brand name cannot be null or empty.", nameof(BrandName));
                 }
 
-                this.brandName = value;
+                brandName = value;
             }
         }
     }

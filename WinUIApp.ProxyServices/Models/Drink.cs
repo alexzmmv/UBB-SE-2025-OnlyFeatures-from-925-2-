@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace WinUIApp.Models
+namespace WinUIApp.ProxyServices.Models
 {
     using System;
     using System.Collections.Generic;
@@ -34,12 +34,12 @@ namespace WinUIApp.Models
         /// <exception cref="ArgumentNullException">Thrown when brand is null.</exception>
         public Drink(int id, string? drinkName, string imageUrl, List<Category> categories, Brand brand, float alcoholContent)
         {
-            this.DrinkId = id;
-            this.DrinkName = drinkName;
-            this.DrinkImageUrl = imageUrl;
-            this.CategoryList = categories;
-            this.DrinkBrand = brand ?? throw new ArgumentNullException(nameof(brand), "Brand cannot be null");
-            this.AlcoholContent = alcoholContent;
+            DrinkId = id;
+            DrinkName = drinkName;
+            DrinkImageUrl = imageUrl;
+            CategoryList = categories;
+            DrinkBrand = brand ?? throw new ArgumentNullException(nameof(brand), "Brand cannot be null");
+            AlcoholContent = alcoholContent;
         }
 
         /// <summary>
@@ -52,8 +52,8 @@ namespace WinUIApp.Models
         /// </summary>
         public string? DrinkName
         {
-            get => this.drinkName;
-            set => this.drinkName = value;
+            get => drinkName;
+            set => drinkName = value;
         }
 
         /// <summary>
@@ -61,8 +61,8 @@ namespace WinUIApp.Models
         /// </summary>
         public string DrinkImageUrl
         {
-            get => this.drinkImageUrl;
-            set => this.drinkImageUrl = value ?? string.Empty;
+            get => drinkImageUrl;
+            set => drinkImageUrl = value ?? string.Empty;
         }
 
         /// <summary>
@@ -70,8 +70,8 @@ namespace WinUIApp.Models
         /// </summary>
         public List<Category> CategoryList
         {
-            get => this.categoryList;
-            set => this.categoryList = value;
+            get => categoryList;
+            set => categoryList = value;
         }
 
         /// <summary>
@@ -84,20 +84,20 @@ namespace WinUIApp.Models
         /// </summary>
         public float AlcoholContent
         {
-            get => this.alcoholContent;
+            get => alcoholContent;
             set
             {
                 if (value < MinimumAlcohoolContent)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(this.AlcoholContent), "Alcohol content must be a positive value.");
+                    throw new ArgumentOutOfRangeException(nameof(AlcoholContent), "Alcohol content must be a positive value.");
                 }
 
                 if (value > MaximumAlcoholContent)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(this.AlcoholContent), $"Alcohol content must not exceed {MaximumAlcoholContent}.");
+                    throw new ArgumentOutOfRangeException(nameof(AlcoholContent), $"Alcohol content must not exceed {MaximumAlcoholContent}.");
                 }
 
-                this.alcoholContent = value;
+                alcoholContent = value;
             }
         }
     }

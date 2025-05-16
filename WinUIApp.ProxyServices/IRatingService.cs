@@ -1,7 +1,7 @@
-﻿using WinUIApp.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using WinUIApp.ProxyServices.Models;
 
-namespace WinUIApp.Services
+namespace WinUIApp.ProxyServices
 {
     public interface IRatingService
     {
@@ -26,7 +26,7 @@ namespace WinUIApp.Services
         /// </summary>
         /// <param name="rating">The rating to create.</param>
         /// <returns>The created <see cref="Rating"/> instance.</returns>
-        /// <exception cref="System.ArgumentException">Thrown when the rating is invalid.</exception>
+        /// <exception cref="ArgumentException">Thrown when the rating is invalid.</exception>
         public Rating CreateRating(Rating rating);
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace WinUIApp.Services
         /// </summary>
         /// <param name="rating">The rating to update.</param>
         /// <returns>The updated <see cref="Rating"/> instance.</returns>
-        /// <exception cref="System.ArgumentException">Thrown when the rating is invalid.</exception>
+        /// <exception cref="ArgumentException">Thrown when the rating is invalid.</exception>
         public Rating UpdateRating(Rating rating);
 
         /// <summary>
