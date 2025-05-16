@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WinUIApp.Constants.ErrorMessages
+namespace WinUIApp.ProxyServices.Constants.ErrorMessages
 {
     /// <summary>
     /// Contains error messages related to the RatingService operations.

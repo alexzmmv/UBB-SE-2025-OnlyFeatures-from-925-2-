@@ -1,11 +1,11 @@
-﻿namespace WinUIApp.Services
+﻿namespace WinUIApp.ProxyServices
 {
     using Microsoft.Extensions.Configuration;
     using System;
     using System.Collections.Generic;
     using System.Net.Http;
     using System.Net.Http.Json;
-    using WinUIApp.Models;
+    using WinUIApp.ProxyServices.Models;
 
     /// <summary>
     /// Proxy service for managing rating-related operations.

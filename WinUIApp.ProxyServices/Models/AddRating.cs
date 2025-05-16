@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WinUIApp.Models
+namespace WinUIApp.ProxyServices.Models
 {
-    public class UpdateRatingRequest
+    public class AddRating
     {
         public Models.Rating ratingDto { get; set; }
     }
-
 }

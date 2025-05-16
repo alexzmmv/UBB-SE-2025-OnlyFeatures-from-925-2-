@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using WinUIApp.Models;
+using WinUIApp.ProxyServices.Models;
 
-namespace WinUIApp.Services
+namespace WinUIApp.ProxyServices
 {
     public interface IReviewService
     {

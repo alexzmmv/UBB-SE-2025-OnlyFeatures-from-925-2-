@@ -2,10 +2,10 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace WinUIApp.Models
+namespace WinUIApp.ProxyServices.Models
 {
     using System;
-    using WinUIApp.Constants;
+    using WinUIApp.ProxyServices.Constants;
 
     /// <summary>
     /// Represents a user's rating for a product.
@@ -47,6 +47,6 @@ namespace WinUIApp.Models
         /// Validates that the rating value is within the acceptable range (1 to 5).
         /// </summary>
         /// <returns>True if the rating value is valid; otherwise, false.</returns>
-        public bool IsValid() => this.RatingValue >= RatingDomainConstants.MinRatingValue && this.RatingValue <= RatingDomainConstants.MaxRatingValue;
+        public bool IsValid() => RatingValue >= RatingDomainConstants.MinRatingValue && RatingValue <= RatingDomainConstants.MaxRatingValue;
     }
 }

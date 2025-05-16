@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace WinUIApp.Constants
+namespace WinUIApp.ProxyServices.Constants
 {
     /// <summary>
     /// Provides constant values related to rating domains.
