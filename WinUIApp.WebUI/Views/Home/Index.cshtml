@@ -1,14 +1,71 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model HomeViewModel
 
+<div class="container-fluid">
+    <div class="row"> 
+        <form class="sidebar col-md-3 p-4 border-end">
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to IMDB Drinks</h1>
-    <div >
-        <h2>Drink of the day:</h2>
-        <h3>@Model.DrinkOfTheDay.DrinkName</h3>
-        <img src="@Model.DrinkOfTheDay.DrinkImageUrl" />
+            <h3>Search filters:</h3>
+            <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+            <div class="align-bottom py-2">
+                <label class="fw-semibold">Categories:</label>
+                <div id="checkboxListCategories" class="checkbox-list px-1">
+                    @foreach (var brand in Model.drinkCategories)
+                    {
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="SelectedCategoryIds" value="@brand.CategoryId"/>
+                            @brand.CategoryName
+                        </div>
+                    }
+                </div>
+                </div>
+            <div class="align-bottom py-2">
+                <label class="fw-semibold">Brands:</label>
+                <div id="checkboxListBrands" class="checkbox-list px-3">
+                    @foreach (var brand in Model.drinkBrands)
+                    {
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="SelectedBrandIds" value="@brand.BrandId"/>
+                            @brand.BrandName
+                        </div>
+                    }
+                </div>
+                </div>
+
+                <label>Minimum Alcohol content:</label>
+                <input type="range" class="form-range" min="0" max="100" step="1">
+                <label>Maximum Alcohol content:</label>
+            <input type="range" class="form-range" min="0" max="100" step="1">
+            <label for="minStars" class="form-label">Minimum Stars</label>
+            <select id="minStars" class="form-select mb-3" aria-label="Minimum Stars">
+                <option value="">Stars</option>
+                <option value="1">1 star</option>
+                <option value="2">2 stars</option>
+                <option value="3">3 stars</option>
+                <option value="4">4 stars</option>
+                <option value="5">5 stars</option>
+            </select>
+            <div class="d-flex gap-2 w-100 justify-content-end">
+                <button type="button" class="btn btn-outline-secondary">
+                    Clear
+                </button>
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+        </form>
+
+
+    <div class="text-center col-md-9 p-4">
+        <h1 class="display-4">Welcome to IMDB Drinks</h1>
+        <div >
+            <h2>Drink of the day:</h2>
+            <h3>@Model.DrinkOfTheDay.DrinkName</h3>
+            <img src="@Model.DrinkOfTheDay.DrinkImageUrl"/>
+        </div>
+    </div>
+
     </div>
 </div>

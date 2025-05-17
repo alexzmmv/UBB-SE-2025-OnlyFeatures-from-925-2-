@@ -19,10 +19,14 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         var drinkOfTheDay = drinkService.GetDrinkOfTheDay();
+        var drinkCategories = drinkService.GetDrinkCategories();
+        var drinkBrands = drinkService.GetDrinkBrandNames();
 
         var homeViewModel = new HomeViewModel
         {
             DrinkOfTheDay = drinkOfTheDay,
+            drinkCategories = drinkCategories,
+            drinkBrands = drinkBrands,
         };
         
         return View(homeViewModel);
