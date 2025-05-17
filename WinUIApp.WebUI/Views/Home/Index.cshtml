@@ -6,9 +6,13 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome to IMDB Drinks</h1>
-    <div >
+    <div>
         <h2>Drink of the day:</h2>
-        <h3>@Model.DrinkOfTheDay.DrinkName</h3>
-        <img src="@Model.DrinkOfTheDay.DrinkImageUrl" />
+
+
+        @await Html.PartialAsync(
+            "~/Views/Drink/DrinkElement.cshtml",
+            new WinUIApp.WebUI.Models.DrinkElementViewModel { Drink = Model.DrinkOfTheDay }
+        )
     </div>
 </div>

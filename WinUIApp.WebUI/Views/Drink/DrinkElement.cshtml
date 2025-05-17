@@ -1,0 +1,13 @@
+﻿@model WinUIApp.WebUI.Models.DrinkElementViewModel
+
+<a asp-controller="Drink" asp-action="DrinkDetail" asp-route-id="@Model.Drink.DrinkId" class="text-decoration-none">
+    <div class="card h-100">
+        <img src="@Model.Drink.DrinkImageUrl" style="height: 200px; object-fit: scale-down;">
+        <div class="card-body text-center h-100">
+			<h4 class="card-title text-dark">@Model.Drink.DrinkName</h4>
+            <h5>Categories: @Html.DisplayFor(m => m.Drink.CategoryList, new { htmlAttributes = new { @class = "text-dark" } })</h5>
+            <h5 class="card-text text-dark">Brand: @Model.Drink.DrinkBrand.BrandName</h5>
+			<h5 class="card-text text-dark">Alcohol Content: @Model.Drink.AlcoholContent.ToString()</h5>
+        </div>
+    </div>
+</a>
