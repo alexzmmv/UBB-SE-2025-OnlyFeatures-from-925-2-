@@ -75,5 +75,4 @@ _[Ss]cripts
 *.dot[Cc]over
 
 .idea
-wwwroot/lib/
 node_modules/
