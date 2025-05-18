@@ -1,23 +1,23 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@using Microsoft.AspNetCore.Mvc.Rendering
+@using Azure.Core
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model HomeViewModel
 
 <div class="container-fluid">
     <div class="row"> 
-        <form class="sidebar col-md-3 p-4 border-end">
+        <form asp-action="Index" method="post" class="sidebar col-md-3 p-4 border-end">
 
             <h3>Search filters:</h3>
-            <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+            <input name="searchKeyword" type="search" class="form-control" placeholder="Search..." aria-label="Search">
             <div class="align-bottom py-2">
                 <label class="fw-semibold">Categories:</label>
                 <div id="checkboxListCategories" class="checkbox-list px-1">
                     @foreach (var brand in Model.drinkCategories)
                     {
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="SelectedCategoryIds" value="@brand.CategoryId"/>
+                            <input type="checkbox" class="form-check-input" name="SelectedCategories" value="@brand.CategoryName"/>
                             @brand.CategoryName
                         </div>
                     }
@@ -29,7 +29,7 @@
                     @foreach (var brand in Model.drinkBrands)
                     {
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="SelectedBrandIds" value="@brand.BrandId"/>
+                            <input type="checkbox" class="form-check-input" name="SelectedBrandNames" value="@brand.BrandName"/>
                             @brand.BrandName
                         </div>
                     }
@@ -37,11 +37,11 @@
                 </div>
 
                 <label>Minimum Alcohol content:</label>
-                <input type="range" class="form-range" min="0" max="100" step="1">
+                <input name="minValue" type="range" class="form-range" min="0" max="100" step="1" value="0" >
                 <label>Maximum Alcohol content:</label>
-            <input type="range" class="form-range" min="0" max="100" step="1">
+            <input name="maxValue" type="range" class="form-range" min="0" max="100" step="1" value="100">
             <label for="minStars" class="form-label">Minimum Stars</label>
-            <select id="minStars" class="form-select mb-3" aria-label="Minimum Stars">
+            <select type="number" name="minStars" id="minStars" class="form-select mb-3" aria-label="Minimum Stars">
                 <option value="">Stars</option>
                 <option value="1">1 star</option>
                 <option value="2">2 stars</option>
@@ -64,6 +64,15 @@
             <h2>Drink of the day:</h2>
             <h3>@Model.DrinkOfTheDay.DrinkName</h3>
             <img src="@Model.DrinkOfTheDay.DrinkImageUrl"/>
+        </div>
+        @foreach (var drink in Model.drinks)
+        {
+            <div>
+                <p>@drink.DrinkName</p>
+            </div>
+        }
+        <div>
+            
         </div>
     </div>
 
