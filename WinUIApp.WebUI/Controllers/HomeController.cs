@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using WinUIApp.ProxyServices;
-using WinUIApp.WebMVC.Models;
+using WinUIApp.WebUI.Models;
 
 namespace WinUIApp.WebMVC.Controllers;
 
