@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using WinUIApp.ProxyServices.Models;
 
-public class DrinkDetailViewModel
+namespace WinUIApp.WebUI.Models
 {
-    public Drink Drink { get; set; }
-    public string CategoriesDisplay { get; set; }
-    public double AverageRatingScore { get; set; }
-    public List<Review> Reviews { get; set; }
+    public class DrinkDetailViewModel
+    {
+        public Drink Drink { get; set; }
+        public string CategoriesDisplay { get; set; }
+        public double AverageRatingScore { get; set; }
+        public List<Review> Reviews { get; set; }
+    }
 }
