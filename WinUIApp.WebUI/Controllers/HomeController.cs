@@ -2,9 +2,10 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using WinUIApp.ProxyServices;
 using WinUIApp.ProxyServices.Models;
-using WinUIApp.WebMVC.Models;
+using WinUIApp.WebUI.Models;
 
-namespace WinUIApp.WebMVC.Controllers;
+
+namespace WinUIApp.WebUI.Controllers;
 
 public class HomeController : Controller
 {
