@@ -9,5 +9,6 @@ namespace WinUIApp.WebUI.Models
         public string CategoriesDisplay { get; set; }
         public double AverageRatingScore { get; set; }
         public List<Review> Reviews { get; set; }
+        public bool IsInFavorites { get; set; }
     }
 }
