@@ -1,0 +1,55 @@
+@model DrinkDetailViewModel
+@{
+    ViewData["Title"] = Model.Drink.DrinkName;
+}
+
+<div class="text-center">
+    <h1 class="fw-bold">@Model.Drink.DrinkName</h1>
+    <img src="@Model.Drink.DrinkImageUrl" alt="Drink Image" style="height: 180px;" class="mb-3" />
+</div>
+
+<div class="d-flex justify-content-center mb-3">
+
+    <!-- Placeholder for Update -->
+    <form method="get" asp-action="UpdateDrink" asp-route-id="@Model.Drink.DrinkId">
+        <button type="submit" class="btn btn-outline-info me-2">Update Drink Information</button>
+    </form>
+
+    <!-- Delete confirmation -->
+    <div class="dropdown">
+        <button class="btn btn-outline-danger dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            Remove
+        </button>
+        <ul class="dropdown-menu p-2 text-center">
+            <li>Are you sure?</li>
+            <li>
+                <form method="post" asp-action="RemoveDrink" asp-route-id="@Model.Drink.DrinkId">
+                    <button type="submit" class="btn btn-danger btn-sm mt-2">Confirm</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Add Rating -->
+    <form method="get" asp-action="AddRating" asp-route-id="@Model.Drink.DrinkId">
+        <button type="submit" class="btn btn-outline-success me-2">Add Rating</button>
+    </form>
+</div>
+
+<div class="text-center">
+    <p><strong>Brand:</strong> @Model.Drink.DrinkBrand.BrandName</p>
+    <p><strong>Alcohol %:</strong> @Model.Drink.AlcoholContent</p>
+    <p><strong>Categories:</strong> @Model.CategoriesDisplay</p>
+    <p><strong>Review score:</strong> ⭐ @Model.AverageRatingScore / 5</p>
+</div>
+
+<hr />
+
+<h2>Reviews</h2>
+
+@foreach (var review in Model.Reviews)
+{
+    <div class="border border-warning p-3 mb-3 rounded">
+        <p>@review.Content</p>
+    </div>
+}
