@@ -401,6 +401,9 @@ FodyWeavers.xsd
 /.env
 /App.config
 
+# Ignore .gitignore files
+.gitignore
+
 .idea/
 /WinUIApp/appsettings.json
 /WinUIApp.WebAPI/appsettings.json
