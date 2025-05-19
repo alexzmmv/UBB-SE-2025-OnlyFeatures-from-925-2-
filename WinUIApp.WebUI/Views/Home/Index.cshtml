@@ -62,17 +62,24 @@
         <h1 class="display-4">Welcome to IMDB Drinks</h1>
         <div >
             <h2>Drink of the day:</h2>
-            @await Html.PartialAsync(
-                "~/Views/Drink/DrinkElement.cshtml",
-                new WinUIApp.WebUI.Models.DrinkElementViewModel { Drink = Model.DrinkOfTheDay }
-            )
-        </div>
-        @foreach (var drink in Model.drinks)
-        {
-            <div>
-                <p>@drink.DrinkName</p>
+            <div class="card shadow-sm border mb-5" style="max-width: 500px; margin: 0 auto;">
+                @await Html.PartialAsync(
+                    "~/Views/Drink/DrinkElement.cshtml",
+                    new WinUIApp.WebUI.Models.DrinkElementViewModel { Drink = Model.DrinkOfTheDay }
+                )
             </div>
-        }
+        </div>
+        <div class="d-flex flex-wrap justify-content-center gap-4 mt-4">
+            @foreach (var drink in Model.drinks)
+            {
+                <div class="card shadow-sm border" style="width: 220px; height: 400px; overflow: hidden;">
+                    @await Html.PartialAsync(
+                        "~/Views/Drink/DrinkElement.cshtml",
+                        new WinUIApp.WebUI.Models.DrinkElementViewModel { Drink = drink }
+                    )
+                </div>
+            }
+        </div>
         <div>
             
         </div>
